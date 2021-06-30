@@ -32,7 +32,6 @@ export async function init(){
 
 
 
-
 function gltfLoader(filePath, targetVar){
     const loader = new GLTFLoader();
     loader.load(filePath, (gltf) => {
@@ -47,9 +46,9 @@ function gltfLoader(filePath, targetVar){
 
 function objLoader(filePath, targetVar){
     const loader = new OBJLoader();
-    loader.load(filePath, (root) => {
-        console.log(root)
-        imported[targetVar] = root.children[0]
+    loader.load(filePath, (obj) => {
+        console.log(obj)
+        imported[targetVar] = obj.children[0]
         console.log(imported)
     })
 }

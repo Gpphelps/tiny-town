@@ -40,7 +40,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setClearColor(0x94e8ff);
 // renderer.shadowMap.enabled = true;
 
-document.querySelector('#root').appendChild( renderer.domElement );
+document.querySelector('#canvCont').appendChild( renderer.domElement );
 
 const OrbitControls = oc(THREE)
 const controls = new OrbitControls(camera, renderer.domElement)
