@@ -49,6 +49,7 @@ document.querySelector('#canvCont').appendChild( renderer.domElement );
 const OrbitControls = oc(THREE)
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.keyPanSpeed = 20
+controls.target.set(5,2,5)
 
 //initializing script that loads all necesarry 3d files
 load.init()
