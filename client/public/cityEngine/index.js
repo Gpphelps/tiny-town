@@ -16,11 +16,15 @@ const runMode = 'editor'
 // initializing basic necesarry scene stuff
 export const scene = new THREE.Scene();
 
-export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
-camera.position.set(10,10,20)
-camera.lookAt(5,0,5);
-camera.near = 1
-camera.far = 10
+// export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+let windowRatio = window.innerWidth/window.innerHeight;
+export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,0.1,50);
+
+camera.position.set(10,10,10)
+camera.lookAt(10,0,5);
+// camera.near = 1
+// camera.far = 10
 
 const light = new THREE.DirectionalLight(0xffffff,1,100);
 light.position.set(4,20,8);
