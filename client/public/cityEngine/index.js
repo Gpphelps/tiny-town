@@ -65,7 +65,9 @@ if(runMode == 'editor'){
 }
 
 
-
+export const log = () => {
+    console.log('yes!!!')
+}
 
 
 
