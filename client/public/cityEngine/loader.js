@@ -39,7 +39,6 @@ function gltfLoader(filePath, targetVar){
     loader.load(filePath, (gltf) => {
         
         const object = gltf.scene;
-        console.log(object)
         imported[targetVar] = object;
 
         // index.scene.add(object)
@@ -50,9 +49,7 @@ function gltfLoader(filePath, targetVar){
 function objLoader(filePath, targetVar){
     const loader = new OBJLoader();
     loader.load(filePath, (obj) => {
-        console.log(obj)
         imported[targetVar] = obj.children[0]
-        console.log(imported)
     })
 }
 

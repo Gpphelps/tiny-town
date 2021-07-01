@@ -14,6 +14,7 @@ const process = {
 }
 
 
+
 //initialzes editor things like the single plot and base
 export function init(){
     editPlot = new Plot(0,0,0)
@@ -22,8 +23,54 @@ export function init(){
 
     document.querySelector('canvas').addEventListener('mousemove',userHover)
     document.querySelector('canvas').addEventListener('mousedown',userClick)
+
+    initUi()
 }
 
+function initUi(){
+    let cont = document.querySelector('#userTools')
+    console.log(cont)
+
+
+    let buttonTemplates = [
+        {
+            name: 'Road',
+            value: 'place-road'
+        },
+        {
+            name: 'Residential',
+            value: 'place-residential'
+        }
+    ]
+
+    buttonTempla
+    let roadButton = document.createElement('button');
+    roadButton.textContent = "Road";
+    roadButton.value = "place-road"
+    roadButton.classList.add('toolButton')
+
+    let residentialButton = document.createElement('button');
+    residentialButton.textContent = "Road";
+    residentialButton.value = "place-residential"
+    residentialButton.classList.add('toolButton')
+
+
+
+    cont.appendChild(roadButton)
+}
+
+
+document.querySelector('body').addEventListener('keydown',function(e){
+    if(e.key != "x"){
+        return
+    }
+
+    if(process.clickOperation == 'place-residential'){
+        process.clickOperation = 'place-road'
+    } else {
+        process.clickOperation = 'place-residential'
+    }
+})
 
 
 
@@ -47,7 +94,6 @@ function userHover(e){
     mouse.y = -(e.clientY/window.innerHeight) * 2 +1;
     raycaster.setFromCamera(mouse,index.camera);
     let intersects = raycaster.intersectObject(index.scene,true)
-    console.log(intersects[0])
     
     //checks to see if the object being currently intersected is not the current hover established last time the function was run
     //if it isnt, ie it isnt being hovered anymore, default material is set

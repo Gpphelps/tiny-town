@@ -1,0 +1,24 @@
+* {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    font-family: Helvetica;
+}
+
+body {
+    margin: 0px;
+}
+
+header {
+    padding: 20px;
+    top: 0px;
+    background-color: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#canvCont {
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+}
