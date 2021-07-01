@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, PlacedBuilding } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -45,6 +45,11 @@ const resolvers = {
 
             return { token, user };
         },
+        placeBuilding: async (parent, {building_possition_x, building_position_y, building_position_z}) => {
+            const building = await PlacedBuilding.create({building_possition_x, building_position_y, building_position_z});
+
+            return {building}
+        }
     }
 };
 
