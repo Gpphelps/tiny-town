@@ -1,3 +1,4 @@
 const User = require('./User');
+const PlacedBuilding = require('./PlacedBuilding');
 
-module.exports = { User };
+module.exports = { User, PlacedBuilding };
