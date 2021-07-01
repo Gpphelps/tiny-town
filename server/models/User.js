@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const plotSchema = require('./Plot');
+
 const userSchema = new Schema(
     {
         userName: {
@@ -19,6 +21,9 @@ const userSchema = new Schema(
             trim: true,
             required: true,
         },
+        plot: {
+            plotSchema,
+        }
     },
     {
         toJSON: {
