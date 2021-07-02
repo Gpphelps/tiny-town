@@ -14,6 +14,14 @@ const process = {
 }
 
 
+const userInput = {
+    toolModeButton(e){
+        console.log(e.target);
+        process.clickOperation = e.target.value;
+    },
+}
+
+
 
 //initialzes editor things like the single plot and base
 export function init(){
@@ -32,6 +40,7 @@ function initUi(){
     console.log(cont)
 
 
+    //code responsible for creating tool buttons programmatically so they can be put into a container created by react
     let buttonTemplates = [
         {
             name: 'Road',
@@ -42,21 +51,18 @@ function initUi(){
             value: 'place-residential'
         }
     ]
-
-    buttonTempla
-    let roadButton = document.createElement('button');
-    roadButton.textContent = "Road";
-    roadButton.value = "place-road"
-    roadButton.classList.add('toolButton')
-
-    let residentialButton = document.createElement('button');
-    residentialButton.textContent = "Road";
-    residentialButton.value = "place-residential"
-    residentialButton.classList.add('toolButton')
+    buttonTemplates.forEach(button => {
+        let elem = document.createElement('button');
+        elem.textContent = button.name;
+        elem.value = button.value;
+        elem.classList.add('toolButton')
+        cont.appendChild(elem)
+    })
 
 
+    let buttons = document.querySelectorAll('.toolButton');
+    buttons.forEach(button => button.addEventListener('mousedown', userInput.toolModeButton))
 
-    cont.appendChild(roadButton)
 }
 
 
