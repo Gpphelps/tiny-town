@@ -12,12 +12,12 @@ const plotSchema = new Schema(
             type: Number,
             required: true,
         },
-        buildings: {
+        buildings: [
             placedSchema,
-        }
+        ]
     }
 );
 
-const Plot = model('Plot', plotSchema);
+// const Plot = model('Plot', plotSchema);
 
-module.exports = Plot;
+module.exports = plotSchema;
