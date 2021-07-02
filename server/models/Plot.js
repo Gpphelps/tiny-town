@@ -21,3 +21,4 @@ const plotSchema = new Schema(
 // const Plot = model('Plot', plotSchema);
 
 module.exports = plotSchema;
+
