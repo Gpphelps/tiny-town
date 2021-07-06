@@ -2,13 +2,13 @@ const { Schema, model } = require('mongoose');
 
 const buildingSchema = new Schema(
     {
-        name: {
+        buildingName: {
             type: String,
             required: true,
         },
     }
 );
 
-const Building = model('Building', buildingSchema);
+// const Building = model('Building', buildingSchema);
 
-module.exports = Building;
+module.exports = buildingSchema;

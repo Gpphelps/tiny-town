@@ -4,7 +4,7 @@ const buildingSchema = require('./Building');
 
 const placedSchema = new Schema(
     {
-        name: {buildingSchema},
+        buildingName: [buildingSchema],
         building_position_x: {
             type: Array,
             required: true,
@@ -21,6 +21,6 @@ const placedSchema = new Schema(
     }
 );
 
-const PlacedBuilding = model('PlacedBuilding', placedSchema);
+// const PlacedBuilding = model('PlacedBuilding', placedSchema);
 
-module.exports = PlacedBuilding;
+module.exports = placedSchema;
