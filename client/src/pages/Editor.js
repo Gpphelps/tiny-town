@@ -20,7 +20,8 @@ const Editor = () => {
 
     return(
         <div>
-            <textarea id='saveText'></textarea>
+            {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
+            <textarea style={{display:'none'}} id='saveText'></textarea>
             <div id="canvCont"></div>
             <div id="userTools">
             </div>

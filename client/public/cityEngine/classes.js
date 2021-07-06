@@ -216,7 +216,6 @@ export class Building {
                 blocksAround++
             }
         })
-        console.log(blocksAround)
 
         //logic for different arrangements of surrounding buildings
         // two levels of differentiation

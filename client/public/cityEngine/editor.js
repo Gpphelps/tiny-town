@@ -143,14 +143,14 @@ function userClick(e){
         newBlock.fitToSurroundings(true)
     }
 
-    exportBlocks(editPlot)
+    let exportable = exportBlocks(editPlot)
+    blockExportElem.value = exportable;
 
 }
 
 //bundles all the placed blocks into a stringified array of objects that react can store with a mutation
 function exportBlocks(plot){
     let blocks = plot.blocks;
-    console.log(blocks);
 
     let exportArray = []
 
@@ -167,10 +167,17 @@ function exportBlocks(plot){
     for(let x=0;x<dimmensions.x; x++){
         for(let y=0;y<dimmensions.y;y++){
             for(let z=0;z<dimmensions.z;z++){
-                
+                let inArray = blocks[x][y][z];
+                if(inArray.type){
+                    console.log(inArray)
+                    let block = new Block(inArray.type,x,y,z);
+                    exportArray.push(block)
+                }
             }
         }
     }
+
+    return JSON.stringify(exportArray);
 }
 
 
