@@ -35,10 +35,16 @@ export function init(){
     initUi()
 }
 
+
+export let blockExportElem;
+
+//RESPONSIBLE FOR PUTTING EVERYTHING INTO REACT CONTAINERS
 function initUi(){
     let cont = document.querySelector('#userTools')
     console.log(cont)
 
+    blockExportElem = document.querySelector('#saveText');
+    console.log(blockExportElem)
 
     //code responsible for creating tool buttons programmatically so they can be put into a container created by react
     let buttonTemplates = [
@@ -135,9 +141,38 @@ function userClick(e){
         newBlock.addToScene()
         console.log(newBlock)
         newBlock.fitToSurroundings(true)
+    }
 
+    exportBlocks(editPlot)
+
+}
+
+//bundles all the placed blocks into a stringified array of objects that react can store with a mutation
+function exportBlocks(plot){
+    let blocks = plot.blocks;
+    console.log(blocks);
+
+    let exportArray = []
+
+    class Block {
+        constructor(type,x,y,z){
+            this.type = type;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
+
+    let dimmensions = editPlot.dimmensions
+    for(let x=0;x<dimmensions.x; x++){
+        for(let y=0;y<dimmensions.y;y++){
+            for(let z=0;z<dimmensions.z;z++){
+                
+            }
+        }
     }
 }
+
 
 
 
