@@ -14,6 +14,14 @@ const process = {
 }
 
 
+const userInput = {
+    toolModeButton(e){
+        console.log(e.target);
+        process.clickOperation = e.target.value;
+    },
+}
+
+
 
 //initialzes editor things like the single plot and base
 export function init(){
@@ -27,11 +35,18 @@ export function init(){
     initUi()
 }
 
+
+export let blockExportElem;
+
+//RESPONSIBLE FOR PUTTING EVERYTHING INTO REACT CONTAINERS
 function initUi(){
     let cont = document.querySelector('#userTools')
     console.log(cont)
 
+    blockExportElem = document.querySelector('#saveText');
+    console.log(blockExportElem)
 
+    //code responsible for creating tool buttons programmatically so they can be put into a container created by react
     let buttonTemplates = [
         {
             name: 'Road',
@@ -42,21 +57,18 @@ function initUi(){
             value: 'place-residential'
         }
     ]
-
-    buttonTemplates
-    let roadButton = document.createElement('button');
-    roadButton.textContent = "Road";
-    roadButton.value = "place-road"
-    roadButton.classList.add('toolButton')
-
-    let residentialButton = document.createElement('button');
-    residentialButton.textContent = "Road";
-    residentialButton.value = "place-residential"
-    residentialButton.classList.add('toolButton')
+    buttonTemplates.forEach(button => {
+        let elem = document.createElement('button');
+        elem.textContent = button.name;
+        elem.value = button.value;
+        elem.classList.add('toolButton')
+        cont.appendChild(elem)
+    })
 
 
+    let buttons = document.querySelectorAll('.toolButton');
+    buttons.forEach(button => button.addEventListener('mousedown', userInput.toolModeButton))
 
-    cont.appendChild(roadButton)
 }
 
 
@@ -71,11 +83,6 @@ document.querySelector('body').addEventListener('keydown',function(e){
         process.clickOperation = 'place-residential'
     }
 })
-
-
-
-
-
 
 
 
@@ -134,9 +141,45 @@ function userClick(e){
         newBlock.addToScene()
         console.log(newBlock)
         newBlock.fitToSurroundings(true)
-
     }
+
+    let exportable = exportBlocks(editPlot)
+    blockExportElem.value = exportable;
+
 }
+
+//bundles all the placed blocks into a stringified array of objects that react can store with a mutation
+function exportBlocks(plot){
+    let blocks = plot.blocks;
+
+    let exportArray = []
+
+    class Block {
+        constructor(type,x,y,z){
+            this.type = type;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
+
+    let dimmensions = editPlot.dimmensions
+    for(let x=0;x<dimmensions.x; x++){
+        for(let y=0;y<dimmensions.y;y++){
+            for(let z=0;z<dimmensions.z;z++){
+                let inArray = blocks[x][y][z];
+                if(inArray.type){
+                    console.log(inArray)
+                    let block = new Block(inArray.type,x,y,z);
+                    exportArray.push(block)
+                }
+            }
+        }
+    }
+
+    return JSON.stringify(exportArray);
+}
+
 
 
 

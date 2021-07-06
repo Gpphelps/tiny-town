@@ -29,7 +29,7 @@ camera.lookAt(10,0,5);
 const light = new THREE.DirectionalLight(0xffffff,1,100);
 light.position.set(4,20,8);
 light.castShadow = true;
-light.shadow.camera = new THREE.OrthographicCamera( -100, 100, 100, -100, 0.1, 100 );
+light.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 100 );
 light.shadow.radius = 0.3
 light.shadowDarkness = 0.5
 scene.add(light);
@@ -42,7 +42,7 @@ export const renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setClearColor(0x94e8ff);
-// renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = true;
 
 document.querySelector('#canvCont').appendChild( renderer.domElement );
 
