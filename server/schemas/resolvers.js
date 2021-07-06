@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, PlacedBuilding } = require('../models');
+const { User, PlacedBuilding, Plot } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -45,10 +45,21 @@ const resolvers = {
 
             return { token, user };
         },
-        placeBuilding: async (parent, {building_possition_x, building_position_y, building_position_z}) => {
-            const building = await PlacedBuilding.create({building_possition_x, building_position_y, building_position_z});
+        placeBuilding: async (parent, args, context) => {
+            if (context.user) {
+                const newBuilding = await Plot.findOneAndUpdate(
+                    { _id: context.plot._id },
+                    { $addToSet: { buildings: args } },
+                    {
+                        new: true,
+                        runValidators: true,
+                    }
+                );
+                    console.log(`newBuilding = ${JSON.stringify(newBuilding, undefined, 2)}`);
+                return newBuilding;
+            }
 
-            return {building}
+            throw new AuthenticationError('You need to be logged in to use this feature.');
         }
     }
 };

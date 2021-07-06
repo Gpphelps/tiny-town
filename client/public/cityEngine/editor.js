@@ -43,7 +43,7 @@ function initUi(){
         }
     ]
 
-    buttonTempla
+    buttonTemplates
     let roadButton = document.createElement('button');
     roadButton.textContent = "Road";
     roadButton.value = "place-road"

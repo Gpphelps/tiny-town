@@ -21,9 +21,9 @@ const userSchema = new Schema(
             trim: true,
             required: true,
         },
-        plot: {
+        plot: [
             plotSchema,
-        }
+        ]
     },
     {
         toJSON: {
