@@ -169,7 +169,6 @@ function exportBlocks(plot){
             for(let z=0;z<dimmensions.z;z++){
                 let inArray = blocks[x][y][z];
                 if(inArray.type){
-                    console.log(inArray)
                     let block = new Block(inArray.type,x,y,z);
                     exportArray.push(block)
                 }
