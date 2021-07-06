@@ -137,6 +137,7 @@ function userClick(e){
     }
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
+        newBlock.init()
         editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         console.log(newBlock)

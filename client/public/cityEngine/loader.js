@@ -29,6 +29,7 @@ export async function init(){
 
     await gltfLoader('./cityEngine/Objects/Residential/residential-basic-ground.glb', 'gltfTest')
 
+    console.log(imported.road2Way)
 }
 
 

@@ -21,7 +21,7 @@ export const scene = new THREE.Scene();
 // export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 let windowRatio = window.innerWidth/window.innerHeight;
-export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,0.1,50);
+export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,0.1,500);
 
 camera.position.set(10,10,10)
 camera.lookAt(10,0,5);
@@ -53,7 +53,7 @@ controls.keyPanSpeed = 20
 controls.target.set(5,2,5)
 
 //initializing script that loads all necesarry 3d files
-load.init()
+
 
 //initialzing array of all plots
     //--will be just 1 plot in editor, fills up in big city
@@ -61,11 +61,19 @@ export const plots = []
 
 
 //depending on mode of page switches between editor and map scripts
-if(runMode == 'editor'){
-    editor.init()
-} else if (runMode == 'city'){
-    city.init()
+async function runByMode(){
+
+    load.init()
+
+    if(runMode == 'editor'){
+        editor.init()
+    } else if (runMode == 'city'){
+        city.init()
+    }
 }
+
+runByMode()
+
 
 
 export const log = () => {

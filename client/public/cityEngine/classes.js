@@ -10,7 +10,7 @@ export class Plot {
         //array holding all base block meshes
         this.base = [];
         this.blocks = [];
-        this.defaultMaterial =  new THREE.MeshToonMaterial({color:'rgb(0,90,0)'});
+        this.defaultMaterial =  new THREE.MeshPhongMaterial({color:'rgb(0,90,0)'});
         this.dimmensions = {x:10,y:7,z:10};
     }
     //initializes the plots blockArray
@@ -166,6 +166,10 @@ export class Building {
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1)
     }
+
+    init(){
+        
+    }
     addToScene(){
 
         //plot array consists of 6 y levels but 6th level only there to prevent glitches with fitToSurroundings
@@ -289,8 +293,8 @@ export class Residential extends Building {
     constructor(parent,x,y,z){
         super(parent,x,y,z),
         this.type = 'residential',
-        this.defaultMaterial = load.imported.residentialBasicGroundMat,
-        this.defaultGeometry = load.imported.residentialBasicGround.geometry,
+        // this.defaultMaterial = load.imported.residentialBasicGroundMat,
+        // this.defaultGeometry = load.imported.residentialBasicGround.geometry,
 
         
         this.floors = {
