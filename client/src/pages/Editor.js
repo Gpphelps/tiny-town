@@ -19,7 +19,7 @@ const Editor = () => {
 
     return(
         <div>
-            <p id="runModeProxy">editor</p>
+            <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>
             <div id="canvCont"></div>

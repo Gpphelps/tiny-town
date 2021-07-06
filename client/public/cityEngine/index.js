@@ -3,13 +3,15 @@ import oc from './orbit.js';
 import * as ts from './tools.js';
 import * as cls from './classes.js';
 import * as editor from './editor.js';
+import * as city from './city.js'
 import * as load from './loader.js';
 
 
 // [=--- RUNTIME SPECIFIC VARIABLES AND THE SORT ---=]
 
 //placeholder for setting the mode that it operates in
-const runMode = 'editor'
+
+const runMode = document.querySelector('#runModeProxy').textContent;
 
 // [=--- MAIN INITIALIZING STUFF ---=]
 
@@ -23,8 +25,7 @@ export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,
 
 camera.position.set(10,10,10)
 camera.lookAt(10,0,5);
-// camera.near = 1
-// camera.far = 10
+
 
 const light = new THREE.DirectionalLight(0xffffff,1,100);
 light.position.set(4,20,8);
@@ -62,6 +63,8 @@ export const plots = []
 //depending on mode of page switches between editor and map scripts
 if(runMode == 'editor'){
     editor.init()
+} else if (runMode == 'city'){
+    city.init()
 }
 
 
