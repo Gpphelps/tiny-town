@@ -6,15 +6,15 @@ const placedSchema = new Schema(
     {
         name: {buildingSchema},
         building_position_x: {
-            type: Array,
+            type: Number,
             required: true,
         },
         building_position_y: {
-            type: Array,
+            type: Number,
             required: true,
         },
         building_position_z: {
-            type: Array,
+            type: Number,
             required: true,
         }
 
