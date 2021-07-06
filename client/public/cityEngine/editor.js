@@ -81,11 +81,6 @@ document.querySelector('body').addEventListener('keydown',function(e){
 
 
 
-
-
-
-
-
 let currentHover;
 
 //tracks which mesh in the scene (if any) the cursor is over
