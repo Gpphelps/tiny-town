@@ -22,7 +22,7 @@ export function wait(){
     return new Promise(resolve => {
         setTimeout(() => {
             resolve('resolved')
-        },2000)
+        },600)
     })
 }
 
@@ -49,6 +49,8 @@ export function newChildren(templateObj){
         mesh.rotation.x = child.rotation.x
         mesh.rotation.y = child.rotation.y
         mesh.rotation.z = child.rotation.z;
+        // mesh.receiveShadow = true;
+        mesh.castShadow = true;
         newChildren.push(mesh)
     })
     return newChildren;

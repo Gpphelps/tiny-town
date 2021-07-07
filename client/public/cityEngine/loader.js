@@ -29,9 +29,14 @@ export async function init(){
 
     await gltfLoader('./cityEngine/Objects/Residential/residential-basic-ground.glb', 'gltfTest')
 
-    await gltfLoader('./cityEngine/Objects/Buisness/officebuilding.glb', 'officeGround')
-    await gltfLoader('./cityEngine/Objects/Buisness/officebuildingmidsection.glb', 'officeMid')
-    await gltfLoader('./cityEngine/Objects/Buisness/officeroof.glb', 'officeRoof')
+    await gltfLoader('./cityEngine/Objects/Office/officebuilding.glb', 'officeGround')
+    await gltfLoader('./cityEngine/Objects/Office/officebuildingmidsection.glb', 'officeMid')
+    await gltfLoader('./cityEngine/Objects/Office/officeroof.glb', 'officeRoof')
+
+    await gltfLoader('./cityEngine/Objects/Commercial/onebyoneshop.glb', 'commercialGround')
+    await gltfLoader('./cityEngine/Objects/Commercial/shopmid.glb', 'commercialMid')
+    await gltfLoader('./cityEngine/Objects/Commercial/shoproof.glb', 'commercialRoof')
+
 
     console.log(imported.road2Way)
 }

@@ -11,59 +11,77 @@ import * as load from './loader.js';
 
 //placeholder for setting the mode that it operates in
 
-const runMode = document.querySelector('#runModeProxy').textContent;
+let runMode;
 
-// [=--- MAIN INITIALIZING STUFF ---=]
+export let scene;
+export let camera;
+export let renderer;
+export let controls;
 
-// initializing basic necesarry scene stuff
-export const scene = new THREE.Scene();
+function init(){
 
-const color = 0x94e8ff;
-const near = 10;
-const far = 100;
-scene.fog = new THREE.Fog(color,near,far)
+    if(document.location.pathname == '/login'){
+        return;
+    }
 
-// export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    runMode = document.querySelector('#runModeProxy').textContent;
+    // [=--- MAIN INITIALIZING STUFF ---=]
 
-let windowRatio = window.innerWidth/window.innerHeight;
-export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,-100,500);
+    // initializing basic necesarry scene stuff
+    scene = new THREE.Scene();
 
-camera.position.set(10,10,10)
-camera.lookAt(10,0,5);
+    const color = 0x94e8ff;
+    const near = 10;
+    const far = 100;
+    scene.fog = new THREE.Fog(color,near,far)
+
+    // export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+    let windowRatio = window.innerWidth/window.innerHeight;
+    camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,-100,500);
+
+    camera.position.set(10,10,10)
+    camera.lookAt(10,0,5);
 
 
-const light = new THREE.DirectionalLight(0xffffff,1,100);
-light.position.set(4,20,8);
-light.castShadow = true;
-light.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 100 );
-light.shadow.radius = 0.3
-light.shadowDarkness = 0.5
-scene.add(light);
+    const light = new THREE.DirectionalLight(0xffffff,0.6);
+    light.position.set(4,20,8);
+    light.castShadow = true;
+    light.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 50 );
+    light.shadow.radius = 0.4
+    light.shadowDarkness = 0.8
+    scene.add(light);
 
-const ambientLight = new THREE.AmbientLight( 0xffffff )
-ambientLight.intensity = 0.2
-scene.add(ambientLight)
+    const ambientLight = new THREE.AmbientLight( 0xffffff )
+    ambientLight.intensity = 0.6
+    scene.add(ambientLight)
 
-export const renderer = new THREE.WebGLRenderer();
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.setClearColor(0x94e8ff);
-renderer.shadowMap.enabled = true;
 
-document.querySelector('#canvCont').appendChild( renderer.domElement );
 
-const OrbitControls = oc(THREE)
-const controls = new OrbitControls(camera, renderer.domElement)
-controls.keyPanSpeed = 20
-controls.target.set(5,2,5);
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0x94e8ff);
+    renderer.shadowMap.enabled = true;
 
-controls.maxZoom = 3;
-controls.minZoom = 0.1;
+    document.querySelector('#canvCont').appendChild( renderer.domElement );
 
-controls.enableDamping = true;
-controls.dampingFactor = 0.05
-controls.rotateSpeed = 0.1
-controls.maxPolarAngle = Math.PI/2.1
+    const OrbitControls = oc(THREE)
+    controls = new OrbitControls(camera, renderer.domElement)
+    controls.keyPanSpeed = 20
+    controls.target.set(5,2,5);
+
+    controls.maxZoom = 3;
+    controls.minZoom = 0.1;
+
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05
+    controls.rotateSpeed = 0.1
+    controls.maxPolarAngle = Math.PI/2.1
+
+    runByMode()
+    animate()
+}
 
 //initializing script that loads all necesarry 3d files
 
@@ -77,6 +95,10 @@ export const plots = []
 async function runByMode(){
 
     load.init()
+    
+    //JUST A PLACEHOLDER FUNCTINO, JUST WAITS 2 SECONDS
+    //NEED TO MAKE THE ACTUAL LOADER WORK WITH A PROMISE
+    await ts.wait()
 
     if(runMode == 'editor'){
         editor.init()
@@ -85,7 +107,6 @@ async function runByMode(){
     }
 }
 
-runByMode()
 
 
 
@@ -103,5 +124,31 @@ function animate() {
 
 	renderer.render( scene, camera );
 }
-animate();
+
+
+init()
+
+
+
+document.querySelector('#test').addEventListener('mousedown',function(e){
+    init()
+})
+
+
+//REALLY CRAPPY SOLUTION TO FIND REACT WINDOW CHANGES
+
+const checkLocationChange = () => {
+    let lastRun = document.location.pathname;
+
+    setInterval(function(){
+        let currentLocation = document.location.pathname;
+        if(currentLocation != lastRun){
+            console.log('changed')
+            init()
+        }
+        lastRun = currentLocation
+    },100)
+}
+
+checkLocationChange()
 

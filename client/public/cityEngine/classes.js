@@ -180,30 +180,13 @@ export class Building {
             //loops through all children and makes a new mesh copying the geometry and material of the child
         this.obj = new THREE.Object3D();
         this.obj.blockType = this.type;
-        this.defaultObj.children.forEach(child => {
-            let subObj = new THREE.Mesh();
-            subObj.material = child.material;
-            subObj.defaultMaterial = child.material;
-            subObj.geometry = child.geometry;
-            subObj.scale.x = child.scale.x
-            subObj.scale.y = child.scale.y
-            subObj.scale.z = child.scale.z
-            subObj.position.x = child.position.x
-            subObj.position.y = child.position.y
-            subObj.position.z = child.position.z
-            subObj.rotation.x = child.rotation.x
-            subObj.rotation.y = child.rotation.y
-            subObj.rotation.z = child.rotation.z
-            this.obj.add(subObj)
-        })
+        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
         console.log(this.obj)
-        // this.obj.material = new THREE.MeshPhongMaterial({color:'orange'});
-        // this.obj.defaultMaterial = new THREE.MeshPhongMaterial({color:'orange'});
 
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = 0.48
         this.obj.scale.y = 0.5
-        this.obj.scale.z = 0.5
+        this.obj.scale.z = 0.48
 
         console.log(this.obj)
         index.scene.add(this.obj)
@@ -227,45 +210,27 @@ export class Building {
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
 
+
         let blocksAround = 0;
         around.forEach(block => {
-            if(block.type == 'residential'){
+            if(block.type == this.type){
                 blocksAround++
             }
         })
-
-        //logic for different arrangements of surrounding buildings
-        // two levels of differentiation
-            // 1. seperates cases based off of total number of blocks around
-            // 2. in each block count case gives possibly cases and adjusts geometry and material accordingly
-        // if(blocksAround === 1){
-        //     if(minusY.type === 'residential'){
-        //         this.obj.geometry = load.imported.residentialBasicRoof.geometry;
-        //         //need to be sure to change both the objects material and its default material
-        //         this.obj.material = load.imported.residentialBasicRoofMat;
-        //         this.obj.defaultMaterial = this.obj.material
-        //     }
-        // }
-        // if(blocksAround === 2){
-        //     if(minusY.type === 'residential' && plusY.type === 'residential'){
-        //         this.obj.geometry = load.imported.residentialBasicFloor.geometry;
-        //         this.obj.material = load.imported.residentialBasicFloorMat;
-        //         this.obj.defaultMaterial = this.obj.material
-        //     }
-        // }
-
 
         //orients buildings to nearby road
             //aligns in order of preference so if a block has roads at
             //plusX and minusX it orients to plusX which is towards the default
             //camera position and doesnt orient to minusX
+
         if(plusX.type == 'road'){
-            this.obj.rotation.y = Math.PI/2
+            this.obj.rotation.y = 0
         } else if (plusZ.type == 'road'){
-        } else if (minusX.type == 'road'){
             this.obj.rotation.y = -Math.PI/2
-        } else if (minusZ.type == 'road'){
+        } else if (minusX.type == 'road'){
             this.obj.rotation.y = Math.PI
+        } else if (minusZ.type == 'road'){
+            this.obj.rotation.y = Math.PI/2
         }
 
         if(minusY.type === this.type && plusY.type != this.type){
@@ -321,6 +286,17 @@ export class Office extends Building {
 
         this.midObj = load.imported.officeMid;
         this.roofObj = load.imported.officeRoof;
+    }
+
+}
+export class Commercial extends Building {
+    constructor(parent,x,y,z){
+        super(parent,x,y,z),
+        this.type = 'commercial',
+        this.defaultObj = load.imported.commercialGround;
+
+        this.midObj = load.imported.commercialMid;
+        this.roofObj = load.imported.commercialRoof;
     }
 
 }
