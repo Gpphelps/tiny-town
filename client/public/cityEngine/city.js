@@ -15,13 +15,13 @@ let placeholderData = {
                 plot_position_z: 0,
                 buildings: [
                     {
-                        name: 'residential',
+                        name: 'office',
                         building_position_x: 4,
                         building_position_y: 1,
                         building_position_z: 4,
                     },
                     {
-                        name: 'residential',
+                        name: 'office',
                         building_position_x: 2,
                         building_position_y: 1,
                         building_position_z: 4,
@@ -33,13 +33,13 @@ let placeholderData = {
                 plot_position_z: 0,
                 buildings: [
                     {
-                        name: 'residential',
+                        name: 'office',
                         building_position_x: 4,
                         building_position_y: 1,
                         building_position_z: 4,
                     },
                     {
-                        name: 'residential',
+                        name: 'office',
                         building_position_x: 2,
                         building_position_y: 1,
                         building_position_z: 4,
@@ -72,12 +72,26 @@ async function buildPlots(){
         plot.buildings.forEach(building => {
             console.log(building)
             let newBuilding;
-            if(building.name == 'residential'){
-                newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
+            // if(building.name == 'residential'){
+            //     newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
+            //     newBuilding.addToScene()
+            // }
+            if(building.name == 'office'){
+                newBuilding = new cls.Office(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
             newPlot.blocks[building.building_position_x][building.building_position_y][building.building_position_z] = newBuilding
         })
+    })
+
+    builtPlots.forEach(plot => {
+        for(var x=0;x<plot.dimmensions.x;x++){
+            for(var y=0;y<plot.dimmensions.y;y++){
+                for(var z=0;z<plot.dimmensions.z;z++){
+                    
+                }
+            }
+        }
     })
 }
 

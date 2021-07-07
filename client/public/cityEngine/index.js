@@ -77,6 +77,10 @@ export const plots = []
 async function runByMode(){
 
     load.init()
+    
+    //JUST A PLACEHOLDER FUNCTINO, JUST WAITS 2 SECONDS
+    //NEED TO MAKE THE ACTUAL LOADER WORK WITH A PROMISE
+    await ts.wait()
 
     if(runMode == 'editor'){
         editor.init()
