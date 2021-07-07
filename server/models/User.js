@@ -26,11 +26,9 @@ const userSchema = new Schema(
         plot: {
             plot_position_x: {
                 type: Number,
-                required: true,
             },
             plot_position_z: {
                 type: Number,
-                required: true,
             },
             buildings: [
                 placedSchema,
