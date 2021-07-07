@@ -21,6 +21,6 @@ const placedSchema = new Schema(
     }
 );
 
-const PlacedBuilding = model('PlacedBuilding', placedSchema);
+// const PlacedBuilding = model('PlacedBuilding', placedSchema);
 
-module.exports = PlacedBuilding;
+module.exports = placedSchema;
