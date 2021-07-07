@@ -10,7 +10,7 @@ let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-office',
+    clickOperation: 'place-commercial',
 }
 
 
@@ -55,7 +55,16 @@ function initUi(){
         {
             name: 'Residential',
             value: 'place-residential'
-        }
+        },
+        {
+            name: 'Buisness',
+            value: 'place-office'
+        },
+        {
+            name: 'Commercial',
+            value: 'place-commercial'
+        },
+
     ]
     buttonTemplates.forEach(button => {
         let elem = document.createElement('button');
@@ -108,7 +117,7 @@ function userHover(e){
         currentHover = null;
         return;
     }
-    
+
     currentHover = intersects[0]
 
     if(currentHover.object.parent.blockType){
@@ -151,7 +160,7 @@ function userClick(e){
         newRoad.addToScene()
         console.log(newRoad)
         newRoad.fitToSurroundings(true)
-    }
+    } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
         editPlot.blocks[place.x][place.y][place.z] = newBlock;
@@ -161,6 +170,13 @@ function userClick(e){
     }
     if(process.clickOperation == 'place-office'){
         let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
+        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.addToScene()
+        console.log(newBlock)
+        newBlock.fitToSurroundings(true)
+    }
+    if(process.clickOperation == 'place-commercial'){
+        let newBlock = new cls.Commercial(editPlot,place.x,place.y,place.z);
         editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         console.log(newBlock)
