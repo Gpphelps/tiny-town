@@ -10,7 +10,7 @@ let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-residential',
+    clickOperation: 'place-office',
 }
 
 
@@ -72,17 +72,6 @@ function initUi(){
 }
 
 
-document.querySelector('body').addEventListener('keydown',function(e){
-    if(e.key != "x"){
-        return
-    }
-
-    if(process.clickOperation == 'place-residential'){
-        process.clickOperation = 'place-road'
-    } else {
-        process.clickOperation = 'place-residential'
-    }
-})
 
 
 
@@ -102,6 +91,7 @@ function userHover(e){
     raycaster.setFromCamera(mouse,index.camera);
     let intersects = raycaster.intersectObject(index.scene,true)
     
+
     //checks to see if the object being currently intersected is not the current hover established last time the function was run
     //if it isnt, ie it isnt being hovered anymore, default material is set
     if(currentHover && intersects[0] != currentHover){
@@ -112,10 +102,20 @@ function userHover(e){
                 child.material = child.defaultMaterial;
             })
         }
-
     }
 
+    if(!intersects[0]){
+        currentHover = null;
+        return;
+    }
+    
     currentHover = intersects[0]
+
+    if(currentHover.object.parent.blockType){
+        currentHover.object = currentHover.object.parent;
+        console.log(currentHover.object)
+    }
+
 
     //GLTF objects don't have material themselves but their children do
     //if object has children it gives children the hover material, else if just gives the entire object the hover material
@@ -154,7 +154,13 @@ function userClick(e){
     }
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
-        newBlock.init()
+        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.addToScene()
+        console.log(newBlock)
+        newBlock.fitToSurroundings(true)
+    }
+    if(process.clickOperation == 'place-office'){
+        let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
         editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         console.log(newBlock)

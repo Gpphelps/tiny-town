@@ -18,7 +18,7 @@ const plotSchema = new Schema(
     }
 );
 
-// const Plot = model('Plot', plotSchema);
+const Plot = model('Plot', plotSchema);
 
 module.exports = plotSchema;
 

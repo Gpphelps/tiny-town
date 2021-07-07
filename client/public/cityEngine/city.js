@@ -84,6 +84,7 @@ async function buildPlots(){
 function buildWorld(){
     const geometry = new THREE.PlaneGeometry(10000,10000);
     const material = new THREE.MeshPhongMaterial( new THREE.MeshPhongMaterial({color:'rgb(0,90,0)'}));
+    material.side = THREE.DoubleSide;
     const plane = new THREE.Mesh(geometry,material);
 
     plane.receiveShadow = true;

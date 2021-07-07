@@ -55,7 +55,15 @@ document.querySelector('#canvCont').appendChild( renderer.domElement );
 const OrbitControls = oc(THREE)
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.keyPanSpeed = 20
-controls.target.set(5,2,5)
+controls.target.set(5,2,5);
+
+controls.maxZoom = 3;
+controls.minZoom = 0.1;
+
+controls.enableDamping = true;
+controls.dampingFactor = 0.05
+controls.rotateSpeed = 0.1
+controls.maxPolarAngle = Math.PI/2.1
 
 //initializing script that loads all necesarry 3d files
 

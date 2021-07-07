@@ -10,7 +10,7 @@ export class Plot {
         //array holding all base block meshes
         this.base = [];
         this.blocks = [];
-        this.defaultMaterial =  new THREE.MeshPhongMaterial({color:'rgb(0,90,0)'});
+        this.defaultMaterial =  new THREE.MeshStandardMaterial({color:'rgb(0,90,0)', roughness:1});
         this.dimmensions = {x:10,y:7,z:10};
     }
     //initializes the plots blockArray
@@ -167,9 +167,6 @@ export class Building {
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1)
     }
 
-    init(){
-        
-    }
     addToScene(){
 
         //plot array consists of 6 y levels but 6th level only there to prevent glitches with fitToSurroundings
@@ -179,11 +176,27 @@ export class Building {
             return;
         }
 
-        this.obj = new THREE.Mesh()
-        this.obj.blockType = this.type
-        this.obj.geometry = this.defaultGeometry
-        this.obj.material = this.defaultMaterial
-        this.obj.defaultMaterial = this.obj.material;
+        //because gltf files consist of many children, the obj needs to be a group that holds all children
+            //loops through all children and makes a new mesh copying the geometry and material of the child
+        this.obj = new THREE.Object3D();
+        this.obj.blockType = this.type;
+        this.defaultObj.children.forEach(child => {
+            let subObj = new THREE.Mesh();
+            subObj.material = child.material;
+            subObj.defaultMaterial = child.material;
+            subObj.geometry = child.geometry;
+            subObj.scale.x = child.scale.x
+            subObj.scale.y = child.scale.y
+            subObj.scale.z = child.scale.z
+            subObj.position.x = child.position.x
+            subObj.position.y = child.position.y
+            subObj.position.z = child.position.z
+            subObj.rotation.x = child.rotation.x
+            subObj.rotation.y = child.rotation.y
+            subObj.rotation.z = child.rotation.z
+            this.obj.add(subObj)
+        })
+        console.log(this.obj)
         // this.obj.material = new THREE.MeshPhongMaterial({color:'orange'});
         // this.obj.defaultMaterial = new THREE.MeshPhongMaterial({color:'orange'});
 
@@ -255,19 +268,15 @@ export class Building {
             this.obj.rotation.y = Math.PI
         }
 
-        if(minusY.type === 'residential' && plusY.type != 'residential'){
-                this.obj.geometry = load.imported.residentialBasicRoof.geometry;
-                //need to be sure to change both the objects material and its default material
-                this.obj.material = load.imported.residentialBasicRoofMat;
-                this.obj.defaultMaterial = this.obj.material;
-
-                //aligns block with block below it so facing same direction
-                this.obj.rotation.y = minusY.obj.rotation.y 
-        } else if (minusY.type === 'residential' && plusY.type === 'residential'){
-                this.obj.geometry = load.imported.residentialBasicFloor.geometry;
-                this.obj.material = load.imported.residentialBasicFloorMat;
-                this.obj.defaultMaterial = this.obj.material
-                this.obj.rotation.y = minusY.obj.rotation.y 
+        if(minusY.type === this.type && plusY.type != this.type){
+            this.obj.children = [];
+            ts.newChildren(this.roofObj).forEach(child => this.obj.add(child))
+            this.obj.rotation.y = minusY.obj.rotation.y 
+            // index.scene.add(this.obj)
+        } else if (minusY.type === this.type && plusY.type === this.type){
+            this.obj.children = [];
+            ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
+            this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
 
@@ -302,4 +311,16 @@ export class Residential extends Building {
             geometry: load.imported.residentialBasicFloorMat
         }
     }
+}
+
+export class Office extends Building {
+    constructor(parent,x,y,z){
+        super(parent,x,y,z),
+        this.type = 'office',
+        this.defaultObj = load.imported.officeGround
+
+        this.midObj = load.imported.officeMid;
+        this.roofObj = load.imported.officeRoof;
+    }
+
 }
