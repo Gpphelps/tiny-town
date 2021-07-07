@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, PlacedBuilding, Plot } = require('../models');
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -45,9 +45,9 @@ const resolvers = {
 
             return { token, user };
         },
-        placeBuilding: async (parent, args, context) => {
+        saveBuildings: async (parent, args, context) => {
             if (context.user) {
-                const newBuilding = await Plot.findOneAndUpdate(
+                const newBuilding = await User.findOneAndUpdate(
                     { _id: context.plot._id },
                     { $addToSet: { buildings: args } },
                     {
