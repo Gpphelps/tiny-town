@@ -29,6 +29,10 @@ export async function init(){
 
     await gltfLoader('./cityEngine/Objects/Residential/residential-basic-ground.glb', 'gltfTest')
 
+    await gltfLoader('./cityEngine/Objects/Buisness/officebuilding.glb', 'officeGround')
+    await gltfLoader('./cityEngine/Objects/Buisness/officebuildingmidsection.glb', 'officeMid')
+    await gltfLoader('./cityEngine/Objects/Buisness/officeroof.glb', 'officeRoof')
+
     console.log(imported.road2Way)
 }
 
@@ -41,11 +45,11 @@ function gltfLoader(filePath, targetVar){
         
         const object = gltf.scene;
         // index.scene.add(object);
-        object.children.forEach(child => {
+        object.children.forEach((child,index) => {
             child.defaultMaterial = child.material;
         })
+        object.children = object.children.filter(child => child.type != "Object3D")
         imported[targetVar] = object;
-        console.log(object)
     })
 }
 
