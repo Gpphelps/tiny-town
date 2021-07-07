@@ -2,6 +2,7 @@
     margin-block-start: 0px;
     margin-block-end: 0px;
     font-family: Helvetica;
+    text-decoration: none;
 }
 
 body {
@@ -21,4 +22,14 @@ header {
     position: absolute;
     top: 0px;
     z-index: -1;
+}
+
+h1 {
+    font-family: 'Bungee';
+    text-transform:uppercase;
+    font-size: 45px;
+}
+
+a:visited {
+    color: black;
 }

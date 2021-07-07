@@ -40,9 +40,8 @@ function gltfLoader(filePath, targetVar){
     loader.load(filePath, (gltf) => {
         
         const object = gltf.scene;
-        index.scene.add(object);
+        // index.scene.add(object);
         object.children.forEach(child => {
-            console.log(child)
             child.defaultMaterial = child.material;
         })
         imported[targetVar] = object;
