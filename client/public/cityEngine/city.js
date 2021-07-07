@@ -58,20 +58,36 @@ export function init(){
     
     // allPlots = document.querySelector('#plotData').textContent;
     plotData = placeholderData;
-    buildCity()
+    buildPlots()
+    buildWorld()
 };
 
 
-function buildCity(){
+async function buildPlots(){
     let plots = plotData.data.plots;
     plots.forEach(plot => {
         let newPlot = new cls.Plot(plot.plot_position_x,0,plot.plot_position_z);
         newPlot.buildBase();
-
         builtPlots.push(newPlot)
         plot.buildings.forEach(building => {
             console.log(building)
-            newPlot.blocks[building.building_position_x][building.building_position_y][building.building_position_z] 
+            let newBuilding;
+            if(building.name == 'residential'){
+                newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
+                newBuilding.addToScene()
+            }
+            newPlot.blocks[building.building_position_x][building.building_position_y][building.building_position_z] = newBuilding
         })
     })
+}
+
+function buildWorld(){
+    const geometry = new THREE.PlaneGeometry(10000,10000);
+    const material = new THREE.MeshPhongMaterial( new THREE.MeshPhongMaterial({color:'rgb(0,90,0)'}));
+    const plane = new THREE.Mesh(geometry,material);
+
+    plane.receiveShadow = true;
+    plane.position.y = 0.5
+    plane.rotation.x = -Math.PI/2
+    index.scene.add(plane)
 }
