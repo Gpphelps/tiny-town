@@ -212,7 +212,7 @@ export class Building {
 
         let blocksAround = 0;
         around.forEach(block => {
-            if(block.type == 'residential'){
+            if(block.type == this.type){
                 blocksAround++
             }
         })

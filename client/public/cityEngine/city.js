@@ -22,10 +22,22 @@ let placeholderData = {
                     },
                     {
                         name: 'office',
+                        building_position_x: 4,
+                        building_position_y: 2,
+                        building_position_z: 4,
+                    },
+                    {
+                        name: 'office',
                         building_position_x: 2,
                         building_position_y: 1,
                         building_position_z: 4,
                     },
+                    {
+                        name: 'road',
+                        building_position_x: 3,
+                        building_position_y: 1,
+                        building_position_z: 4,
+                    }
                 ]
             },
             {
@@ -80,6 +92,10 @@ async function buildPlots(){
                 newBuilding = new cls.Office(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
+            if(building.name == 'road'){
+                newBuilding = new cls.Road(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
+                newBuilding.addToScene()
+            }
             newPlot.blocks[building.building_position_x][building.building_position_y][building.building_position_z] = newBuilding
         })
     })
@@ -88,7 +104,10 @@ async function buildPlots(){
         for(var x=0;x<plot.dimmensions.x;x++){
             for(var y=0;y<plot.dimmensions.y;y++){
                 for(var z=0;z<plot.dimmensions.z;z++){
-                    
+                    let blockAtIndex = plot.blocks[x][y][z];
+                    if(blockAtIndex.type){
+                        blockAtIndex.fitToSurroundings(false)
+                    }
                 }
             }
         }
