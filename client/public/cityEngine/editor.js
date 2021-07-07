@@ -105,12 +105,29 @@ function userHover(e){
     //checks to see if the object being currently intersected is not the current hover established last time the function was run
     //if it isnt, ie it isnt being hovered anymore, default material is set
     if(currentHover && intersects[0] != currentHover){
-        currentHover.object.material = currentHover.object.defaultMaterial
+        if(currentHover.object.children.length == 0){
+            currentHover.object.material = currentHover.object.defaultMaterial
+        } else {
+            currentHover.object.children.forEach(child => {
+                child.material = child.defaultMaterial;
+            })
+        }
+
     }
 
     currentHover = intersects[0]
+
+    //GLTF objects don't have material themselves but their children do
+    //if object has children it gives children the hover material, else if just gives the entire object the hover material
     if(intersects.length > 0){
-        intersects[0].object.material = new THREE.MeshPhongMaterial({color:`yellow`})
+        if(intersects[0].object.children.length == 0){
+            intersects[0].object.material = new THREE.MeshPhongMaterial({color:`yellow`})
+        } else {
+            intersects[0].object.children.forEach(child => {
+                child.material = new THREE.MeshPhongMaterial({color:'yellow'})
+            })
+        }
+
     }
 }
 

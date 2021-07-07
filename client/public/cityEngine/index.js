@@ -18,10 +18,15 @@ const runMode = document.querySelector('#runModeProxy').textContent;
 // initializing basic necesarry scene stuff
 export const scene = new THREE.Scene();
 
+const color = 0x94e8ff;
+const near = 10;
+const far = 100;
+scene.fog = new THREE.Fog(color,near,far)
+
 // export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 let windowRatio = window.innerWidth/window.innerHeight;
-export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,0.1,500);
+export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,-100,500);
 
 camera.position.set(10,10,10)
 camera.lookAt(10,0,5);
