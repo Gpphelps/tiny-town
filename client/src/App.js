@@ -5,6 +5,7 @@ import Header from './components/Header'
 
 import Login from './pages/Login'
 import Editor from './pages/Editor'
+import Home from './pages/Home'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <div>
           <Header />
           <Route exact path="/">
-            {/* <div id="canvCont"></div> */}
+            <Home />
           </Route>
           <Route exact path="/login">
             <Login />

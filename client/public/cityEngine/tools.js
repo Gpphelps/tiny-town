@@ -16,7 +16,17 @@ export const plotArrayInit = (targetArray,dimmensions) => {
 
 }
 
+export function wait(){
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve('resolved')
+        },2000)
+    })
+}
 
+export async function waitASec(){
+    const result = await wait();
+}
 
 const mouseHover = () => {
 

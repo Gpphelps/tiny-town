@@ -3,28 +3,34 @@ import oc from './orbit.js';
 import * as ts from './tools.js';
 import * as cls from './classes.js';
 import * as editor from './editor.js';
+import * as city from './city.js'
 import * as load from './loader.js';
 
 
 // [=--- RUNTIME SPECIFIC VARIABLES AND THE SORT ---=]
 
 //placeholder for setting the mode that it operates in
-const runMode = 'editor'
+
+const runMode = document.querySelector('#runModeProxy').textContent;
 
 // [=--- MAIN INITIALIZING STUFF ---=]
 
 // initializing basic necesarry scene stuff
 export const scene = new THREE.Scene();
 
+const color = 0x94e8ff;
+const near = 10;
+const far = 100;
+scene.fog = new THREE.Fog(color,near,far)
+
 // export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 let windowRatio = window.innerWidth/window.innerHeight;
-export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,0.1,50);
+export const camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,-100,500);
 
 camera.position.set(10,10,10)
 camera.lookAt(10,0,5);
-// camera.near = 1
-// camera.far = 10
+
 
 const light = new THREE.DirectionalLight(0xffffff,1,100);
 light.position.set(4,20,8);
@@ -52,7 +58,7 @@ controls.keyPanSpeed = 20
 controls.target.set(5,2,5)
 
 //initializing script that loads all necesarry 3d files
-load.init()
+
 
 //initialzing array of all plots
     //--will be just 1 plot in editor, fills up in big city
@@ -60,9 +66,19 @@ export const plots = []
 
 
 //depending on mode of page switches between editor and map scripts
-if(runMode == 'editor'){
-    editor.init()
+async function runByMode(){
+
+    load.init()
+
+    if(runMode == 'editor'){
+        editor.init()
+    } else if (runMode == 'city'){
+        city.init()
+    }
 }
+
+runByMode()
+
 
 
 export const log = () => {
