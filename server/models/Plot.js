@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const placedSchema = require('./PlacedBuilding');
 
@@ -18,7 +18,7 @@ const plotSchema = new Schema(
     }
 );
 
-const Plot = model('Plot', plotSchema);
 
 module.exports = plotSchema;
+
 
