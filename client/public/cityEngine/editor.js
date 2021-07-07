@@ -122,7 +122,6 @@ function userHover(e){
 
     if(currentHover.object.parent.blockType){
         currentHover.object = currentHover.object.parent;
-        console.log(currentHover.object)
     }
 
 
@@ -229,3 +228,4 @@ function exportBlocks(plot){
 
 // document.querySelector('#road-mode').addEventListener('mousedown', () => process.clickOperation = 'place-road')
 // document.querySelector('#residential-mode').addEventListener('mousedown', () => process.clickOperation = 'place-residential')
+

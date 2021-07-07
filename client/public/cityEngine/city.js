@@ -33,6 +33,12 @@ let placeholderData = {
                         building_position_z: 4,
                     },
                     {
+                        name: 'commercial',
+                        building_position_x: 2,
+                        building_position_y: 1,
+                        building_position_z: 5,
+                    },
+                    {
                         name: 'road',
                         building_position_x: 3,
                         building_position_y: 1,
@@ -92,6 +98,10 @@ async function buildPlots(){
                 newBuilding = new cls.Office(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
+            if(building.name == 'commercial'){
+                newBuilding = new cls.Commercial(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
+                newBuilding.addToScene()
+            }
             if(building.name == 'road'){
                 newBuilding = new cls.Road(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
@@ -125,3 +135,4 @@ function buildWorld(){
     plane.rotation.x = -Math.PI/2
     index.scene.add(plane)
 }
+

@@ -186,7 +186,7 @@ export class Building {
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = 0.48
         this.obj.scale.y = 0.5
-        this.obj.scale.z = 0.5
+        this.obj.scale.z = 0.48
 
         console.log(this.obj)
         index.scene.add(this.obj)
@@ -210,6 +210,7 @@ export class Building {
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
 
+
         let blocksAround = 0;
         around.forEach(block => {
             if(block.type == this.type){
@@ -222,7 +223,6 @@ export class Building {
             //plusX and minusX it orients to plusX which is towards the default
             //camera position and doesnt orient to minusX
 
-        console.log(plusX.type,minusX.type,plusZ.type,minusZ.type)
         if(plusX.type == 'road'){
             this.obj.rotation.y = 0
         } else if (plusZ.type == 'road'){
