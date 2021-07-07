@@ -91,9 +91,7 @@ function userHover(e){
     raycaster.setFromCamera(mouse,index.camera);
     let intersects = raycaster.intersectObject(index.scene,true)
     
-    if(!intersects[0]){
-        return
-    }
+
     //checks to see if the object being currently intersected is not the current hover established last time the function was run
     //if it isnt, ie it isnt being hovered anymore, default material is set
     if(currentHover && intersects[0] != currentHover){
@@ -106,6 +104,11 @@ function userHover(e){
         }
     }
 
+    if(!intersects[0]){
+        currentHover = null;
+        return;
+    }
+    
     currentHover = intersects[0]
 
     if(currentHover.object.parent.blockType){

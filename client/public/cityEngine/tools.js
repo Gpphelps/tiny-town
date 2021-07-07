@@ -51,6 +51,5 @@ export function newChildren(templateObj){
         mesh.rotation.z = child.rotation.z;
         newChildren.push(mesh)
     })
-    obj.position.x = obj.position.x
-    console.log(obj)
+    return newChildren;
 }

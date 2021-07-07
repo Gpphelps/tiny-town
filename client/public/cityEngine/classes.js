@@ -270,26 +270,13 @@ export class Building {
 
         if(minusY.type === this.type && plusY.type != this.type){
             this.obj.children = [];
-            this.roofObj.children.forEach(child => {
-                let mesh = new THREE.Mesh(child.geometry,child.material);
-                mesh.defaultMaterial = child.material;
-                mesh.scale.x = child.scale.x
-                mesh.scale.y = child.scale.y
-                mesh.scale.z = child.scale.z
-                mesh.position.x = child.position.x
-                mesh.position.y = child.position.y
-                mesh.position.z = child.position.z
-                mesh.rotation.x = child.rotation.x
-                mesh.rotation.y = child.rotation.y
-                mesh.rotation.z = child.rotation.z;
-                this.obj.add(mesh)
-            })
+            ts.newChildren(this.roofObj).forEach(child => this.obj.add(child))
             this.obj.rotation.y = minusY.obj.rotation.y 
-            index.scene.add(this.obj)
+            // index.scene.add(this.obj)
         } else if (minusY.type === this.type && plusY.type === this.type){
-                this.obj = this.midObj
-                this.obj.defaultMaterial = this.midObj.material;
-                this.obj.rotation.y = minusY.obj.rotation.y 
+            this.obj.children = [];
+            ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
+            this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
 
