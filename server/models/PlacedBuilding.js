@@ -1,10 +1,10 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 // Importing the buildingSchema from Building.js
 const buildingSchema = require('./Building');
 
 const placedSchema = new Schema(
     {
-        name: {buildingSchema},
+        type: {buildingSchema},
         building_position_x: {
             type: Number,
             required: true,
@@ -21,6 +21,5 @@ const placedSchema = new Schema(
     }
 );
 
-// const PlacedBuilding = model('PlacedBuilding', placedSchema);
 
 module.exports = placedSchema;

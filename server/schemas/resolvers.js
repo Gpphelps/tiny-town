@@ -47,20 +47,17 @@ const resolvers = {
         },
         saveBuildings: async (parent, args, context) => {
             if (context.user) {
-                const newBuilding = await User.findOneAndUpdate(
-                    { _id: context.plot._id },
-                    { $addToSet: { buildings: args } },
-                    {
-                        new: true,
-                        runValidators: true,
-                    }
+                const userBuildings = await User.findById(
+                    context.user._id 
                 );
-                    console.log(`newBuilding = ${JSON.stringify(newBuilding, undefined, 2)}`);
-                return newBuilding;
+                    userBuildings.plot.buildings.push(args);
+                    await userBuildings.save();
+                    console.log(userBuildings);
+                return userBuildings;
             }
 
             throw new AuthenticationError('You need to be logged in to use this feature.');
-        }
+        },
     }
 };
 
