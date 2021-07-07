@@ -20,6 +20,10 @@ export let controls;
 
 function init(){
 
+    if(document.location.pathname == '/login'){
+        return;
+    }
+
     runMode = document.querySelector('#runModeProxy').textContent;
     // [=--- MAIN INITIALIZING STUFF ---=]
 
@@ -131,5 +135,20 @@ document.querySelector('#test').addEventListener('mousedown',function(e){
 })
 
 
+//REALLY CRAPPY SOLUTION TO FIND REACT WINDOW CHANGES
 
+const checkLocationChange = () => {
+    let lastRun = document.location.pathname;
+
+    setInterval(function(){
+        let currentLocation = document.location.pathname;
+        if(currentLocation != lastRun){
+            console.log('changed')
+            init()
+        }
+        lastRun = currentLocation
+    },100)
+}
+
+checkLocationChange()
 
