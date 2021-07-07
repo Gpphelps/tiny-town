@@ -50,10 +50,27 @@ const resolvers = {
                 const userBuildings = await User.findById(
                     context.user._id 
                 );
-                    userBuildings.plot.buildings.push(args);
-                    await userBuildings.save();
-                    console.log(userBuildings);
+
+                userBuildings.plot.buildings.push(args);
+                await userBuildings.save();
+                console.log(userBuildings);
                 return userBuildings;
+            }
+
+            throw new AuthenticationError('You need to be logged in to use this feature.');
+        },
+        savePlot: async (parent, { plot_position_x, plot_position_z }, context) => {
+            if (context.user) {
+                const savedPlot = await User.findById(
+                    context.user._id 
+                );
+
+                savedPlot.plot.plot_position_x.push(plot_position_x);
+                savedPlot.plot.plot_position_y.push(plot_position_z);
+                await savedPlot.save();
+
+                return savedPlot;
+                    
             }
 
             throw new AuthenticationError('You need to be logged in to use this feature.');
