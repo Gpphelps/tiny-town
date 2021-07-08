@@ -9,12 +9,14 @@ const typeDefs = gql`
     }
 
     type Plot {
+        _id: ID
         plot_position_x: Int
         plot_position_z: Int
         buildings: [Building]
     }
 
     type Building {
+        _id: ID
         type: String
         building_position_x: Int
         building_position_y: Int
@@ -37,6 +39,7 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         saveBuildings(buildingType: String!, building_position_x: Int!, building_position_y: Int!, building_position_z: Int!): User
         savePlot(plot_position_x: Int, plot_position_z: Int): User
+        removeBuilding(_id: ID): User
     }
 `;
 

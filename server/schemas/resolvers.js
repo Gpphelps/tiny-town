@@ -79,6 +79,19 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in to use this feature.');
         },
+        removeBuilding: async (parent, { _id }, context ) => {
+            if (context.user) {
+                const updatedBuildings = await User.findById(
+                    context.user._id 
+                );
+
+                updatedBuildings.plot.buildings.pull(_id);
+                await updatedBuildings.save();
+
+                return updatedBuildings;
+            }
+        }
+
     }
 };
 
