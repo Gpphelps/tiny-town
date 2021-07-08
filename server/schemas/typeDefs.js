@@ -11,6 +11,14 @@ const typeDefs = gql`
     type Plot {
         plot_position_x: Int
         plot_position_z: Int
+        buildings: [Building]
+    }
+
+    type Building {
+        type: String
+        building_position_x: Int
+        building_position_y: Int
+        building_position_z: Int
     }
 
     type Auth {
