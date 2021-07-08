@@ -45,7 +45,7 @@ function init(){
     let windowRatio = window.innerWidth/window.innerHeight;
     camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-100,500);
 
-    camera.position.set(10,10,10)
+    camera.position.set(10,12,10)
     camera.lookAt(5,0,5);
     camera.zoom = 2
 

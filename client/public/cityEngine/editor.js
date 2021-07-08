@@ -10,7 +10,7 @@ let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-commercial',
+    clickOperation: 'place-road',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
 }

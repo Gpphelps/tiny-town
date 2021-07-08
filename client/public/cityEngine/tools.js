@@ -39,26 +39,53 @@ export function newChildren(templateObj){
     let newChildren = []
     templateObj.children.forEach(child => {
 
-        let childColor = child.material.color
+        if(child.type == "Mesh"){
+            let childColor = child.material.color
 
-        //makes new material so that it has it's own material whose color it can change without everyone sharing a material
-        let newMat = new THREE.MeshPhongMaterial();
-        newMat.color = childColor
+            //makes new material so that it has it's own material whose color it can change without everyone sharing a material
+            let newMat = new THREE.MeshPhongMaterial();
+            newMat.color = childColor
+    
+            let mesh = new THREE.Mesh(child.geometry,newMat);
+            mesh.defaultMaterial = newMat;
+            mesh.scale.x = child.scale.x
+            mesh.scale.y = child.scale.y
+            mesh.scale.z = child.scale.z
+            mesh.position.x = child.position.x
+            mesh.position.y = child.position.y
+            mesh.position.z = child.position.z
+            mesh.rotation.x = child.rotation.x
+            mesh.rotation.y = child.rotation.y
+            mesh.rotation.z = child.rotation.z;
+            // mesh.receiveShadow = true;
+            mesh.castShadow = true;
+            newChildren.push(mesh)
+        } else if (child.type == "Group"){
+            child.children.forEach(child => {
+                let childColor = child.material.color
 
-        let mesh = new THREE.Mesh(child.geometry,newMat);
-        mesh.defaultMaterial = newMat;
-        mesh.scale.x = child.scale.x
-        mesh.scale.y = child.scale.y
-        mesh.scale.z = child.scale.z
-        mesh.position.x = child.position.x
-        mesh.position.y = child.position.y
-        mesh.position.z = child.position.z
-        mesh.rotation.x = child.rotation.x
-        mesh.rotation.y = child.rotation.y
-        mesh.rotation.z = child.rotation.z;
-        // mesh.receiveShadow = true;
-        mesh.castShadow = true;
-        newChildren.push(mesh)
+                //makes new material so that it has it's own material whose color it can change without everyone sharing a material
+                let newMat = new THREE.MeshPhongMaterial();
+                newMat.color = childColor
+        
+                let mesh = new THREE.Mesh(child.geometry,newMat);
+                mesh.defaultMaterial = newMat;
+                mesh.scale.x = child.scale.x
+                mesh.scale.y = child.scale.y
+                mesh.scale.z = child.scale.z
+                mesh.position.x = child.position.x
+                mesh.position.y = child.position.y
+                mesh.position.z = child.position.z
+                mesh.rotation.x = child.rotation.x
+                mesh.rotation.y = child.rotation.y
+                mesh.rotation.z = child.rotation.z;
+                // mesh.receiveShadow = true;
+                mesh.castShadow = true;
+                newChildren.push(mesh)
+            })
+        }
+        console.log(child)
+
     })
     return newChildren;
 }

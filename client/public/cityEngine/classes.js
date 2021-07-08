@@ -42,30 +42,28 @@ export class Road {
         this.parent = parent,
         this.relativePos = {x:x,y:y,z:z},
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'rgb(40,40,40)'})
+        this.defaultObj = load.imported.road2Way;
+
+        this.threeWay = load.imported.road3Way;
+        this.fourWay = load.imported.road4Way;
+        this.corner = load.imported.roadCorner;
     }
     addToScene(){
-        console.log(load.imported.road2Way)
 
         //imports default material
         this.defaultMaterial = load.imported.road2WayMat
 
         //creates new basic mesh
-        this.obj = new THREE.Mesh()
+        this.obj = new THREE.Object3D();
+        this.obj.blockType = this.type;
+        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-        this.obj.blockType = 'road'
-        //sets mesh geometry to the geometry of the road2Way model
-        //allows entirely new mesh to be made instead of being reference to imported road mesh
-        this.obj.geometry = load.imported.road2Way.geometry
-        console.log(this.obj)
         index.scene.add(this.obj)
 
         this.obj.scale.x = 0.5
         this.obj.scale.y = 0.5
         this.obj.scale.z = 0.5
 
-        this.obj.material = this.defaultMaterial
-        this.obj.defaultMaterial = this.defaultMaterial
-        console.log(this.obj.defaultMaterial)
         //positioning in scene is calculated relative to placed coords and the coords of the parent
         let absX = this.relativePos.x + this.parent.position.x;
         let absY = this.relativePos.y + this.parent.position.y;
@@ -94,55 +92,58 @@ export class Road {
         })
         console.log(roadsAround)
 
+        this.obj.scale.x = 0.5;
+        this.obj.rotation.y = 0;
+
         //logic for various arrangements of roads
         //PROBABLY BETTER WAY TO DO THIS, SHOULD FIGURE THAT OUT
         if(roadsAround === 1){
-            if(plusX.type == 'road' || minusX.type == 'road'){
+            if(plusZ.type == 'road' || minusZ.type == 'road'){
                 console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             }
         }
 
-        this.obj.scale.x = 0.5;
+
 
         if(roadsAround === 2){
-            if(plusX.type == 'road' && minusX.type == 'road'){
+            if(plusZ.type == 'road' && minusZ.type == 'road'){
                 console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             } else if (plusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
-                this.obj.rotation.y = Math.PI
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.rotation.y = -Math.PI/2
             } else if (minusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
                 this.obj.rotation.y = Math.PI;
-                this.obj.scale.x *= -1
             } else if (plusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
-                this.obj.rotation.y = -Math.PI/2;
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
             } else if (minusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
-                this.obj.rotation.y = Math.PI/2;
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                // this.obj.rotation.y = Math.PI/2;
                 this.obj.scale.x *= -1
             }
         }
 
         if(roadsAround === 3){
-            this.obj.geometry = load.imported.road3Way.geometry
+            this.obj.children = []
+            ts.newChildren(this.threeWay).forEach(child => this.obj.add(child))
             if(minusX.type != 'road'){
-                this.obj.rotation.y = Math.PI;
-            } else if (plusZ.type != 'road'){
-                this.obj.rotation.y = -Math.PI/2
-            } else if (minusZ.type != 'road'){
+                this.obj.rotation.y = -Math.PI/2;
+            } else if (plusX.type != 'road'){
                 this.obj.rotation.y = Math.PI/2
+            } else if (minusZ.type != 'road'){
+                this.obj.rotation.y = -Math.PI
             }
         }
 
         if(roadsAround === 4){
-            this.obj.geometry = load.imported.road4Way.geometry
+            this.obj.children = []
+            ts.newChildren(this.fourWay).forEach(child => this.obj.add(child))
         }
 
 
