@@ -9,6 +9,7 @@ export class Plot {
         this.position = {x:x,y:y,z:z};
         //array holding all base block meshes
         this.base = [];
+        this.baseGroup;
         this.blocks = [];
         this.defaultMaterial =  new THREE.MeshStandardMaterial({color:'rgb(0,90,0)', roughness:1});
         this.dimmensions = {x:10,y:7,z:10};
@@ -24,7 +25,9 @@ export class Plot {
                 let baseMesh = new THREE.Mesh(baseGeometry,baseMaterial);
                 baseMesh.receiveShadow = true;
                 this.base.push(baseMesh)
+
                 index.scene.add(baseMesh)
+
                 baseMesh.defaultMaterial = this.defaultMaterial
                 baseMesh.position.set(this.position.x+x,this.position.y,this.position.z+z)
             }
@@ -181,14 +184,13 @@ export class Building {
         this.obj = new THREE.Object3D();
         this.obj.blockType = this.type;
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
-        console.log(this.obj)
+
 
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = 0.48
         this.obj.scale.y = 0.5
         this.obj.scale.z = 0.48
 
-        console.log(this.obj)
         index.scene.add(this.obj)
 
         let absX = this.relativePos.x + this.parent.position.x;

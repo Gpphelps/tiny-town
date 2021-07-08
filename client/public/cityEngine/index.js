@@ -130,10 +130,6 @@ init()
 
 
 
-document.querySelector('#test').addEventListener('mousedown',function(e){
-    init()
-})
-
 
 //REALLY CRAPPY SOLUTION TO FIND REACT WINDOW CHANGES
 

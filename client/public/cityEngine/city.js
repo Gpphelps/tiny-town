@@ -70,7 +70,7 @@ let placeholderData = {
 };
 
 
-const builtPlots = []
+const allPlots = []
 
 export function init(){
     
@@ -78,6 +78,9 @@ export function init(){
     plotData = placeholderData;
     buildPlots()
     buildWorld()
+    document.querySelector('canvas').addEventListener('mousemove',userHover)
+    document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
+
 };
 
 
@@ -86,9 +89,9 @@ async function buildPlots(){
     plots.forEach(plot => {
         let newPlot = new cls.Plot(plot.plot_position_x,0,plot.plot_position_z);
         newPlot.buildBase();
-        builtPlots.push(newPlot)
+        allPlots.push(newPlot)
         plot.buildings.forEach(building => {
-            console.log(building)
+
             let newBuilding;
             // if(building.name == 'residential'){
             //     newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
@@ -110,7 +113,7 @@ async function buildPlots(){
         })
     })
 
-    builtPlots.forEach(plot => {
+    allPlots.forEach(plot => {
         for(var x=0;x<plot.dimmensions.x;x++){
             for(var y=0;y<plot.dimmensions.y;y++){
                 for(var z=0;z<plot.dimmensions.z;z++){
@@ -131,8 +134,62 @@ function buildWorld(){
     const plane = new THREE.Mesh(geometry,material);
 
     plane.receiveShadow = true;
-    plane.position.y = 0.5
+    plane.position.y = 0.499
     plane.rotation.x = -Math.PI/2
     index.scene.add(plane)
 }
+
+
+
+
+let currentHover;
+
+//tracks which mesh in the scene (if any) the cursor is over
+//assigns an intersect object with distance and face info
+//access intersected mesh with currentHover.object
+function userHover(e){
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2()
+
+    mouse.x = (e.clientX/window.innerWidth) * 2 -1;
+    mouse.y = -(e.clientY/window.innerHeight) * 2 +1;
+    raycaster.setFromCamera(mouse,index.camera);
+    let intersects = raycaster.intersectObject(index.scene,true)
+    
+    // console.log(intersects[0])
+  
+}
+
+function userDoubleClick(e){
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2()
+
+    mouse.x = (e.clientX/window.innerWidth) * 2 -1;
+    mouse.y = -(e.clientY/window.innerHeight) * 2 +1;
+    raycaster.setFromCamera(mouse,index.camera);
+    let intersects = raycaster.intersectObject(index.scene,true)
+
+    let object = intersects[0].object
+    console.log(object)
+
+    let selectedPlot;
+
+    if(object.geometry.type != "PlaneGeometry"){
+        let x = object.position.x;
+        let z = object.position.z;
+
+        allPlots.forEach(plot => {
+            if(x >= plot.position.x && x < plot.position.x + plot.dimmensions.x){
+                if(z >= plot.position.z && z < plot.position.z + plot.dimmensions.z){
+                    selectedPlot = plot;
+                }
+            }
+        })
+    }
+
+    
+}
+
 

@@ -83,3 +83,38 @@ form > button {
 a:visited {
     color: black;
 }
+
+
+
+
+
+
+
+/* NEW PLOT POP UP STYLING */
+
+#newPlotPopUp {
+    position: absolute;
+    display: flex;
+    width: 60px;
+    flex-wrap: wrap;
+}
+
+.plotPopUpSpacer {
+    width: 20px;
+    height: 20px;
+}
+
+.plotOption {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(50,50,50);
+    border: 1px solid rgb(30,30,30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+}
+
+.plotOption:hover{
+    background-color: yellow;
+}
