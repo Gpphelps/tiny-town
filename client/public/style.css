@@ -95,8 +95,10 @@ a:visited {
 #newPlotPopUp {
     position: absolute;
     display: flex;
-    width: 60px;
+    width: 100px;
     flex-wrap: wrap;
+    display: none;
+    padding: 20px;
 }
 
 .plotPopUpSpacer {

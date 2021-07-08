@@ -188,38 +188,69 @@ function userDoubleClick(e){
             }
         })
     }
+    console.log(selectedPlot)
 
-    let popup = document.querySelector('#newPlotPopUp')
+    //cloning the popup to remove previous event listeners
+    let oldPopup = document.querySelector('#newPlotPopUp')
+    let popup = oldPopup.cloneNode(true);
+    oldPopup.parentNode.replaceChild(popup,oldPopup)
+
     popup.style.top = `${e.clientY}px`
     popup.style.left = `${e.clientX}px`
+    popup.style.display = 'flex'
+
+
 
     let allButtons = document.querySelectorAll('.plotOption');
-
     let currentHover;
 
-    popup.addEventListener('mousemove',function(e){
-        allButtons.forEach(button => {
+    allButtons.forEach(button => {
+        let highlightMesh;
+        button.addEventListener('mouseenter',function(e){
+            console.log(highlightMesh)
+            console.log('on')
             let x = e.clientX;
             let y = e.clientY;
             let coords = button.getBoundingClientRect()
-            if(x > coords.left && x < coords.right && y > coords.top && y < coords.bottom){
+            if(x >= coords.left-5 && x <= coords.right && y >= coords.top-5 && y <= coords.bottom){
                 currentHover = button;
                 let id = button.getAttribute('id')
-                let highlightMesh;
-                if(id == 'plotPlusX'){
-                    highlightMesh = new THREE.Mesh()
-                    highlightMesh.geometry = new THREE.BoxGeometry(selectedPlot.dimmensions.x,selectedPlot.dimmensions.y,selectedPlot.dimmensions.z);
-                    highlightMesh.material = new THREE.MeshPhongMaterial({
-                        color: 'yellow',
-                        opacity: 0.5,
-                        transparent: true
-                    })
+                highlightMesh = new THREE.Mesh()
+                highlightMesh.geometry = new THREE.BoxGeometry(selectedPlot.dimmensions.x,2,selectedPlot.dimmensions.z);
+                highlightMesh.material = new THREE.MeshPhongMaterial({
+                    color: 'yellow',
+                    opacity: 0.3,
+                    transparent: true
+                })
+                if(id == 'plotMinusX'){
+                    let x = selectedPlot.position.x - 5.5;
+                    let z = selectedPlot.position.z + 4.5;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                } else if (id == 'plotPlusX'){
+                    let x = selectedPlot.position.x + 15;
+                    let z = selectedPlot.position.z + 4.5;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                } else if (id == 'plotMinusZ'){
+                    let x = selectedPlot.position.x + 4.5;
+                    let z = selectedPlot.position.z - 5.5;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                } else if (id == 'plotPlusZ'){
+                    let x = selectedPlot.position.x + 4.5;
+                    let z = selectedPlot.position.z + 15;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
                 }
                 index.scene.add(highlightMesh);
 
             }
         })
-
+        button.addEventListener('mouseleave',function(e){
+            console.log('out')
+            index.scene.remove(highlightMesh)
+        })
     })
 }
 

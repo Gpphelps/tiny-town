@@ -121,7 +121,12 @@ function animate() {
 	requestAnimationFrame( animate );
 
     controls.update()
-
+    // console.log(controls.getAzimuthalAngle())
+    if(document.querySelector('#newPlotPopUp').style.display == 'flex'){
+        let angle = controls.getAzimuthalAngle();
+        let popup = document.querySelector('#newPlotPopUp');
+        popup.style.transform = `rotate(${angle*(180/Math.PI)}deg)`
+    }
 	renderer.render( scene, camera );
 }
 
