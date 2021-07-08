@@ -18,6 +18,10 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in!');
         },
+        city: async () => {
+            return User.find({}).populate('plot')
+        },
+            
     },
 
     Mutation: {
