@@ -12,7 +12,7 @@ let editPlot;
 const process = {
     clickOperation: 'place-commercial',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
-    hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true})
+    hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
 }
 
 
@@ -21,8 +21,13 @@ const userInput = {
         console.log(e.target);
         process.clickOperation = e.target.value;
         if(e.target.dataset.highlight){
-            console.log('yuh')
-            console.log(e.target.dataset.highlight)
+            if(e.target.dataset.highlight == 'paintColor'){
+                let inputHexColor = document.querySelector('#paintColorInput').value;
+                let rgb = ts.hexToRgb(inputHexColor)
+                process.paintColor = rgb;
+                process.hoverMaterial.color = process.paintColor;
+                return;
+            }
             process.hoverMaterial.color = JSON.parse(e.target.dataset.highlight)
         } else {
             process.hoverMaterial.color = process.defaultHoverMaterial.color
@@ -78,8 +83,12 @@ function initUi(){
             name: 'Delete',
             value: 'delete-block',
             highlight: '{"r":1,"g":0,"b":0}'
-
-        }
+        },
+        {
+            name: 'Paint',
+            value: 'paint-building',
+            highlight: 'paintColor'
+        },
 
     ]
     buttonTemplates.forEach(button => {
@@ -97,6 +106,16 @@ function initUi(){
 
     let buttons = document.querySelectorAll('.toolButton');
     buttons.forEach(button => button.addEventListener('mousedown', userInput.toolModeButton))
+
+    let paintColorInput = document.createElement('input');
+    paintColorInput.type = 'color';
+    paintColorInput.value = '#888888';
+    paintColorInput.setAttribute('id','paintColorInput')
+    cont.appendChild(paintColorInput);
+    paintColorInput.addEventListener("change", (e) => {
+        console.log(e.target)
+        process.paintColor = e.target.value
+    })
 
 }
 
@@ -211,6 +230,9 @@ function userClick(e){
         ts.deleteAtandUp(x,y,z,editPlot.blocks,editPlot)
         // editPlot.blocks[x][y][z] = [];
     }
+    if(process.clickOperation == 'paint-building' && currentHover.object.blockType){
+        currentHover.object.children[0].defaultMaterial.color = process.paintColor;
+    }
     let exportable = exportBlocks(editPlot)
     blockExportElem.value = exportable;
 
@@ -246,6 +268,8 @@ function exportBlocks(plot){
 
     return JSON.stringify(exportArray);
 }
+
+
 
 
 
