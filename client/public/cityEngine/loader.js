@@ -20,15 +20,6 @@ export async function init(){
     await mtlLoader('./cityEngine/Objects/Roads/road-pholder-corner.mtl', 'roadCornerMat')
 
 
-    await objLoader('./cityEngine/Objects/Residential/residential-basic-ground.obj', 'residentialBasicGround')
-    await mtlLoader('./cityEngine/Objects/Residential/residential-basic-ground.mtl', 'residentialBasicGroundMat')
-    await objLoader('./cityEngine/Objects/Residential/residential-basic-floor.obj', 'residentialBasicFloor')
-    await mtlLoader('./cityEngine/Objects/Residential/residential-basic-floor.mtl', 'residentialBasicFloorMat')
-    await objLoader('./cityEngine/Objects/Residential/residential-basic-roof.obj', 'residentialBasicRoof')
-    await mtlLoader('./cityEngine/Objects/Residential/residential-basic-roof.mtl', 'residentialBasicRoofMat')
-
-    await gltfLoader('./cityEngine/Objects/Residential/residential-basic-ground.glb', 'gltfTest')
-
     await gltfLoader('./cityEngine/Objects/Office/officebuilding.glb', 'officeGround')
     await gltfLoader('./cityEngine/Objects/Office/officebuildingmidsection.glb', 'officeMid')
     await gltfLoader('./cityEngine/Objects/Office/officeroof.glb', 'officeRoof')

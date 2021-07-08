@@ -11,6 +11,8 @@ let editPlot;
 //tracks currently selected options from user, kinda like dif states
 const process = {
     clickOperation: 'place-commercial',
+    defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
+    hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true})
 }
 
 
@@ -18,6 +20,13 @@ const userInput = {
     toolModeButton(e){
         console.log(e.target);
         process.clickOperation = e.target.value;
+        if(e.target.dataset.highlight){
+            console.log('yuh')
+            console.log(e.target.dataset.highlight)
+            process.hoverMaterial.color = JSON.parse(e.target.dataset.highlight)
+        } else {
+            process.hoverMaterial.color = process.defaultHoverMaterial.color
+        }
     },
 }
 
@@ -50,11 +59,12 @@ function initUi(){
     let buttonTemplates = [
         {
             name: 'Road',
-            value: 'place-road'
+            value: 'place-road',
         },
         {
             name: 'Residential',
-            value: 'place-residential'
+            value: 'place-residential',
+
         },
         {
             name: 'Buisness',
@@ -66,7 +76,8 @@ function initUi(){
         },
         {
             name: 'Delete',
-            value: 'delete-block'
+            value: 'delete-block',
+            highlight: '{"r":1,"g":0,"b":0}'
 
         }
 
@@ -75,6 +86,10 @@ function initUi(){
         let elem = document.createElement('button');
         elem.textContent = button.name;
         elem.value = button.value;
+        if(button.highlight){
+            elem.dataset.highlight = button.highlight
+        }
+
         elem.classList.add('toolButton')
         cont.appendChild(elem)
     })
@@ -135,10 +150,10 @@ function userHover(e){
     //if object has children it gives children the hover material, else if just gives the entire object the hover material
     if(intersects.length > 0){
         if(intersects[0].object.children.length == 0){
-            intersects[0].object.material = new THREE.MeshPhongMaterial({color:`yellow`})
+            intersects[0].object.material = process.hoverMaterial
         } else {
             intersects[0].object.children.forEach(child => {
-                child.material = new THREE.MeshPhongMaterial({color:'yellow'})
+                child.material = process.hoverMaterial
             })
         }
 
@@ -188,13 +203,13 @@ function userClick(e){
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
-        console.log(currentHover)
-        index.scene.remove(currentHover.object)
+        console.log(currentHover.object)
+        // index.scene.remove(currentHover.object)
         let x = currentHover.object.position.x;
         let y = currentHover.object.position.y;
         let z = currentHover.object.position.z;
-
-        editPlot.blocks[x][y][z] = undefined;
+        ts.deleteAtandUp(x,y,z,editPlot.blocks,editPlot)
+        // editPlot.blocks[x][y][z] = [];
     }
     let exportable = exportBlocks(editPlot)
     blockExportElem.value = exportable;

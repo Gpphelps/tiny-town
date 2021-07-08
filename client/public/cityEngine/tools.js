@@ -73,3 +73,14 @@ export function copy(variable){
     console.log(JSON.parse(string))
     return JSON.parse(string)
 }
+
+export function deleteAtandUp(x,y,z,array,plot){
+    // let at = array[x][y][z];
+    // index.scene.remove(at.obj);
+    // array[x][y][z] = [];
+    for(var y=y; y<plot.dimmensions.y;y++){
+        let inArray = array[x][y][z];
+        index.scene.remove(inArray.obj);
+        array[x][y][z] = [];
+    }
+}
