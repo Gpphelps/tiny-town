@@ -30,7 +30,7 @@ export function init(){
     editPlot.buildBase()
 
     document.querySelector('canvas').addEventListener('mousemove',userHover)
-    document.querySelector('canvas').addEventListener('mousedown',userClick)
+    document.querySelector('canvas').addEventListener('mouseup',userClick)
 
     initUi()
 }
@@ -64,6 +64,11 @@ function initUi(){
             name: 'Commercial',
             value: 'place-commercial'
         },
+        {
+            name: 'Delete',
+            value: 'delete-block'
+
+        }
 
     ]
     buttonTemplates.forEach(button => {
@@ -120,6 +125,7 @@ function userHover(e){
 
     currentHover = intersects[0]
 
+    //if selected object is actually part of a larger block group selects the group object
     if(currentHover.object.parent.blockType){
         currentHover.object = currentHover.object.parent;
     }
@@ -181,7 +187,15 @@ function userClick(e){
         console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
+    if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
+        console.log(currentHover)
+        index.scene.remove(currentHover.object)
+        let x = currentHover.object.position.x;
+        let y = currentHover.object.position.y;
+        let z = currentHover.object.position.z;
 
+        editPlot.blocks[x][y][z] = undefined;
+    }
     let exportable = exportBlocks(editPlot)
     blockExportElem.value = exportable;
 

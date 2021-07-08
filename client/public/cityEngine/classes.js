@@ -167,7 +167,8 @@ export class Building {
         this.relativePos = {x:x,y:y,z:z},
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
-        this.defaultGeometry = new THREE.BoxGeometry(1,1,1)
+        this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
+        this.baseColor = {r: 0.4,g:0,b:0.4}
     }
 
     addToScene(){
@@ -185,7 +186,7 @@ export class Building {
         this.obj.blockType = this.type;
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-
+        this.obj.children[0].material.color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = 0.48
         this.obj.scale.y = 0.5
@@ -212,7 +213,7 @@ export class Building {
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
 
-
+        
         let blocksAround = 0;
         around.forEach(block => {
             if(block.type == this.type){
@@ -235,6 +236,8 @@ export class Building {
             this.obj.rotation.y = Math.PI/2
         }
 
+
+
         if(minusY.type === this.type && plusY.type != this.type){
             this.obj.children = [];
             ts.newChildren(this.roofObj).forEach(child => this.obj.add(child))
@@ -244,6 +247,18 @@ export class Building {
             this.obj.children = [];
             ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
             this.obj.rotation.y = minusY.obj.rotation.y 
+        }
+
+        //makes color the same as the building below it
+        if(minusY.type){
+            let newMat = new THREE.MeshPhongMaterial()
+            newMat.color = minusY.obj.children[0].defaultMaterial.color
+            newMat
+            console.log(minusY)
+            console.log(newMat)
+            this.obj.children[0].material = newMat
+            this.obj.children[0].defaultMaterial = newMat
+
         }
 
 

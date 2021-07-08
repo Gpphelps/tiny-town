@@ -195,7 +195,7 @@ function userDoubleClick(e){
     let popup = oldPopup.cloneNode(true);
     oldPopup.parentNode.replaceChild(popup,oldPopup)
 
-    
+
     popup.style.top = `${e.clientY}px`
     popup.style.left = `${e.clientX}px`
     popup.style.display = 'flex'
@@ -205,8 +205,33 @@ function userDoubleClick(e){
     let allButtons = document.querySelectorAll('.plotOption');
     let currentHover;
 
+    console.log(selectedPlot);
     allButtons.forEach(button => {
         let highlightMesh;
+        button.addEventListener('mousedown',function(e){
+            let id = e.target.getAttribute('id');
+
+            let pos = selectedPlot.position;
+            let plotX;
+            let plotZ;
+            console.log(id)
+
+            if(id == 'plotMinusZ'){
+                plotX = pos.x;
+                plotZ = pos.z - selectedPlot.dimmensions.z;
+            } else if (id == 'plotPlusZ'){
+                plotX = pos.x;
+                plotZ = pos.z + selectedPlot.dimmensions.z;
+            } else if (id == 'plotMinusX'){
+                plotX = pos.x - selectedPlot.dimmensions.x;
+                plotZ = pos.z;
+            } else if (id == 'plotPlusX'){
+                plotX = pos.x + selectedPlot.dimmensions.x;
+                plotZ = pos.z;
+            }
+            localStorage.setItem('plotX',plotX)
+            localStorage.setItem('plotZ',plotZ)
+        })
         button.addEventListener('mouseenter',function(e){
             console.log(highlightMesh)
             console.log('on')

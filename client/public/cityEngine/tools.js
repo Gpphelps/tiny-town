@@ -38,8 +38,15 @@ const mouseHover = () => {
 export function newChildren(templateObj){
     let newChildren = []
     templateObj.children.forEach(child => {
-        let mesh = new THREE.Mesh(child.geometry,child.material);
-        mesh.defaultMaterial = child.material;
+
+        let childColor = child.material.color
+
+        //makes new material so that it has it's own material whose color it can change without everyone sharing a material
+        let newMat = new THREE.MeshPhongMaterial();
+        newMat.color = childColor
+
+        let mesh = new THREE.Mesh(child.geometry,newMat);
+        mesh.defaultMaterial = newMat;
         mesh.scale.x = child.scale.x
         mesh.scale.y = child.scale.y
         mesh.scale.z = child.scale.z
@@ -54,4 +61,15 @@ export function newChildren(templateObj){
         newChildren.push(mesh)
     })
     return newChildren;
+}
+
+export function rndmNum(min,max){
+    return Math.random() * (max-min) + min;
+}
+
+export function copy(variable){
+    let string = JSON.stringify(variable)
+    console.log(string)
+    console.log(JSON.parse(string))
+    return JSON.parse(string)
 }
