@@ -70,7 +70,7 @@ let placeholderData = {
 };
 
 
-const builtPlots = []
+const allPlots = []
 
 export function init(){
     
@@ -78,6 +78,9 @@ export function init(){
     plotData = placeholderData;
     buildPlots()
     buildWorld()
+    document.querySelector('canvas').addEventListener('mousemove',userHover)
+    document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
+
 };
 
 
@@ -86,9 +89,9 @@ async function buildPlots(){
     plots.forEach(plot => {
         let newPlot = new cls.Plot(plot.plot_position_x,0,plot.plot_position_z);
         newPlot.buildBase();
-        builtPlots.push(newPlot)
+        allPlots.push(newPlot)
         plot.buildings.forEach(building => {
-            console.log(building)
+
             let newBuilding;
             // if(building.name == 'residential'){
             //     newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
@@ -110,7 +113,7 @@ async function buildPlots(){
         })
     })
 
-    builtPlots.forEach(plot => {
+    allPlots.forEach(plot => {
         for(var x=0;x<plot.dimmensions.x;x++){
             for(var y=0;y<plot.dimmensions.y;y++){
                 for(var z=0;z<plot.dimmensions.z;z++){
@@ -131,8 +134,125 @@ function buildWorld(){
     const plane = new THREE.Mesh(geometry,material);
 
     plane.receiveShadow = true;
-    plane.position.y = 0.5
+    plane.position.y = 0.499
     plane.rotation.x = -Math.PI/2
     index.scene.add(plane)
 }
+
+
+
+
+let currentHover;
+
+//tracks which mesh in the scene (if any) the cursor is over
+//assigns an intersect object with distance and face info
+//access intersected mesh with currentHover.object
+function userHover(e){
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2()
+
+    mouse.x = (e.clientX/window.innerWidth) * 2 -1;
+    mouse.y = -(e.clientY/window.innerHeight) * 2 +1;
+    raycaster.setFromCamera(mouse,index.camera);
+    let intersects = raycaster.intersectObject(index.scene,true)
+    
+    // console.log(intersects[0])
+  
+}
+
+function userDoubleClick(e){
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2()
+
+    mouse.x = (e.clientX/window.innerWidth) * 2 -1;
+    mouse.y = -(e.clientY/window.innerHeight) * 2 +1;
+    raycaster.setFromCamera(mouse,index.camera);
+    let intersects = raycaster.intersectObject(index.scene,true)
+
+    let object = intersects[0].object
+    console.log(object)
+
+    let selectedPlot;
+
+    if(object.geometry.type != "PlaneGeometry"){
+        let x = object.position.x;
+        let z = object.position.z;
+
+        allPlots.forEach(plot => {
+            if(x >= plot.position.x && x < plot.position.x + plot.dimmensions.x){
+                if(z >= plot.position.z && z < plot.position.z + plot.dimmensions.z){
+                    selectedPlot = plot;
+                }
+            }
+        })
+    }
+    console.log(selectedPlot)
+
+    //cloning the popup to remove previous event listeners
+    let oldPopup = document.querySelector('#newPlotPopUp')
+    let popup = oldPopup.cloneNode(true);
+    oldPopup.parentNode.replaceChild(popup,oldPopup)
+
+    
+    popup.style.top = `${e.clientY}px`
+    popup.style.left = `${e.clientX}px`
+    popup.style.display = 'flex'
+
+
+
+    let allButtons = document.querySelectorAll('.plotOption');
+    let currentHover;
+
+    allButtons.forEach(button => {
+        let highlightMesh;
+        button.addEventListener('mouseenter',function(e){
+            console.log(highlightMesh)
+            console.log('on')
+            let x = e.clientX;
+            let y = e.clientY;
+            let coords = button.getBoundingClientRect()
+            if(x >= coords.left-5 && x <= coords.right && y >= coords.top-5 && y <= coords.bottom){
+                currentHover = button;
+                let id = button.getAttribute('id')
+                highlightMesh = new THREE.Mesh()
+                highlightMesh.geometry = new THREE.BoxGeometry(selectedPlot.dimmensions.x,2,selectedPlot.dimmensions.z);
+                highlightMesh.material = new THREE.MeshPhongMaterial({
+                    color: 'yellow',
+                    opacity: 0.3,
+                    transparent: true
+                })
+                if(id == 'plotMinusX'){
+                    let x = selectedPlot.position.x - 5.5;
+                    let z = selectedPlot.position.z + 4.5;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                } else if (id == 'plotPlusX'){
+                    let x = selectedPlot.position.x + 15;
+                    let z = selectedPlot.position.z + 4.5;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                } else if (id == 'plotMinusZ'){
+                    let x = selectedPlot.position.x + 4.5;
+                    let z = selectedPlot.position.z - 5.5;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                } else if (id == 'plotPlusZ'){
+                    let x = selectedPlot.position.x + 4.5;
+                    let z = selectedPlot.position.z + 15;
+                    highlightMesh.position.x = x;
+                    highlightMesh.position.z = z;
+                }
+                index.scene.add(highlightMesh);
+
+            }
+        })
+        button.addEventListener('mouseleave',function(e){
+            console.log('out')
+            index.scene.remove(highlightMesh)
+        })
+    })
+}
+
 
