@@ -189,7 +189,38 @@ function userDoubleClick(e){
         })
     }
 
-    
+    let popup = document.querySelector('#newPlotPopUp')
+    popup.style.top = `${e.clientY}px`
+    popup.style.left = `${e.clientX}px`
+
+    let allButtons = document.querySelectorAll('.plotOption');
+
+    let currentHover;
+
+    popup.addEventListener('mousemove',function(e){
+        allButtons.forEach(button => {
+            let x = e.clientX;
+            let y = e.clientY;
+            let coords = button.getBoundingClientRect()
+            if(x > coords.left && x < coords.right && y > coords.top && y < coords.bottom){
+                currentHover = button;
+                let id = button.getAttribute('id')
+                let highlightMesh;
+                if(id == 'plotPlusX'){
+                    highlightMesh = new THREE.Mesh()
+                    highlightMesh.geometry = new THREE.BoxGeometry(selectedPlot.dimmensions.x,selectedPlot.dimmensions.y,selectedPlot.dimmensions.z);
+                    highlightMesh.material = new THREE.MeshPhongMaterial({
+                        color: 'yellow',
+                        opacity: 0.5,
+                        transparent: true
+                    })
+                }
+                index.scene.add(highlightMesh);
+
+            }
+        })
+
+    })
 }
 
 
