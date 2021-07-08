@@ -195,6 +195,7 @@ function userDoubleClick(e){
     let popup = oldPopup.cloneNode(true);
     oldPopup.parentNode.replaceChild(popup,oldPopup)
 
+    
     popup.style.top = `${e.clientY}px`
     popup.style.left = `${e.clientX}px`
     popup.style.display = 'flex'
