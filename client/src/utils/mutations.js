@@ -25,7 +25,7 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_BUILDINGS = gql`
-    mutation saveBuildings($type: String!, $building_position_x: Int!, $building_position_y: Int!, building_position_z: Int!, building_color_r: Float, building_color_g: Float, building_color_b: Float) {
+    mutation saveBuildings($type: String!, $building_position_x: Int!, $building_position_y: Int!, $building_position_z: Int!, $building_color_r: Float, $building_color_g: Float, $building_color_b: Float) {
         saveBuilding(type: $type, building_position_x: $building_position_x, building_position_y: $building_position_y, building_position_z: $building_position_z, building_color_r: $building_color_r, building_color_g: $building_color_g, building_color_b: $building_color_b) {
             username
             plot {
