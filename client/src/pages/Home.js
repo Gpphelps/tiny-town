@@ -16,7 +16,7 @@ const Home = () => {
             <textarea style={{display:'none'}} id="plotData"></textarea>
             <p style={{display:'none'}} id="runModeProxy">city</p>
             <PlotPopUp />
-            <div onClick={handleDivClick}  id="canvCont"></div>
+            <div id="canvCont"></div>
         </div>
     )
 }

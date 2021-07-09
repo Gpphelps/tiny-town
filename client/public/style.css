@@ -97,7 +97,7 @@ a:visited {
     display: flex;
     width: 100px;
     flex-wrap: wrap;
-    /* display: none; */
+    display: none;
     padding: 20px;
 }
 
