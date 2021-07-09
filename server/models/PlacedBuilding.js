@@ -16,6 +16,15 @@ const placedSchema = new Schema(
         building_position_z: {
             type: Number,
             required: true,
+        },
+        building_color_r: {
+            type: Number,
+        },
+        building_color_g: {
+            type: Number,
+        },
+        building_color_b: {
+            type: Number,
         }
 
     }
