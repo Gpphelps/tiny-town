@@ -1,7 +1,8 @@
 
 import React from 'react';
-
-import PlotPopUp from '../components/PlotPopUp'
+import { useQuery, useMutation } from '@apollo/client';
+import PlotPopUp from '../components/PlotPopUp';
+import { SAVE_PLOT } from '../utils/mutations';
 
 const Home = () => {
 
@@ -9,6 +10,7 @@ const Home = () => {
     //HERE WILL BE ALL PLOTS QUERY 
     //textarea text content will immedietly be set to the data from the query
 
+    const [savePlot, { error }] = useMutation(SAVE_PLOT)
 
 
     return (
