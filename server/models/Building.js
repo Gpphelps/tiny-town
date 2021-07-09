@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 
 const buildingSchema = new Schema(
     {
-        buildingType: {
+        type: {
             type: String,
             required: true,
         },
