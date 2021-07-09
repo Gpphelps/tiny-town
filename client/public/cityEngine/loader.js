@@ -32,7 +32,8 @@ export async function init(){
     await gltfLoader('./cityEngine/Objects/Roads/road3way.glb','road3Way')
     await gltfLoader('./cityEngine/Objects/Roads/road4way.glb','road4Way')
     await gltfLoader('./cityEngine/Objects/Roads/roadCorner.glb','roadCorner')
-    console.log(imported.road2Way)
+
+    await gltfLoader('./cityEngine/Objects/Park/park-1x1-01.glb','park1x1One')
 }
 
 

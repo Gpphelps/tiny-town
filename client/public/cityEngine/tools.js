@@ -67,7 +67,8 @@ export function newChildren(templateObj){
                 //makes new material so that it has it's own material whose color it can change without everyone sharing a material
                 let newMat = new THREE.MeshPhongMaterial();
                 newMat.color = childColor
-        
+                newMat.shininess = 1
+                newMat.flatShading = false;
                 let mesh = new THREE.Mesh(child.geometry,newMat);
                 mesh.defaultMaterial = newMat;
                 mesh.scale.x = child.scale.x

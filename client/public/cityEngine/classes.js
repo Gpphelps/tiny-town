@@ -187,11 +187,13 @@ export class Building {
         this.obj.blockType = this.type;
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-        this.obj.children[0].material.color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
+        if(this.randomBaseColor){
+            this.obj.children[0].material.color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
+        }
         //x scale is slightly decreased to give space between buildings
-        this.obj.scale.x = 0.48
-        this.obj.scale.y = 0.5
-        this.obj.scale.z = 0.48
+        this.obj.scale.x = this.scale.x;
+        this.obj.scale.y = this.scale.y;
+        this.obj.scale.z = this.scale.z;
 
         index.scene.add(this.obj)
 
@@ -300,7 +302,9 @@ export class Office extends Building {
     constructor(parent,x,y,z){
         super(parent,x,y,z),
         this.type = 'office',
-        this.defaultObj = load.imported.officeGround
+        this.defaultObj = load.imported.officeGround;
+        this.scale = {x:0.48,y:0.5,z:0.48};
+        this.randomBaseColor = true;
 
         this.midObj = load.imported.officeMid;
         this.roofObj = load.imported.officeRoof;
@@ -312,9 +316,22 @@ export class Commercial extends Building {
         super(parent,x,y,z),
         this.type = 'commercial',
         this.defaultObj = load.imported.commercialGround;
+        this.scale = {x:0.48,y:0.5,z:0.48};
+        this.randomBaseColor = true;
 
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
     }
 
+}
+
+
+export class Park extends Building {
+    constructor(parent,x,y,z){
+        super(parent,x,y,z);
+        this.type = 'park';
+        this.defaultObj = load.imported.park1x1One;
+        this.scale = {x:0.5,y:0.5,z:0.5};
+        this.randomBaseColor = false;
+    }
 }

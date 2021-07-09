@@ -10,7 +10,7 @@ let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-road',
+    clickOperation: 'place-park',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
 }
@@ -78,6 +78,10 @@ function initUi(){
         {
             name: 'Commercial',
             value: 'place-commercial'
+        },
+        {
+            name: 'Park',
+            value: 'place-park'
         },
         {
             name: 'Delete',
@@ -221,6 +225,13 @@ function userClick(e){
         console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
+    if(process.clickOperation == 'place-park' && currentHover.object.blockType == undefined){
+        let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
+        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.addToScene()
+        console.log(newBlock)
+        newBlock.fitToSurroundings(true)
+    }
     if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
         console.log(currentHover.object)
         // index.scene.remove(currentHover.object)
@@ -233,6 +244,7 @@ function userClick(e){
     if(process.clickOperation == 'paint-building' && currentHover.object.blockType){
         currentHover.object.children[0].defaultMaterial.color = process.paintColor;
     }
+
     let exportable = exportBlocks(editPlot)
     blockExportElem.value = exportable;
 
