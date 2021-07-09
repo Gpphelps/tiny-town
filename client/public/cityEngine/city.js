@@ -79,7 +79,7 @@ export function init(){
     buildPlots()
     buildWorld()
     document.querySelector('canvas').addEventListener('mousemove',userHover)
-    // document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
+    document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
 
 };
 
