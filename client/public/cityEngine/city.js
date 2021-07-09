@@ -79,7 +79,7 @@ export function init(){
     buildPlots()
     buildWorld()
     document.querySelector('canvas').addEventListener('mousemove',userHover)
-    document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
+    // document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
 
 };
 
@@ -214,7 +214,6 @@ function userDoubleClick(e){
             let pos = selectedPlot.position;
             let plotX;
             let plotZ;
-            console.log(id)
 
             if(id == 'plotMinusZ'){
                 plotX = pos.x;
@@ -233,8 +232,6 @@ function userDoubleClick(e){
             localStorage.setItem('plotZ',plotZ)
         })
         button.addEventListener('mouseenter',function(e){
-            console.log(highlightMesh)
-            console.log('on')
             let x = e.clientX;
             let y = e.clientY;
             let coords = button.getBoundingClientRect()
@@ -274,7 +271,6 @@ function userDoubleClick(e){
             }
         })
         button.addEventListener('mouseleave',function(e){
-            console.log('out')
             index.scene.remove(highlightMesh)
         })
     })
