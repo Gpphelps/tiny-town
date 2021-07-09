@@ -18,6 +18,11 @@ export let camera;
 export let renderer;
 export let controls;
 
+
+let generalSettings = {
+    vertOrbit: false,
+}
+
 function init(){
 
     if(document.location.pathname == '/login'){
@@ -38,10 +43,11 @@ function init(){
     // export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
     let windowRatio = window.innerWidth/window.innerHeight;
-    camera = new THREE.OrthographicCamera(-5*windowRatio,5*windowRatio,5,-5,-100,500);
+    camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-100,500);
 
-    camera.position.set(10,10,10)
-    camera.lookAt(10,0,5);
+    camera.position.set(10,12,10)
+    camera.lookAt(5,0,5);
+    camera.zoom = 2
 
 
     const light = new THREE.DirectionalLight(0xffffff,0.6);
@@ -58,11 +64,12 @@ function init(){
 
 
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(0x94e8ff);
     renderer.shadowMap.enabled = true;
+
 
     document.querySelector('#canvCont').appendChild( renderer.domElement );
 
@@ -78,6 +85,13 @@ function init(){
     controls.dampingFactor = 0.05
     controls.rotateSpeed = 0.1
     controls.maxPolarAngle = Math.PI/2.1
+
+    if(!generalSettings.vertOrbit){
+        let vertAngle = controls.getPolarAngle()
+        controls.minPolarAngle = vertAngle
+        controls.maxPolarAngle = vertAngle
+    }
+
 
     runByMode()
     animate()
@@ -121,12 +135,21 @@ function animate() {
 	requestAnimationFrame( animate );
 
     controls.update()
-    // console.log(controls.getAzimuthalAngle())
-    if(document.querySelector('#newPlotPopUp').style.display == 'flex'){
-        let angle = controls.getAzimuthalAngle();
+
+    //rotates popup menu
+    
+    if(document.querySelector('#newPlotPopUp') && document.querySelector('#newPlotPopUp').style.display == 'flex'){
         let popup = document.querySelector('#newPlotPopUp');
-        popup.style.transform = `rotate(${angle*(180/Math.PI)}deg)`
+
+        let horizontal = controls.getAzimuthalAngle();
+
+
+        popup.style.transform = `rotate(${horizontal*(180/Math.PI)}deg)`
+
+
+
     }
+
 	renderer.render( scene, camera );
 }
 

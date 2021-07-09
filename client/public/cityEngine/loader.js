@@ -10,24 +10,15 @@ export const imported = {}
 
 
 export async function init(){
-    await objLoader('./cityEngine/Objects/Roads/road-pholder-straight.obj', 'road2Way')
-    await mtlLoader('./cityEngine/Objects/Roads/road-pholder-straight.mtl', 'road2WayMat')
-    await objLoader('./cityEngine/Objects/Roads/road-pholder-3way.obj', 'road3Way')
-    await mtlLoader('./cityEngine/Objects/Roads/road-pholder-3way.mtl', 'road3WayMat')
-    await objLoader('./cityEngine/Objects/Roads/road-pholder-4way.obj', 'road4Way')
-    await mtlLoader('./cityEngine/Objects/Roads/road-pholder-4way.mtl', 'road4WayMat')
-    await objLoader('./cityEngine/Objects/Roads/road-pholder-corner.obj', 'roadCorner')
-    await mtlLoader('./cityEngine/Objects/Roads/road-pholder-corner.mtl', 'roadCornerMat')
+    // await objLoader('./cityEngine/Objects/Roads/road-pholder-straight.obj', 'road2Way')
+    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-straight.mtl', 'road2WayMat')
+    // await objLoader('./cityEngine/Objects/Roads/road-pholder-3way.obj', 'road3Way')
+    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-3way.mtl', 'road3WayMat')
+    // await objLoader('./cityEngine/Objects/Roads/road-pholder-4way.obj', 'road4Way')
+    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-4way.mtl', 'road4WayMat')
+    // await objLoader('./cityEngine/Objects/Roads/road-pholder-corner.obj', 'roadCorner')
+    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-corner.mtl', 'roadCornerMat')
 
-
-    await objLoader('./cityEngine/Objects/Residential/residential-basic-ground.obj', 'residentialBasicGround')
-    await mtlLoader('./cityEngine/Objects/Residential/residential-basic-ground.mtl', 'residentialBasicGroundMat')
-    await objLoader('./cityEngine/Objects/Residential/residential-basic-floor.obj', 'residentialBasicFloor')
-    await mtlLoader('./cityEngine/Objects/Residential/residential-basic-floor.mtl', 'residentialBasicFloorMat')
-    await objLoader('./cityEngine/Objects/Residential/residential-basic-roof.obj', 'residentialBasicRoof')
-    await mtlLoader('./cityEngine/Objects/Residential/residential-basic-roof.mtl', 'residentialBasicRoofMat')
-
-    await gltfLoader('./cityEngine/Objects/Residential/residential-basic-ground.glb', 'gltfTest')
 
     await gltfLoader('./cityEngine/Objects/Office/officebuilding.glb', 'officeGround')
     await gltfLoader('./cityEngine/Objects/Office/officebuildingmidsection.glb', 'officeMid')
@@ -37,8 +28,12 @@ export async function init(){
     await gltfLoader('./cityEngine/Objects/Commercial/shopmid.glb', 'commercialMid')
     await gltfLoader('./cityEngine/Objects/Commercial/shoproof.glb', 'commercialRoof')
 
+    await gltfLoader('./cityEngine/Objects/Roads/road2way.glb','road2Way')
+    await gltfLoader('./cityEngine/Objects/Roads/road3way.glb','road3Way')
+    await gltfLoader('./cityEngine/Objects/Roads/road4way.glb','road4Way')
+    await gltfLoader('./cityEngine/Objects/Roads/roadCorner.glb','roadCorner')
 
-    console.log(imported.road2Way)
+    await gltfLoader('./cityEngine/Objects/Park/park-1x1-01.glb','park1x1One')
 }
 
 
@@ -53,6 +48,8 @@ function gltfLoader(filePath, targetVar){
         object.children.forEach((child,index) => {
             child.defaultMaterial = child.material;
         })
+        object.path = filePath
+        console.log(object)
         object.children = object.children.filter(child => child.type != "Object3D")
         imported[targetVar] = object;
     })

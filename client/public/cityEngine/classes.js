@@ -42,30 +42,28 @@ export class Road {
         this.parent = parent,
         this.relativePos = {x:x,y:y,z:z},
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'rgb(40,40,40)'})
+        this.defaultObj = load.imported.road2Way;
+
+        this.threeWay = load.imported.road3Way;
+        this.fourWay = load.imported.road4Way;
+        this.corner = load.imported.roadCorner;
     }
     addToScene(){
-        console.log(load.imported.road2Way)
 
         //imports default material
         this.defaultMaterial = load.imported.road2WayMat
 
         //creates new basic mesh
-        this.obj = new THREE.Mesh()
+        this.obj = new THREE.Object3D();
+        this.obj.blockType = this.type;
+        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-        this.obj.blockType = 'road'
-        //sets mesh geometry to the geometry of the road2Way model
-        //allows entirely new mesh to be made instead of being reference to imported road mesh
-        this.obj.geometry = load.imported.road2Way.geometry
-        console.log(this.obj)
         index.scene.add(this.obj)
 
         this.obj.scale.x = 0.5
         this.obj.scale.y = 0.5
         this.obj.scale.z = 0.5
 
-        this.obj.material = this.defaultMaterial
-        this.obj.defaultMaterial = this.defaultMaterial
-        console.log(this.obj.defaultMaterial)
         //positioning in scene is calculated relative to placed coords and the coords of the parent
         let absX = this.relativePos.x + this.parent.position.x;
         let absY = this.relativePos.y + this.parent.position.y;
@@ -94,55 +92,58 @@ export class Road {
         })
         console.log(roadsAround)
 
+        this.obj.scale.x = 0.5;
+        this.obj.rotation.y = 0;
+
         //logic for various arrangements of roads
         //PROBABLY BETTER WAY TO DO THIS, SHOULD FIGURE THAT OUT
         if(roadsAround === 1){
-            if(plusX.type == 'road' || minusX.type == 'road'){
+            if(plusZ.type == 'road' || minusZ.type == 'road'){
                 console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             }
         }
 
-        this.obj.scale.x = 0.5;
+
 
         if(roadsAround === 2){
-            if(plusX.type == 'road' && minusX.type == 'road'){
+            if(plusZ.type == 'road' && minusZ.type == 'road'){
                 console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             } else if (plusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
-                this.obj.rotation.y = Math.PI
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.rotation.y = -Math.PI/2
             } else if (minusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
                 this.obj.rotation.y = Math.PI;
-                this.obj.scale.x *= -1
             } else if (plusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
-                this.obj.rotation.y = -Math.PI/2;
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
             } else if (minusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.geometry = load.imported.roadCorner.geometry;
-                this.obj.material = load.imported.roadCornerMat;
-                this.obj.rotation.y = Math.PI/2;
+                this.obj.children = []
+                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                // this.obj.rotation.y = Math.PI/2;
                 this.obj.scale.x *= -1
             }
         }
 
         if(roadsAround === 3){
-            this.obj.geometry = load.imported.road3Way.geometry
+            this.obj.children = []
+            ts.newChildren(this.threeWay).forEach(child => this.obj.add(child))
             if(minusX.type != 'road'){
-                this.obj.rotation.y = Math.PI;
-            } else if (plusZ.type != 'road'){
-                this.obj.rotation.y = -Math.PI/2
-            } else if (minusZ.type != 'road'){
+                this.obj.rotation.y = -Math.PI/2;
+            } else if (plusX.type != 'road'){
                 this.obj.rotation.y = Math.PI/2
+            } else if (minusZ.type != 'road'){
+                this.obj.rotation.y = -Math.PI
             }
         }
 
         if(roadsAround === 4){
-            this.obj.geometry = load.imported.road4Way.geometry
+            this.obj.children = []
+            ts.newChildren(this.fourWay).forEach(child => this.obj.add(child))
         }
 
 
@@ -167,7 +168,8 @@ export class Building {
         this.relativePos = {x:x,y:y,z:z},
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
-        this.defaultGeometry = new THREE.BoxGeometry(1,1,1)
+        this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
+        this.baseColor = {r: 0.4,g:0,b:0.4}
     }
 
     addToScene(){
@@ -185,11 +187,13 @@ export class Building {
         this.obj.blockType = this.type;
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-
+        if(this.randomBaseColor){
+            this.obj.children[0].material.color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
+        }
         //x scale is slightly decreased to give space between buildings
-        this.obj.scale.x = 0.48
-        this.obj.scale.y = 0.5
-        this.obj.scale.z = 0.48
+        this.obj.scale.x = this.scale.x;
+        this.obj.scale.y = this.scale.y;
+        this.obj.scale.z = this.scale.z;
 
         index.scene.add(this.obj)
 
@@ -212,7 +216,7 @@ export class Building {
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
 
-
+        
         let blocksAround = 0;
         around.forEach(block => {
             if(block.type == this.type){
@@ -235,6 +239,8 @@ export class Building {
             this.obj.rotation.y = Math.PI/2
         }
 
+
+
         if(minusY.type === this.type && plusY.type != this.type){
             this.obj.children = [];
             ts.newChildren(this.roofObj).forEach(child => this.obj.add(child))
@@ -244,6 +250,18 @@ export class Building {
             this.obj.children = [];
             ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
             this.obj.rotation.y = minusY.obj.rotation.y 
+        }
+
+        //makes color the same as the building below it
+        if(minusY.type){
+            let newMat = new THREE.MeshPhongMaterial()
+            newMat.color = minusY.obj.children[0].defaultMaterial.color
+            newMat
+            console.log(minusY)
+            console.log(newMat)
+            this.obj.children[0].material = newMat
+            this.obj.children[0].defaultMaterial = newMat
+
         }
 
 
@@ -284,7 +302,9 @@ export class Office extends Building {
     constructor(parent,x,y,z){
         super(parent,x,y,z),
         this.type = 'office',
-        this.defaultObj = load.imported.officeGround
+        this.defaultObj = load.imported.officeGround;
+        this.scale = {x:0.48,y:0.5,z:0.48};
+        this.randomBaseColor = true;
 
         this.midObj = load.imported.officeMid;
         this.roofObj = load.imported.officeRoof;
@@ -296,9 +316,22 @@ export class Commercial extends Building {
         super(parent,x,y,z),
         this.type = 'commercial',
         this.defaultObj = load.imported.commercialGround;
+        this.scale = {x:0.48,y:0.5,z:0.48};
+        this.randomBaseColor = true;
 
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
     }
 
+}
+
+
+export class Park extends Building {
+    constructor(parent,x,y,z){
+        super(parent,x,y,z);
+        this.type = 'park';
+        this.defaultObj = load.imported.park1x1One;
+        this.scale = {x:0.5,y:0.5,z:0.5};
+        this.randomBaseColor = false;
+    }
 }

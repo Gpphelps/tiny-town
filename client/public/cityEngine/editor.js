@@ -10,7 +10,9 @@ let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-commercial',
+    clickOperation: 'place-park',
+    defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
+    hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
 }
 
 
@@ -18,6 +20,18 @@ const userInput = {
     toolModeButton(e){
         console.log(e.target);
         process.clickOperation = e.target.value;
+        if(e.target.dataset.highlight){
+            if(e.target.dataset.highlight == 'paintColor'){
+                let inputHexColor = document.querySelector('#paintColorInput').value;
+                let rgb = ts.hexToRgb(inputHexColor)
+                process.paintColor = rgb;
+                process.hoverMaterial.color = process.paintColor;
+                return;
+            }
+            process.hoverMaterial.color = JSON.parse(e.target.dataset.highlight)
+        } else {
+            process.hoverMaterial.color = process.defaultHoverMaterial.color
+        }
     },
 }
 
@@ -30,7 +44,7 @@ export function init(){
     editPlot.buildBase()
 
     document.querySelector('canvas').addEventListener('mousemove',userHover)
-    document.querySelector('canvas').addEventListener('mousedown',userClick)
+    document.querySelector('canvas').addEventListener('mouseup',userClick)
 
     initUi()
 }
@@ -50,11 +64,12 @@ function initUi(){
     let buttonTemplates = [
         {
             name: 'Road',
-            value: 'place-road'
+            value: 'place-road',
         },
         {
             name: 'Residential',
-            value: 'place-residential'
+            value: 'place-residential',
+
         },
         {
             name: 'Buisness',
@@ -64,12 +79,30 @@ function initUi(){
             name: 'Commercial',
             value: 'place-commercial'
         },
+        {
+            name: 'Park',
+            value: 'place-park'
+        },
+        {
+            name: 'Delete',
+            value: 'delete-block',
+            highlight: '{"r":1,"g":0,"b":0}'
+        },
+        {
+            name: 'Paint',
+            value: 'paint-building',
+            highlight: 'paintColor'
+        },
 
     ]
     buttonTemplates.forEach(button => {
         let elem = document.createElement('button');
         elem.textContent = button.name;
         elem.value = button.value;
+        if(button.highlight){
+            elem.dataset.highlight = button.highlight
+        }
+
         elem.classList.add('toolButton')
         cont.appendChild(elem)
     })
@@ -77,6 +110,16 @@ function initUi(){
 
     let buttons = document.querySelectorAll('.toolButton');
     buttons.forEach(button => button.addEventListener('mousedown', userInput.toolModeButton))
+
+    let paintColorInput = document.createElement('input');
+    paintColorInput.type = 'color';
+    paintColorInput.value = '#888888';
+    paintColorInput.setAttribute('id','paintColorInput')
+    cont.appendChild(paintColorInput);
+    paintColorInput.addEventListener("change", (e) => {
+        console.log(e.target)
+        process.paintColor = e.target.value
+    })
 
 }
 
@@ -120,6 +163,7 @@ function userHover(e){
 
     currentHover = intersects[0]
 
+    //if selected object is actually part of a larger block group selects the group object
     if(currentHover.object.parent.blockType){
         currentHover.object = currentHover.object.parent;
     }
@@ -129,10 +173,10 @@ function userHover(e){
     //if object has children it gives children the hover material, else if just gives the entire object the hover material
     if(intersects.length > 0){
         if(intersects[0].object.children.length == 0){
-            intersects[0].object.material = new THREE.MeshPhongMaterial({color:`yellow`})
+            intersects[0].object.material = process.hoverMaterial
         } else {
             intersects[0].object.children.forEach(child => {
-                child.material = new THREE.MeshPhongMaterial({color:'yellow'})
+                child.material = process.hoverMaterial
             })
         }
 
@@ -181,6 +225,25 @@ function userClick(e){
         console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
+    if(process.clickOperation == 'place-park' && currentHover.object.blockType == undefined){
+        let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
+        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.addToScene()
+        console.log(newBlock)
+        newBlock.fitToSurroundings(true)
+    }
+    if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
+        console.log(currentHover.object)
+        // index.scene.remove(currentHover.object)
+        let x = currentHover.object.position.x;
+        let y = currentHover.object.position.y;
+        let z = currentHover.object.position.z;
+        ts.deleteAtandUp(x,y,z,editPlot.blocks,editPlot)
+        // editPlot.blocks[x][y][z] = [];
+    }
+    if(process.clickOperation == 'paint-building' && currentHover.object.blockType){
+        currentHover.object.children[0].defaultMaterial.color = process.paintColor;
+    }
 
     let exportable = exportBlocks(editPlot)
     blockExportElem.value = exportable;
@@ -217,6 +280,8 @@ function exportBlocks(plot){
 
     return JSON.stringify(exportArray);
 }
+
+
 
 
 
