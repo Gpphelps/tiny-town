@@ -25,8 +25,10 @@ const Header = () => {
             </Link>
             <div>
                 {
-                    userData ? 
-                        <h3></h3> :
+                    !userData ? 
+                        <Link to="/createAccount">
+                        <h3>Sign Up</h3>
+                        </Link> :
 
                         <Link to="/login">
                             <h3>Login</h3>
