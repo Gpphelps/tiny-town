@@ -71,16 +71,26 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in to use this feature.');
         },
         savePlot: async (parent, { plot_position_x, plot_position_z }, context) => {
-            console.log('-----SAVE PLOT------')
-            console.log(plot_position_x,plot_position_z)
-            console.log(context.user)
+
             if (context.user) {
                 const savedPlot = await User.findById(
                     context.user._id 
                 );
 
-                savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
-                savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
+                console.log('-----SAVE PLOT------')
+                console.log(savedPlot)
+                console.log(savedPlot.plot)
+
+                let newPlot = {
+                    plot_position_x: plot_position_x,
+                    plot_position_z: plot_position_z
+                }
+
+                savedPlot.plot.push(newPlot)
+
+
+                // savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
+                // savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
                 await savedPlot.save();
 
                 return savedPlot;

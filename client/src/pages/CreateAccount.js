@@ -37,11 +37,11 @@ const CreateAccount = () => {
         const { data } = await addUser({
             variables:{ username: username, email: email, password: password }
         });
-  
 
-        Auth.login(data.token);
+        Auth.login(data.addUser.token);
 
         console.log(data)
+        
         if (error) {
             console.log(error.message)
         }

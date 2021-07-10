@@ -18,18 +18,22 @@ const Editor = () => {
     const [modalDisplay, setModalDisplay] = useState('flex')
 
     const handlePlotSave = async () => {
-        let plotX = localStorage.getItem('plotX');
-        let plotZ = localStorage.getItem('plotZ');
+        let plotX = JSON.parse(localStorage.getItem('plotX'));
+        let plotZ = JSON.parse(localStorage.getItem('plotZ'));
 
         console.log(plotX,plotZ)
 
-        try {
-            await savePlot({
-                variables: {plot_position_x: plotX, plot_position_z: plotZ}
-            })
-        } catch (err){
-            console.log(err)
+
+
+        const { data } = await savePlot({
+            variables: {plot_position_x: plotX, plot_position_z: plotZ}
+        });
+
+        if(error){
+            console.log(error)
         }
+
+        console.log(data)
     }
 
     const handleNameInput = (e) => {

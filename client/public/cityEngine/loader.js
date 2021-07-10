@@ -48,7 +48,6 @@ function gltfLoader(filePath, targetVar){
     loader.load(filePath, (gltf) => {
         
         const object = gltf.scene;
-        // index.scene.add(object);
         object.children.forEach((child,index) => {
             child.defaultMaterial = child.material;
         })
