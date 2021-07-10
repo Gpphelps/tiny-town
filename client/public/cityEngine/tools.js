@@ -85,7 +85,6 @@ export function newChildren(templateObj){
                 newChildren.push(mesh)
             })
         }
-        console.log(child)
 
     })
     return newChildren;

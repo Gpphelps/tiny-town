@@ -13,6 +13,9 @@ const resolvers = {
             });
         },
         me: async (parent, args, context) => {
+            console.log('[---USER CONTEXT---]')
+            console.log(context.user)
+            console.log(User.findOne({ _id: context.user._id }))
             if (context.user) {
               return User.findOne({ _id: context.user._id })
             }
@@ -26,15 +29,19 @@ const resolvers = {
 
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
+            console.log(username,email,password)
             const user = await User.create({ username, email, password });
-
+            console.log(username,email,password)
             const token = signToken(user);
 
             return { token, user };
         },
         login: async (parent, { email, password }) => {
+            console.log('------')
+            console.log(email,password)
             const user = await User.findOne({ email });
-
+            console.log('------')
+            console.log(user)
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }

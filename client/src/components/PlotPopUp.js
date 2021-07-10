@@ -1,7 +1,10 @@
 import React from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { SAVE_PLOT } from '../utils/mutations';
 
 const PlotPopUp = () => {
+
     return(
         <div id="newPlotPopUp">
             <div className="plotPopUpSpacer"></div>

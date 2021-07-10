@@ -1,15 +1,16 @@
 import { useMutation } from '@apollo/client';
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
-import { LOGIN_USER } from '../utils/mutations';
+import { tsRestType } from '@babel/types';
+import React,{useState} from 'react';
+import {ADD_USER} from '../utils/mutations'
 import Auth from '../utils/auth';
 
-const Login = () => {
+const CreateAccount = () => {
 
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const [loginUser, { error }] = useMutation(LOGIN_USER);
+    const [addUser, { error }] = useMutation(ADD_USER);
 
     const handleInput = (e) => {
         const {name, value} = e.target
@@ -17,6 +18,9 @@ const Login = () => {
         switch(name) {
             case 'email':
                 setEmail(value);
+                break;
+            case 'username':
+                setUsername(value);
                 break;
             case 'password':
                 setPassword(value);
@@ -26,41 +30,39 @@ const Login = () => {
     }
 
     const handleFormSubmit = async (e) => {
-        
+
         e.preventDefault();
 
-        const { data } = await loginUser({
-            variables: { email: email, password: password }
+
+        const { data } = await addUser({
+            variables:{ username: username, email: email, password: password }
         });
+  
 
+        Auth.login(data.token);
 
-        Auth.login(data.login.token)
-
+        console.log(data)
         if (error) {
             console.log(error.message)
         }
-        console.log(data)
 
-        setEmail('');
-        setPassword('');
+
+        setEmail('')
+        setUsername('')
+        setPassword('')
     }
 
     return (
         <div className='cont'>
             <form>
-                <h3>Login</h3>
+                <h3>Create New Account</h3>
                 <input onChange={handleInput} name="email" placeholder="Email"></input>
+                <input onChange={handleInput} name="username" placeholder="Username"></input>
                 <input onChange={handleInput} name="password" placeholder="Password"></input>
-                <button onClick={handleFormSubmit}>Login</button>
-                <Link to="/createaccount">
-                    <p>Don't have an account? Create one here</p>
-                </Link>
-
+                <button onClick={handleFormSubmit}>Sign Up</button>
             </form>
         </div>
     )
 }
 
-
-
-export default Login
+export default CreateAccount;

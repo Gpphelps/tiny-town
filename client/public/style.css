@@ -10,6 +10,7 @@
     font-family: Helvetica;
     text-decoration: none;
     box-sizing: border-box;
+    font-weight: 100;
 }
 
 body {
@@ -62,13 +63,17 @@ form > h3 {
 form > input {
     padding: 10px;
     margin: 5px 10px 5px 10px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-weight: 100;
 }
 
 form > button {
     margin: 5px 10px 5px 10px;
     padding: 10px;
+}
+
+form > p {
+    margin: 10px;
 }
 
 .cont {
@@ -81,7 +86,7 @@ form > button {
 
 
 a:visited {
-    color: black;
+    /* color: black; */
 }
 
 

@@ -2,18 +2,26 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import UserTool from '../components/userTool'
+import { SAVE_PLOT } from '../utils/mutations'
 
 
 const Editor = () => {
 
     const [mode, setMode] = useState('place-residential');
 
-    const save = () => {
-        if(document.querySelector('#saveText').value.length >= 2);{
-            console.log('long enough')
-            let data = JSON.parse(document.querySelector('#saveText').value);
-        }
+    const [savePlot, { error }] = useMutation(SAVE_PLOT)
 
+    const handlePlotSave = async () => {
+        let plotX = localStorage.getItem('plotX');
+        let plotZ = localStorage.getItem('plotZ');
+
+        try {
+            await savePlot({
+                variables: {plot_position_x: plotX, plot_position_z: plotZ}
+            })
+        } catch (err){
+            console.log(err)
+        }
     }
 
 
@@ -26,7 +34,7 @@ const Editor = () => {
             <div id="userTools">
             </div>
             <div id="userSave">
-                <button onClick={save}>Save Plot</button>
+                <button onClick={handlePlotSave}>Save Plot</button>
             </div>
         </div>
     )

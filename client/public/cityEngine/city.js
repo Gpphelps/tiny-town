@@ -129,7 +129,7 @@ async function buildPlots(){
 
 function buildWorld(){
     const geometry = new THREE.PlaneGeometry(10000,10000);
-    const material = new THREE.MeshPhongMaterial( new THREE.MeshPhongMaterial({color:'rgb(0,90,0)'}));
+    const material = new THREE.MeshStandardMaterial(({color:'rgb(0,90,0)',roughness:1}));
     material.side = THREE.DoubleSide;
     const plane = new THREE.Mesh(geometry,material);
 
@@ -214,7 +214,6 @@ function userDoubleClick(e){
             let pos = selectedPlot.position;
             let plotX;
             let plotZ;
-            console.log(id)
 
             if(id == 'plotMinusZ'){
                 plotX = pos.x;
@@ -233,8 +232,6 @@ function userDoubleClick(e){
             localStorage.setItem('plotZ',plotZ)
         })
         button.addEventListener('mouseenter',function(e){
-            console.log(highlightMesh)
-            console.log('on')
             let x = e.clientX;
             let y = e.clientY;
             let coords = button.getBoundingClientRect()
@@ -274,7 +271,6 @@ function userDoubleClick(e){
             }
         })
         button.addEventListener('mouseleave',function(e){
-            console.log('out')
             index.scene.remove(highlightMesh)
         })
     })

@@ -49,7 +49,6 @@ function gltfLoader(filePath, targetVar){
             child.defaultMaterial = child.material;
         })
         object.path = filePath
-        console.log(object)
         object.children = object.children.filter(child => child.type != "Object3D")
         imported[targetVar] = object;
     })
