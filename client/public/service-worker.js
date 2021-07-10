@@ -64,16 +64,10 @@ self.addEventListener('activate', function(event) {
 });
 
 // Sends cached static files to the indexDB if offline
-self.addEventListener('fetch', (event) => {
-    // Prevents console error when sending requests while offline
-    const { request } = event;
-    if (request.method === 'GET') {
+self.addEventListener('fetch', async (event) => {
+    if (event.request.method === 'POST') {
         event.respondWith(
-            caches.open(CACHE_NAME).then(cache => {
-                return cache.match(event.request).then(response => {
-                    return response || fetch(event.request);
-                });
-            })
+            staleWhileRevalidate(event)
         );
     }
 });
