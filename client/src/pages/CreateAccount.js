@@ -34,7 +34,7 @@ const CreateAccount = () => {
 
 
         const { data } = await addUser({
-            variables:{ userName: username, email: email, password: password}
+            variables:{ username: username, email: email, password: password}
         });
 
         console.log(data)
