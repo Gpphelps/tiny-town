@@ -37,11 +37,11 @@ const resolvers = {
             return { token, user };
         },
         login: async (parent, { email, password }) => {
-            // console.log('------')
-            // console.log(email,password)
+            console.log('------')
+            console.log(email,password)
             const user = await User.findOne({ email });
-            // console.log('------')
-            // console.log(user)
+            console.log('------')
+            console.log(user)
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
@@ -53,7 +53,7 @@ const resolvers = {
             }
 
             const token = signToken(user);
-
+            console.log(token)
             return { token, user };
         },
         saveBuildings: async (parent, args, context) => {
