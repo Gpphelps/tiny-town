@@ -33,8 +33,12 @@ const Login = () => {
             variables: { email: email, password: password }
         });
 
-        Auth.login(data.token)
 
+        Auth.login(data.login.token)
+
+        if (error) {
+            console.log(error.message)
+        }
         console.log(data)
 
         setEmail('');

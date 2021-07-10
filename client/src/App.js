@@ -7,11 +7,27 @@ import Login from './pages/Login'
 import Editor from './pages/Editor'
 import Home from './pages/Home'
 import CreateAccount from './pages/CreateAccount'
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 
-const client = new ApolloClient({
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+
+  return {
+    headers: {
+      ...headers, 
+      authorization: token ? `Bearer ${token}` : '',
+    }
+  };
+});
+
+const httpLink = createHttpLink({
   uri: '/graphql',
+})
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
