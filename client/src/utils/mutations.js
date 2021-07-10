@@ -31,10 +31,12 @@ export const SAVE_BUILDINGS = gql`
             plot {
                 buildings {
                     _id
-                    type
                     building_position_x
                     building_position_y
                     building_position_z
+                    type {
+                        type
+                    }
                 }
             }
         }
@@ -51,10 +53,12 @@ export const SAVE_PLOT = gql`
                 plot_position_z
                 buildings {
                     _id
-                    type
                     building_position_x
                     building_position_y
                     building_position_z
+                    type {
+                        type
+                    }
                 }
             }
         }
@@ -68,10 +72,12 @@ export const REMOVE_BUILDING = gql`
             plot {
                 buildings {
                     _id
-                    type
                     building_position_x
                     building_position_y
                     building_position_z
+                    type {
+                        type
+                    }
                 }
             }
         }
