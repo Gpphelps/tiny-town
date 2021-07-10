@@ -13,6 +13,8 @@ const Editor = () => {
 
     const [savePlot, { error }] = useMutation(SAVE_PLOT)
 
+    const [savedYet, setSavedYet ] = useState(false)
+
     const [plotName, setPlotName] = useState('')
 
     const [modalDisplay, setModalDisplay] = useState('flex')
@@ -23,8 +25,6 @@ const Editor = () => {
 
         console.log(plotX,plotZ)
 
-
-
         const { data } = await savePlot({
             variables: {plot_position_x: plotX, plot_position_z: plotZ}
         });
@@ -32,8 +32,16 @@ const Editor = () => {
         if(error){
             console.log(error)
         }
+        let plots = data.savePlot.plot;
+        plots.forEach(plot => {
+            if(plotX == plot.plot_position_x && plotZ == plot.plot_position_z){
+                localStorage.setItem('currentPlot',plot._id)
+            }
+        })
+    }
 
-        console.log(data)
+    const handleBuildingSave = async () => {
+
     }
 
     const handleNameInput = (e) => {
@@ -47,7 +55,7 @@ const Editor = () => {
 
     return(
         <div>
-            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave}/>
+            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/>
             <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>
@@ -56,7 +64,7 @@ const Editor = () => {
             <div id="userTools">
             </div>
             <div id="userSave">
-                <button onClick={handlePlotSave}>Save Plot</button>
+                <button onClick={handleBuildingSave}>Save Plot</button>
             </div>
         </div>
     )

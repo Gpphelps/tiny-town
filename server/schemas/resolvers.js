@@ -88,6 +88,8 @@ const resolvers = {
 
                 savedPlot.plot.push(newPlot)
 
+                //custom property inserted so editor knows what plot it's working with
+                // savedPlot.currentPlotID = savedPlot.plot[savedPlot.plot.length-1]._id
 
                 // savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
                 // savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
