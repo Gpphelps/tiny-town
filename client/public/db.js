@@ -37,9 +37,13 @@ function checkDatabase() {
 
     const [saveBuildings, { error }] = useMutation(SAVE_BUILDINGS);
 
-    getAll.onsuccess = function () {
+    getAll.onsuccess = async function () {
         if (getAll.results.length > 0) {
-
+            try {
+                await saveBuildings({
+                    variables: {}
+                })
+            }
         }
     }
 }
