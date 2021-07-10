@@ -15,6 +15,8 @@ const Editor = () => {
 
     const [plotName, setPlotName] = useState('')
 
+    const [modalDisplay, setModalDisplay] = useState('flex')
+
     const handlePlotSave = async () => {
         let plotX = localStorage.getItem('plotX');
         let plotZ = localStorage.getItem('plotZ');
@@ -33,13 +35,18 @@ const Editor = () => {
         setPlotName(value)
     }
 
+    const renameButton = (e) => {
+        setModalDisplay('flex')
+    }
+
     return(
         <div>
-            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'}/>
+            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay}/>
             <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>
             <div id="canvCont"></div>
+            <button onClick={renameButton}>Rename this plot</button>
             <div id="userTools">
             </div>
             <div id="userSave">
