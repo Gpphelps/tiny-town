@@ -5,11 +5,15 @@ import UserTool from '../components/userTool'
 import { SAVE_PLOT } from '../utils/mutations'
 
 
+import InputModal from '../components/InputModal'
+
 const Editor = () => {
 
     const [mode, setMode] = useState('place-residential');
 
     const [savePlot, { error }] = useMutation(SAVE_PLOT)
+
+    const [plotName, setPlotName] = useState('')
 
     const handlePlotSave = async () => {
         let plotX = localStorage.getItem('plotX');
@@ -24,9 +28,14 @@ const Editor = () => {
         }
     }
 
+    const handleNameInput = (e) => {
+        let value = e.target.value;
+        setPlotName(value)
+    }
 
     return(
         <div>
+            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'}/>
             <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>
