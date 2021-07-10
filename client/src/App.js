@@ -6,6 +6,7 @@ import Header from './components/Header'
 import Login from './pages/Login'
 import Editor from './pages/Editor'
 import Home from './pages/Home'
+import CreateAccount from './pages/CreateAccount'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 
@@ -26,6 +27,9 @@ function App() {
               </Route>
               <Route exact path="/login">
                 <Login />
+              </Route>
+              <Route exact path="/createaccount">
+                <CreateAccount />
               </Route>
               <Route exact path="/editor">
                 <Editor />

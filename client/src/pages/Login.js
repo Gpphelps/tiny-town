@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     return (
@@ -10,6 +10,10 @@ const Login = () => {
                 <input placeholder="Username"></input>
                 <input placeholder="Password"></input>
                 <button>Login</button>
+                <Link to="/createaccount">
+                    <p>Don't have an account? Create one here</p>
+                </Link>
+
             </form>
         </div>
     )
