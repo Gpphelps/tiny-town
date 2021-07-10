@@ -13,9 +13,9 @@ const resolvers = {
             });
         },
         me: async (parent, args, context) => {
-            console.log('[---USER CONTEXT---]')
+            // console.log('[---USER CONTEXT---]')
             console.log(context.user)
-            console.log(User.findOne({ _id: context.user._id }))
+            // console.log(User.findOne({ _id: context.user._id }))
             if (context.user) {
               return User.findOne({ _id: context.user._id })
             }
@@ -37,11 +37,11 @@ const resolvers = {
             return { token, user };
         },
         login: async (parent, { email, password }) => {
-            console.log('------')
-            console.log(email,password)
+            // console.log('------')
+            // console.log(email,password)
             const user = await User.findOne({ email });
-            console.log('------')
-            console.log(user)
+            // console.log('------')
+            // console.log(user)
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
@@ -71,13 +71,26 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in to use this feature.');
         },
         savePlot: async (parent, { plot_position_x, plot_position_z }, context) => {
+
             if (context.user) {
                 const savedPlot = await User.findById(
                     context.user._id 
                 );
 
-                savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
-                savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
+                console.log('-----SAVE PLOT------')
+                console.log(savedPlot)
+                console.log(savedPlot.plot)
+
+                let newPlot = {
+                    plot_position_x: plot_position_x,
+                    plot_position_z: plot_position_z
+                }
+
+                savedPlot.plot.push(newPlot)
+
+
+                // savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
+                // savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
                 await savedPlot.save();
 
                 return savedPlot;

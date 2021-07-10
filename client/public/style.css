@@ -125,3 +125,40 @@ a:visited {
 .plotOption:hover{
     background-color: yellow;
 }
+
+
+
+
+/* MODAL STYLING */
+
+.modalCont {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal > * {
+    margin: 5px;
+}
+
+.modal > h5 {
+    font-family: 'BN Times Gothic';
+    font-size: 24px;
+}
+
+.modal > input {
+    padding: 5px
+}

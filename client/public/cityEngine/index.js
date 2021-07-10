@@ -25,10 +25,10 @@ let generalSettings = {
 
 function init(){
 
-    if(document.location.pathname == '/login'){
+    if(document.location.pathname == '/login' || document.location.pathname == '/signup'){
         return;
     }
-
+    
     runMode = document.querySelector('#runModeProxy').textContent;
     // [=--- MAIN INITIALIZING STUFF ---=]
 

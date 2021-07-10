@@ -287,14 +287,12 @@ export class Residential extends Building {
     constructor(parent,x,y,z){
         super(parent,x,y,z),
         this.type = 'residential',
-        // this.defaultMaterial = load.imported.residentialBasicGroundMat,
-        // this.defaultGeometry = load.imported.residentialBasicGround.geometry,
+        this.defaultObj = load.imported.apartmentGround;
+        this.scale = {x:0.48,y:0.5,z:0.48};
+        this.randomBaseColor = true;
 
-        
-        this.floors = {
-            material: load.imported.residentialBasicFloor,
-            geometry: load.imported.residentialBasicFloorMat
-        }
+        this.midObj = load.imported.apartmentMid;
+        this.roofObj = load.imported.apartmentRoof;
     }
 }
 
