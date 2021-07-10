@@ -56,6 +56,9 @@ export const SAVE_PLOT = gql`
                     building_position_x
                     building_position_y
                     building_position_z
+                    building_color_r
+                    building_color_g
+                    building_color_b
                     type {
                         type
                     }
@@ -75,6 +78,9 @@ export const REMOVE_BUILDING = gql`
                     building_position_x
                     building_position_y
                     building_position_z
+                    building_color_r
+                    building_color_g
+                    building_color_b
                     type {
                         type
                     }
