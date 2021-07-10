@@ -13,9 +13,9 @@ const resolvers = {
             });
         },
         me: async (parent, args, context) => {
-            console.log('[---USER CONTEXT---]')
+            // console.log('[---USER CONTEXT---]')
             console.log(context.user)
-            console.log(User.findOne({ _id: context.user._id }))
+            // console.log(User.findOne({ _id: context.user._id }))
             if (context.user) {
               return User.findOne({ _id: context.user._id })
             }
@@ -37,11 +37,11 @@ const resolvers = {
             return { token, user };
         },
         login: async (parent, { email, password }) => {
-            console.log('------')
-            console.log(email,password)
+            // console.log('------')
+            // console.log(email,password)
             const user = await User.findOne({ email });
-            console.log('------')
-            console.log(user)
+            // console.log('------')
+            // console.log(user)
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
@@ -71,6 +71,9 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in to use this feature.');
         },
         savePlot: async (parent, { plot_position_x, plot_position_z }, context) => {
+            console.log('-----SAVE PLOT------')
+            console.log(plot_position_x,plot_position_z)
+            console.log(context.user)
             if (context.user) {
                 const savedPlot = await User.findById(
                     context.user._id 

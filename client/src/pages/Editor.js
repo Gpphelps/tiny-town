@@ -21,6 +21,8 @@ const Editor = () => {
         let plotX = localStorage.getItem('plotX');
         let plotZ = localStorage.getItem('plotZ');
 
+        console.log(plotX,plotZ)
+
         try {
             await savePlot({
                 variables: {plot_position_x: plotX, plot_position_z: plotZ}
@@ -41,7 +43,7 @@ const Editor = () => {
 
     return(
         <div>
-            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay}/>
+            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave}/>
             <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>

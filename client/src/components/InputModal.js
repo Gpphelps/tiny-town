@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 
-const InputModal = ({ header, inputFunction, buttonText, display, setModalDisplay }) => {
+const InputModal = ({ header, inputFunction, buttonText, display, setModalDisplay, otherFunction }) => {
     
     const style = {
         container: {
@@ -12,6 +12,7 @@ const InputModal = ({ header, inputFunction, buttonText, display, setModalDispla
     
     const submitName = () => {
         setModalDisplay('none')
+        otherFunction()
     }
 
     return(

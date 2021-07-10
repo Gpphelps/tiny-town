@@ -19,10 +19,13 @@ export async function init(){
     // await objLoader('./cityEngine/Objects/Roads/road-pholder-corner.obj', 'roadCorner')
     // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-corner.mtl', 'roadCornerMat')
 
+    await gltfLoader('./cityEngine/Objects/Residential/apartment.glb','apartmentGround')
+    await gltfLoader('./cityEngine/Objects/Residential/apartmentmid.glb','apartmentMid')
+    await gltfLoader('./cityEngine/Objects/Residential/apartmentroof.glb','apartmentRoof')
 
-    await gltfLoader('./cityEngine/Objects/Office/officebuilding.glb', 'officeGround')
-    await gltfLoader('./cityEngine/Objects/Office/officebuildingmidsection.glb', 'officeMid')
-    await gltfLoader('./cityEngine/Objects/Office/officeroof.glb', 'officeRoof')
+    await gltfLoader('./cityEngine/Objects/Office/modernofficebase.glb', 'officeGround')
+    await gltfLoader('./cityEngine/Objects/Office/modernofficemid.glb', 'officeMid')
+    await gltfLoader('./cityEngine/Objects/Office/modofficeroof.glb', 'officeRoof')
 
     await gltfLoader('./cityEngine/Objects/Commercial/onebyoneshop.glb', 'commercialGround')
     await gltfLoader('./cityEngine/Objects/Commercial/shopmid.glb', 'commercialMid')
@@ -34,6 +37,7 @@ export async function init(){
     await gltfLoader('./cityEngine/Objects/Roads/roadCorner.glb','roadCorner')
 
     await gltfLoader('./cityEngine/Objects/Park/park-1x1-01.glb','park1x1One')
+
 }
 
 
