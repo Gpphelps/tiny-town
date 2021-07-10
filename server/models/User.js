@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// const plotSchema = require('./Plot');
+const plotSchema = require('./Plot');
 
 const placedSchema = require('./PlacedBuilding');
 
@@ -23,17 +23,9 @@ const userSchema = new Schema(
             trim: true,
             required: true,
         },
-        plot: {
-            plot_position_x: {
-                type: Number,
-            },
-            plot_position_z: {
-                type: Number,
-            },
-            buildings: [
-                placedSchema,
-            ]
-        },
+        plot: [
+            plotSchema
+        ],
     },
     {
         toJSON: {
