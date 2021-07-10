@@ -10,13 +10,13 @@ const Header = () => {
 
     const { loading, error, data, refetch } = useQuery(GET_ME);
 
-    // useEffect(() => {
-    //     refetch();
-    // },[refetch]);
+    useEffect(() => {
+        refetch();
+    },[refetch]);
 
-    console.log(data)
+
     const userData = data?.me;
-    
+    console.log(userData)
 
     return(
         <header>
@@ -24,9 +24,15 @@ const Header = () => {
                 <h1>Tiny Town</h1>
             </Link>
             <div>
-                <Link to="/login">
-                    <h3>Login</h3>
-                </Link>
+                {
+                    userData ? 
+                        <h3></h3> :
+
+                        <Link to="/login">
+                            <h3>Login</h3>
+                        </Link>
+                }
+
             </div>
 
         </header>
