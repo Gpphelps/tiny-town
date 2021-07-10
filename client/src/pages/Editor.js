@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import UserTool from '../components/userTool'
-import { SAVE_PLOT } from '../utils/mutations'
+import { SAVE_PLOT, SAVE_BUILDINGS } from '../utils/mutations'
 
 
 import InputModal from '../components/InputModal'
@@ -11,7 +11,8 @@ const Editor = () => {
 
     const [mode, setMode] = useState('place-residential');
 
-    const [savePlot, { error }] = useMutation(SAVE_PLOT)
+    const [savePlot, { plotError }] = useMutation(SAVE_PLOT)
+    const [saveBuildings, { buildingError }] = useMutation(SAVE_BUILDINGS)
 
     const [savedYet, setSavedYet ] = useState(false)
 
@@ -19,6 +20,9 @@ const Editor = () => {
 
     const [modalDisplay, setModalDisplay] = useState('flex')
 
+    //gets plotX and plotZ data from local storage
+        //saves new plot, SAVE_PLOT resolver returns the entire user
+        //iterates through all of the users plots to find the one with the same x and z coords and saves that plots id for later
     const handlePlotSave = async () => {
         let plotX = JSON.parse(localStorage.getItem('plotX'));
         let plotZ = JSON.parse(localStorage.getItem('plotZ'));
@@ -29,8 +33,8 @@ const Editor = () => {
             variables: {plot_position_x: plotX, plot_position_z: plotZ}
         });
 
-        if(error){
-            console.log(error)
+        if(plotError){
+            console.log(plotError)
         }
         let plots = data.savePlot.plot;
         plots.forEach(plot => {
@@ -41,7 +45,9 @@ const Editor = () => {
     }
 
     const handleBuildingSave = async () => {
-
+        //retrieves exported building data stored in dom element from static scripts
+        let cityEngineData = document.querySelector('#saveText').value
+        console.log(cityEngineData)
     }
 
     const handleNameInput = (e) => {
