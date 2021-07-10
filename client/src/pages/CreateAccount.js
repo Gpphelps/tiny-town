@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import { tsRestType } from '@babel/types';
 import React,{useState} from 'react';
 import {ADD_USER} from '../utils/mutations'
+import Auth from '../utils/auth';
 
 const CreateAccount = () => {
 
@@ -34,8 +35,11 @@ const CreateAccount = () => {
 
 
         const { data } = await addUser({
-            variables:{ username: username, email: email, password: password}
+            variables:{ username: username, email: email, password: password }
         });
+  
+
+        Auth.login(data.token);
 
         console.log(data)
         if (error) {
