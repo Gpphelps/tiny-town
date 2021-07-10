@@ -4,19 +4,15 @@ const placedSchema = new Schema(
     {
         type: {
             type: String,
-            required: true
         },
         building_position_x: {
             type: Number,
-            required: true,
         },
         building_position_y: {
             type: Number,
-            required: true,
         },
         building_position_z: {
             type: Number,
-            required: true,
         },
         building_color_r: {
             type: Number,
