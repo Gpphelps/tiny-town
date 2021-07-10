@@ -6,11 +6,9 @@ const plotSchema = new Schema(
     {
         plot_position_x: {
             type: Number,
-            required: true,
         },
         plot_position_z: {
             type: Number,
-            required: true,
         },
         buildings: [
             placedSchema,
