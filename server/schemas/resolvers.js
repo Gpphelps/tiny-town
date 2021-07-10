@@ -62,7 +62,7 @@ const resolvers = {
                     context.user._id 
                 );
 
-                userBuildings.plot.buildings.push(args);
+                userBuildings.plot.plotSchema.buildings.push(args);
                 await userBuildings.save();
                 console.log(userBuildings);
                 return userBuildings;
@@ -76,8 +76,8 @@ const resolvers = {
                     context.user._id 
                 );
 
-                savedPlot.plot.plot_position_x.push(plot_position_x);
-                savedPlot.plot.plot_position_y.push(plot_position_z);
+                savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
+                savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
                 await savedPlot.save();
 
                 return savedPlot;
@@ -92,7 +92,7 @@ const resolvers = {
                     context.user._id 
                 );
 
-                updatedBuildings.plot.buildings.pull(_id);
+                updatedBuildings.plot.plotSchema.buildings.pull(_id);
                 await updatedBuildings.save();
 
                 return updatedBuildings;
