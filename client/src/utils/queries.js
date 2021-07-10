@@ -16,14 +16,14 @@ export const GET_ME = gql`
                     building_color_r
                     building_color_g
                     building_color_b
-                    type {
-                        type
-                    }
+                    type
                 }
             }
         }
     }
 `;
+
+
 
 
 export const GET_CITY = gql`
@@ -39,10 +39,7 @@ export const GET_CITY = gql`
                     building_color_r
                     building_color_g
                     building_color_b
-                    type {
-                        type
-                    }
-
+                    type
                 }
             }
         }

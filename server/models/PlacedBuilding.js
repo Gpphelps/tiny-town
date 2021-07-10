@@ -1,10 +1,11 @@
 const { Schema } = require('mongoose');
-// Importing the buildingSchema from Building.js
-const buildingSchema = require('./Building');
 
 const placedSchema = new Schema(
     {
-        type: {buildingSchema},
+        type: {
+            type: String,
+            required: true
+        },
         building_position_x: {
             type: Number,
             required: true,
