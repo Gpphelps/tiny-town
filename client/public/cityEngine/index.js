@@ -28,7 +28,7 @@ function init(){
     if(document.location.pathname == '/login' || document.location.pathname == '/signup'){
         return;
     }
-    
+
     runMode = document.querySelector('#runModeProxy').textContent;
     // [=--- MAIN INITIALIZING STUFF ---=]
 
@@ -78,7 +78,7 @@ function init(){
     controls.keyPanSpeed = 20
     controls.target.set(5,2,5);
 
-    controls.maxZoom = 3;
+    controls.maxZoom = 8;
     controls.minZoom = 0.1;
 
     controls.enableDamping = true;
@@ -119,6 +119,7 @@ async function runByMode(){
     } else if (runMode == 'city'){
         city.init()
     }
+
 }
 
 

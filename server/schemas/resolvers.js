@@ -13,9 +13,9 @@ const resolvers = {
             });
         },
         me: async (parent, args, context) => {
-            // console.log('[---USER CONTEXT---]')
+            console.log('[---USER CONTEXT---]')
             console.log(context.user)
-            // console.log(User.findOne({ _id: context.user._id }))
+            console.log(User.findOne({ _id: context.user._id }))
             if (context.user) {
               return User.findOne({ _id: context.user._id })
             }
@@ -37,11 +37,11 @@ const resolvers = {
             return { token, user };
         },
         login: async (parent, { email, password }) => {
-            // console.log('------')
-            // console.log(email,password)
+            console.log('------')
+            console.log(email,password)
             const user = await User.findOne({ email });
-            // console.log('------')
-            // console.log(user)
+            console.log('------')
+            console.log(user)
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
@@ -53,7 +53,7 @@ const resolvers = {
             }
 
             const token = signToken(user);
-
+            console.log(token)
             return { token, user };
         },
         saveBuildings: async (parent, args, context) => {
@@ -88,6 +88,8 @@ const resolvers = {
 
                 savedPlot.plot.push(newPlot)
 
+                //custom property inserted so editor knows what plot it's working with
+                // savedPlot.currentPlotID = savedPlot.plot[savedPlot.plot.length-1]._id
 
                 // savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
                 // savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);

@@ -14,7 +14,7 @@ const Header = () => {
         refetch();
     },[refetch]);
 
-
+    console.log(data)
     const userData = data?.me;
     console.log(userData)
 

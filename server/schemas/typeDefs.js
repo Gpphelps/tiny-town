@@ -5,7 +5,7 @@ const typeDefs = gql`
         _id: ID
         username: String
         email: String
-        plot: [Plot]
+        plot: Plot
     }
 
     type Plot {
@@ -21,9 +21,6 @@ const typeDefs = gql`
         building_position_x: Int
         building_position_y: Int
         building_position_z: Int
-        building_color_r: Float
-        building_color_g: Float
-        building_color_b: Float
     }
 
     type Auth {
