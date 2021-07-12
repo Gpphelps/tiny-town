@@ -185,6 +185,12 @@ export class Building {
             //loops through all children and makes a new mesh copying the geometry and material of the child
         this.obj = new THREE.Object3D();
         this.obj.blockType = this.type;
+
+        if(this.alts){
+            console.log('alts')
+            this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
+        }
+
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
         if(this.randomBaseColor){
@@ -295,6 +301,9 @@ export class Residential extends Building {
 
         this.midObj = load.imported.apartmentMid;
         this.roofObj = load.imported.apartmentRoof;
+
+        //includes default base and all alts
+        this.alts = [load.imported.apartmentGround, load.imported.apartmentGroundAltOne]
     }
 }
 
@@ -321,6 +330,8 @@ export class Commercial extends Building {
 
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
+
+        this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
     }
 
 }
