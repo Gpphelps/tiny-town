@@ -29,8 +29,10 @@ const Editor = () => {
 
         console.log(plotX,plotZ)
 
+        let buildingData = document.querySelector('#saveText').value
+
         const { data } = await savePlot({
-            variables: {plot_position_x: plotX, plot_position_z: plotZ}
+            variables: {plot_position_x: plotX, plot_position_z: plotZ, buildings: buildingData}
         });
 
         console.log(data)
