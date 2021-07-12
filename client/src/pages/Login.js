@@ -28,12 +28,11 @@ const Login = () => {
     const handleFormSubmit = async (e) => {
         
         e.preventDefault();
-
+    
         const { data } = await loginUser({
             variables: { email: email, password: password }
         });
-
-
+        
         Auth.login(data.login.token)
 
         if (error) {

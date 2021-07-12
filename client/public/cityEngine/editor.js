@@ -208,7 +208,6 @@ function userHover(e){
 function userClick(e){
 
     let dragCheck = userInput.dragOrClickCheckandStop()
-    console.log(dragCheck)
     if(dragCheck){
         return;
     }
