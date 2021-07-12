@@ -35,7 +35,7 @@ function checkDatabase() {
     const store = transaction.objectStore('pending');
     const getAll = store.getAll();
 
-    const [savePlot, { error }] = useMutation(SAVE_BUILDINGS);
+    const [savePlot, { error }] = useMutation(SAVE_PLOT);
 
     getAll.onsuccess = async function () {
         if (getAll.results.length > 0) {
