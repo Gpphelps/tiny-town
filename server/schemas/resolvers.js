@@ -70,23 +70,36 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in to use this feature.');
         },
-        savePlot: async (parent, { plot_position_x, plot_position_z }, context) => {
-
+        savePlot: async (parent, { plot_position_x, plot_position_z, buildings }, context) => {
+            console.log(buildings)
             if (context.user) {
                 const savedPlot = await User.findById(
                     context.user._id 
                 );
 
                 console.log('-----SAVE PLOT------')
-                console.log(savedPlot)
-                console.log(savedPlot.plot)
+                // console.log(savedPlot)
+                // console.log(savedPlot.plot)
+
+
+
+                let parsed = JSON.parse(buildings)
+                let buildingArray = []
+                parsed.forEach(building => {
+                    buildingArray.push(building)
+                })
 
                 let newPlot = {
                     plot_position_x: plot_position_x,
-                    plot_position_z: plot_position_z
+                    plot_position_z: plot_position_z,
+                    buildings: buildingArray
                 }
 
+
+
                 savedPlot.plot.push(newPlot)
+
+
 
                 //custom property inserted so editor knows what plot it's working with
                 // savedPlot.currentPlotID = savedPlot.plot[savedPlot.plot.length-1]._id

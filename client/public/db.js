@@ -1,8 +1,8 @@
 let db;
 const request = indexedDB.open('tinyTown', 1);
 
-import { useMutation, useQuery } from '@apollo/client';
-import { SAVE_BUILDINGS } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+import { SAVE_BUILDINGS } from '../src/utils/mutations';
 
 // Creates the objectStore when there is a new version of the DB that is requested
 request.onupgradeneeded = function (event) {
@@ -40,11 +40,14 @@ function checkDatabase() {
     getAll.onsuccess = async function () {
         if (getAll.results.length > 0) {
             try {
-                await saveBuildings({
-                    variables: {}
-                })
+                await saveBuildings({ variables: getAll })
+            } catch {
+                console.log(error.message)
             }
         }
+        const transaction = db.transaction(["pending"], "readwrite");
+        const store = transaction.objectStore("pending");
+        store.clear();
     }
 }
 

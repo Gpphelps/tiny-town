@@ -29,13 +29,17 @@ const Editor = () => {
 
         console.log(plotX,plotZ)
 
+        let buildingData = document.querySelector('#saveText').value
+
         const { data } = await savePlot({
-            variables: {plot_position_x: plotX, plot_position_z: plotZ}
+            variables: {plot_position_x: plotX, plot_position_z: plotZ, buildings: buildingData}
         });
 
+        console.log(data)
         if(plotError){
             console.log(plotError)
         }
+
         let plots = data.savePlot.plot;
         plots.forEach(plot => {
             if(plotX == plot.plot_position_x && plotZ == plot.plot_position_z){
@@ -70,7 +74,7 @@ const Editor = () => {
             <div id="userTools">
             </div>
             <div id="userSave">
-                <button onClick={handleBuildingSave}>Save Plot</button>
+                <button onClick={handlePlotSave}>Save Plot</button>
             </div>
         </div>
     )
