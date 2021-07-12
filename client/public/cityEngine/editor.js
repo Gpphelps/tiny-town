@@ -10,7 +10,7 @@ let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-park',
+    clickOperation: 'place-commercial',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
 }
@@ -33,6 +33,27 @@ const userInput = {
             process.hoverMaterial.color = process.defaultHoverMaterial.color
         }
     },
+    //dragOrClickChecker runs a timer that constantly updates after mouse has been put down
+    //the mouseup userclick function
+    timeDown: 0,
+    timeDownTimer: null,
+    dragOrClickChecker(e){
+        userInput.timeDownTimer = setInterval(function(){
+            userInput.timeDown += 100;
+            console.log(userInput.timeDown)
+        },100)
+    },
+    dragOrClickCheckandStop(){
+        clearInterval(this.timeDownTimer)
+        if(this.timeDown > 300){
+            this.timeDown = 0;
+            return true;
+        } else {
+            this.timeDown = 0;
+            return false;
+        }
+
+    }
 }
 
 
@@ -43,6 +64,7 @@ export function init(){
     index.plots.push(editPlot)
     editPlot.buildBase()
 
+    document.querySelector('canvas').addEventListener('mousedown',userInput.dragOrClickChecker)
     document.querySelector('canvas').addEventListener('mousemove',userHover)
     document.querySelector('canvas').addEventListener('mouseup',userClick)
 
@@ -185,9 +207,18 @@ function userHover(e){
 
 //tracks user clicks and depending on process mode will act accordingly
 function userClick(e){
+
+    let dragCheck = userInput.dragOrClickCheckandStop()
+    console.log(dragCheck)
+    if(dragCheck){
+        return;
+    }
+
     if(!currentHover){
         return;
     }
+
+
 
     //cant place things on top of roads so nothing happens on click
     if(currentHover.object.blockType == 'road'){
@@ -280,9 +311,6 @@ function exportBlocks(plot){
 
     return JSON.stringify(exportArray);
 }
-
-
-
 
 
 

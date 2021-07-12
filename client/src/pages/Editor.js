@@ -61,7 +61,7 @@ const Editor = () => {
 
     return(
         <div>
-            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/>
+            {/* <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/> */}
             <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>
