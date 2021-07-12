@@ -10,6 +10,15 @@ const Header = () => {
 
     const { loading, error, data, refetch } = useQuery(GET_ME);
 
+    const textStyle = {
+        color: "#EEDC05",
+        fontFamily: "'VT323', monospace",
+        textTransform: "uppercase",
+    };
+
+    useEffect(() => {
+        refetch();
+    },[refetch]);
 
     console.log(data)
     const userData = data?.me;
@@ -18,23 +27,23 @@ const Header = () => {
     return(
         <header>
             <Link to="/">
-                <h1>Tiny Town</h1>
+                <h1 style={textStyle}>Tiny Town</h1>
             </Link>
             <div>
                 {
                     !userData ? 
                     <div>
                         <Link to="/createAccount">
-                        <h3>Sign Up</h3>
+                        <h3 style={textStyle}>Sign Up</h3>
                         </Link>
                         <Link to="/login">
-                        <h3>Login</h3>
+                        <h3 style={textStyle}>Login</h3>
                          </Link> 
                     </div>
 
                     :
                     <Link to="/editor">
-                    <h3>Create a Neighborhood</h3>
+                    <h3 style={textStyle}>Create a Neighborhood</h3>
                     </Link>
 
                         

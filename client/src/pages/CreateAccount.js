@@ -52,14 +52,31 @@ const CreateAccount = () => {
         setPassword('')
     }
 
+    const textStyle = {
+        color: "#474EED",
+        fontFamily: "'VT323', monospace",
+        textTransform: "uppercase",
+        textAlign: "center",
+        fontSize: "50px",
+    };
+
+    const loginStyle = {
+        fontFamily: "'Inconsolata', monospace",
+    };
+
+    const buttonStyle = {
+        fontFamily: "'Inconsolata', monospace",
+        fontSize: "20px",
+    };
+
     return (
         <div className='cont'>
             <form>
-                <h3>Create New Account</h3>
-                <input onChange={handleInput} name="email" placeholder="Email"></input>
-                <input onChange={handleInput} name="username" placeholder="Username"></input>
-                <input onChange={handleInput} name="password" placeholder="Password"></input>
-                <button onClick={handleFormSubmit}>Sign Up</button>
+                <h3 style={textStyle}>Create New Account</h3>
+                <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
+                <input style={loginStyle} onChange={handleInput} name="username" placeholder="Username"></input>
+                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password"></input>
+                <button style={buttonStyle} onClick={handleFormSubmit}>Sign Up</button>
             </form>
         </div>
     )
