@@ -16,6 +16,7 @@ const Home = () => {
     return (
         <div>
             <textarea style={{display:'none'}} id="plotData"></textarea>
+            <textarea style={{display:'none'}} id="plotData"></textarea>
             <p style={{display:'none'}} id="runModeProxy">city</p>
             <PlotPopUp />
             <div id="canvCont"></div>
