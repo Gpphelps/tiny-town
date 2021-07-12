@@ -44,7 +44,7 @@ const userInput = {
     },
     dragOrClickCheckandStop(){
         clearInterval(this.timeDownTimer)
-        if(this.timeDown > 300){
+        if(this.timeDown > 200){
             this.timeDown = 0;
             return true;
         } else {
