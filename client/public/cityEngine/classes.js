@@ -185,6 +185,12 @@ export class Building {
             //loops through all children and makes a new mesh copying the geometry and material of the child
         this.obj = new THREE.Object3D();
         this.obj.blockType = this.type;
+
+        if(this.alts){
+            console.log('alts')
+            this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
+        }
+
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
         if(this.randomBaseColor){
@@ -209,15 +215,25 @@ export class Building {
     }
     fitToSurroundings(original){
         let pos = this.relativePos
-        let plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
-        let minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
-        let plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
-        let minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
-        let plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
-        let minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        
+        //weird way to assign plusX, minusX ... but done so that if on the edge it doesn't have error because plusX is not in the array or whatever
+        let plusX
+        let minusX
+        let plusY
+        let minusY
+        let plusZ
+        let minusZ
+
+        let pd = this.parent.dimmensions
+
+        plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
+        plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
+        minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
+        plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
-
         
         let blocksAround = 0;
         around.forEach(block => {
@@ -295,6 +311,9 @@ export class Residential extends Building {
 
         this.midObj = load.imported.apartmentMid;
         this.roofObj = load.imported.apartmentRoof;
+
+        //includes default base and all alts
+        this.alts = [load.imported.apartmentGround, load.imported.apartmentGroundAltOne]
     }
 }
 
@@ -321,6 +340,8 @@ export class Commercial extends Building {
 
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
+
+        this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
     }
 
 }
@@ -332,6 +353,14 @@ export class Park extends Building {
         this.type = 'park';
         this.defaultObj = load.imported.park1x1One;
         this.scale = {x:0.5,y:0.5,z:0.5};
+        this.randomBaseColor = false;
+    }
+}
+
+
+class Blank {
+    constructor(){
+        this.type = 'blank';
         this.randomBaseColor = false;
     }
 }

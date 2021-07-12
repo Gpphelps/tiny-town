@@ -40,7 +40,6 @@ const userInput = {
     dragOrClickChecker(e){
         userInput.timeDownTimer = setInterval(function(){
             userInput.timeDown += 100;
-            console.log(userInput.timeDown)
         },100)
     },
     dragOrClickCheckandStop(){
@@ -209,7 +208,6 @@ function userHover(e){
 function userClick(e){
 
     let dragCheck = userInput.dragOrClickCheckandStop()
-    console.log(dragCheck)
     if(dragCheck){
         return;
     }

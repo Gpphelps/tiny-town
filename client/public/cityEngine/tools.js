@@ -93,6 +93,10 @@ export function newChildren(templateObj){
 export function rndmNum(min,max){
     return Math.random() * (max-min) + min;
 }
+export function rndmInt(min,max){
+    return Math.floor(Math.random() * (max-min) + min);
+}
+
 
 export function copy(variable){
     let string = JSON.stringify(variable)

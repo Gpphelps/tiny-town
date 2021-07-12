@@ -22,6 +22,8 @@ export async function init(){
     await gltfLoader('./cityEngine/Objects/Residential/apartment.glb','apartmentGround')
     await gltfLoader('./cityEngine/Objects/Residential/apartmentmid.glb','apartmentMid')
     await gltfLoader('./cityEngine/Objects/Residential/apartmentroof.glb','apartmentRoof')
+    await gltfLoader('./cityEngine/Objects/Residential/apartmentbase2.glb','apartmentGroundAltOne')
+
 
     await gltfLoader('./cityEngine/Objects/Office/modernofficebase.glb', 'officeGround')
     await gltfLoader('./cityEngine/Objects/Office/modernofficemid.glb', 'officeMid')
@@ -30,6 +32,8 @@ export async function init(){
     await gltfLoader('./cityEngine/Objects/Commercial/onebyoneshop.glb', 'commercialGround')
     await gltfLoader('./cityEngine/Objects/Commercial/shopmid.glb', 'commercialMid')
     await gltfLoader('./cityEngine/Objects/Commercial/shoproof.glb', 'commercialRoof')
+    await gltfLoader('./cityEngine/Objects/Commercial/shopbase2.glb', 'commercialGroundAltOne')
+
 
     await gltfLoader('./cityEngine/Objects/Roads/road2way.glb','road2Way')
     await gltfLoader('./cityEngine/Objects/Roads/road3way.glb','road3Way')
@@ -54,6 +58,7 @@ function gltfLoader(filePath, targetVar){
         object.path = filePath
         object.children = object.children.filter(child => child.type != "Object3D")
         imported[targetVar] = object;
+
     })
 }
 

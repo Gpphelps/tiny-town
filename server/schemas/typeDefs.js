@@ -21,6 +21,9 @@ const typeDefs = gql`
         building_position_x: Int
         building_position_y: Int
         building_position_z: Int
+        building_color_r: Int
+        building_color_g: Int
+        building_color_b: Int
     }
 
     type Auth {

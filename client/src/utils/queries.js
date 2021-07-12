@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+
 export const GET_ME = gql`
     query me {
         me {
@@ -7,6 +8,7 @@ export const GET_ME = gql`
             username
             email
             plot {
+                _id
                 plot_position_x
                 plot_position_z
                 buildings {
@@ -22,6 +24,7 @@ export const GET_ME = gql`
         }
     }
 `;
+
 
 
 
