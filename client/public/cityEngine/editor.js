@@ -286,11 +286,14 @@ function exportBlocks(plot){
     let exportArray = []
 
     class Block {
-        constructor(type,x,y,z){
+        constructor(type,x,y,z,r,g,b){
             this.type = type;
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this.building_position_x = x;
+            this.building_position_y = y;
+            this.building_position_z = z;
+            this.building_color_r = r;
+            this.building_color_g = g;
+            this.building_color_b = b;
         }
     }
 
@@ -300,7 +303,9 @@ function exportBlocks(plot){
             for(let z=0;z<dimmensions.z;z++){
                 let inArray = blocks[x][y][z];
                 if(inArray.type){
-                    let block = new Block(inArray.type,x,y,z);
+                    console.log(inArray)
+                    let color = inArray.baseColor
+                    let block = new Block(inArray.type,x,y,z,color.r,color.g,color.b);
                     exportArray.push(block)
                 }
             }
