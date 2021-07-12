@@ -56,20 +56,6 @@ const resolvers = {
             console.log(token)
             return { token, user };
         },
-        saveBuildings: async (parent, args, context) => {
-            if (context.user) {
-                const userBuildings = await User.findById(
-                    context.user._id 
-                );
-
-                userBuildings.plot.plotSchema.buildings.push(args);
-                await userBuildings.save();
-                console.log(userBuildings);
-                return userBuildings;
-            }
-
-            throw new AuthenticationError('You need to be logged in to use this feature.');
-        },
         savePlot: async (parent, { plot_position_x, plot_position_z, buildings }, context) => {
             console.log(buildings)
             if (context.user) {
