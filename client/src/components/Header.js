@@ -10,9 +10,6 @@ const Header = () => {
 
     const { loading, error, data, refetch } = useQuery(GET_ME);
 
-    useEffect(() => {
-        refetch();
-    },[refetch]);
 
     console.log(data)
     const userData = data?.me;

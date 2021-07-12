@@ -33,9 +33,11 @@ const Editor = () => {
             variables: {plot_position_x: plotX, plot_position_z: plotZ}
         });
 
+        console.log(data)
         if(plotError){
             console.log(plotError)
         }
+
         let plots = data.savePlot.plot;
         plots.forEach(plot => {
             if(plotX == plot.plot_position_x && plotZ == plot.plot_position_z){
@@ -70,7 +72,7 @@ const Editor = () => {
             <div id="userTools">
             </div>
             <div id="userSave">
-                <button onClick={handleBuildingSave}>Save Plot</button>
+                <button onClick={handlePlotSave}>Save Plot</button>
             </div>
         </div>
     )

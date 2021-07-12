@@ -43,6 +43,7 @@ export class Road {
         this.relativePos = {x:x,y:y,z:z},
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'rgb(40,40,40)'})
         this.defaultObj = load.imported.road2Way;
+        this.baseColor = {r:1,g:1,b:1}
 
         this.threeWay = load.imported.road3Way;
         this.fourWay = load.imported.road4Way;
@@ -58,6 +59,7 @@ export class Road {
         this.obj.blockType = this.type;
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
+        this.obj.children.forEach(child => child.receiveShadow = true)
         index.scene.add(this.obj)
 
         this.obj.scale.x = 0.5
