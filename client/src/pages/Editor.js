@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import UserTool from '../components/userTool'
-import { SAVE_PLOT, SAVE_BUILDINGS } from '../utils/mutations'
+import { SAVE_PLOT } from '../utils/mutations'
 
 
 import InputModal from '../components/InputModal'
@@ -12,7 +12,6 @@ const Editor = () => {
     const [mode, setMode] = useState('place-residential');
 
     const [savePlot, { plotError }] = useMutation(SAVE_PLOT)
-    const [saveBuildings, { buildingError }] = useMutation(SAVE_BUILDINGS)
 
     const [savedYet, setSavedYet ] = useState(false)
 

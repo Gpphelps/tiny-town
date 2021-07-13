@@ -18,11 +18,11 @@ export const plotArrayInit = (targetArray,dimmensions) => {
 
 }
 
-export function wait(){
+export function wait(time){
     return new Promise(resolve => {
         setTimeout(() => {
             resolve('resolved')
-        },600)
+        },time)
     })
 }
 
