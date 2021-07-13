@@ -25,11 +25,12 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_PLOT = gql` 
-    mutation savePlot($plot_position_x: Int, $plot_position_z: Int, $buildings: String) {
-        savePlot(plot_position_x: $plot_position_x, plot_position_z: $plot_position_z, buildings: $buildings) {
+    mutation savePlot($plot_position_x: Int, $plot_position_z: Int, $buildings: String, $plotName: String) {
+        savePlot(plot_position_x: $plot_position_x, plot_position_z: $plot_position_z, buildings: $buildings, plotName: $plotName) {
             username
             plot {
                 _id
+                plotName
                 plot_position_x
                 plot_position_z
                 buildings {

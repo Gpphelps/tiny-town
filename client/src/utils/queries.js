@@ -9,6 +9,7 @@ export const GET_ME = gql`
             email
             plot {
                 _id
+                plotName
                 plot_position_x
                 plot_position_z
                 buildings {
@@ -33,6 +34,7 @@ export const GET_CITY = gql`
     query city {
         city {
             plot {
+                plotName
                 plot_position_x
                 plot_position_z
                 buildings {
