@@ -92,7 +92,6 @@ export class Road {
                 roadsAround++
             }
         })
-        console.log(roadsAround)
 
         this.obj.scale.x = 0.5;
         this.obj.rotation.y = 0;
@@ -101,7 +100,6 @@ export class Road {
         //PROBABLY BETTER WAY TO DO THIS, SHOULD FIGURE THAT OUT
         if(roadsAround === 1){
             if(plusZ.type == 'road' || minusZ.type == 'road'){
-                console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             }
         }
@@ -110,7 +108,6 @@ export class Road {
 
         if(roadsAround === 2){
             if(plusZ.type == 'road' && minusZ.type == 'road'){
-                console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             } else if (plusX.type == 'road' && plusZ.type == 'road'){
                 this.obj.children = []
@@ -277,8 +274,6 @@ export class Building {
             let newMat = new THREE.MeshPhongMaterial()
             newMat.color = minusY.obj.children[0].defaultMaterial.color
             newMat
-            console.log(minusY)
-            console.log(newMat)
             this.obj.children[0].material = newMat
             this.obj.children[0].defaultMaterial = newMat
 

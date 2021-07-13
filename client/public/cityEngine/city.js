@@ -7,74 +7,12 @@ import * as cls from './classes.js'
 
 let plotData;
 
-let placeholderData = {
-    data: {
-        plots: [
-            {
-                plot_position_x: 0,
-                plot_position_z: 0,
-                buildings: [
-                    {
-                        name: 'office',
-                        building_position_x: 4,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'office',
-                        building_position_x: 4,
-                        building_position_y: 2,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'office',
-                        building_position_x: 2,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'commercial',
-                        building_position_x: 2,
-                        building_position_y: 1,
-                        building_position_z: 5,
-                    },
-                    {
-                        name: 'road',
-                        building_position_x: 3,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    }
-                ]
-            },
-            {
-                plot_position_x: 10,
-                plot_position_z: 0,
-                buildings: [
-                    {
-                        name: 'office',
-                        building_position_x: 4,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'office',
-                        building_position_x: 2,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                ]
-            },
-
-        ]
-    }
-};
-
-
 const allPlots = []
 
-export function init(){
+export async function init(){
     
-    // allPlots = document.querySelector('#plotData').textContent;
+    //waits until react has put the data in the text area
+    await ts.domWait(document.querySelector('#plotData'))
     plotData = JSON.parse(document.querySelector('#plotData').value)
     console.log(plotData)
     buildPlots()
@@ -144,6 +82,7 @@ async function buildPlots(){
             }
         }
     })
+    console.log(allPlots)
 }
 
 function buildWorld(){
@@ -189,6 +128,10 @@ function userDoubleClick(e){
     mouse.y = -(e.clientY/window.innerHeight) * 2 +1;
     raycaster.setFromCamera(mouse,index.camera);
     let intersects = raycaster.intersectObject(index.scene,true)
+
+    if(intersects.length == 0){
+        return
+    }
 
     let object = intersects[0].object
     console.log(object)

@@ -112,7 +112,7 @@ async function runByMode(){
     
     //JUST A PLACEHOLDER FUNCTINO, JUST WAITS 2 SECONDS
     //NEED TO MAKE THE ACTUAL LOADER WORK WITH A PROMISE
-    await ts.wait()
+    await ts.wait(600)
 
     if(runMode == 'editor'){
         editor.init()

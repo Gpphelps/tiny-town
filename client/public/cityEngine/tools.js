@@ -26,6 +26,21 @@ export function wait(time){
     })
 }
 
+
+//Promise for awaiting react dom changes, does interval until react puts stuff in the textarea
+export function domWait(waitingUpon){
+    return new Promise(resolve => {
+        setInterval(() => {
+            let value = waitingUpon.value;
+
+            if(value.length > 10){
+                resolve('resolved')
+            }
+
+        },10)
+    })
+}
+
 export async function waitASec(){
     const result = await wait();
 }
