@@ -12,7 +12,6 @@ const Editor = () => {
     const [mode, setMode] = useState('place-residential');
 
     const [savePlot, { plotError }] = useMutation(SAVE_PLOT)
-    const [saveBuildings, { buildingError }] = useMutation(SAVE_BUILDINGS)
 
     const [savedYet, setSavedYet ] = useState(false)
 

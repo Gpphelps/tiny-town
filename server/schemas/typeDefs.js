@@ -36,7 +36,7 @@ const typeDefs = gql`
         users: [User]
         user(_id: String, username: String): User
         me: User
-        city: [Plot]
+        city: [User]
     }
 
 
