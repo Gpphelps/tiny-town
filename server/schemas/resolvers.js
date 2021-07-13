@@ -56,6 +56,7 @@ const resolvers = {
             console.log(token)
             return { token, user };
         },
+
         savePlot: async (parent, { plot_position_x, plot_position_z, buildings, plotName }, context) => {
             console.log(buildings)
             if (context.user) {
