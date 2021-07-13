@@ -192,9 +192,14 @@ export class Building {
         console.log(this.defaultObj)
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-        if(this.randomBaseColor){
-            this.obj.children[0].material.color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
+        this.obj.children[0].material.color = this.baseColor
+
+        if(this.randomBaseColor && index.runMode == 'edit'){
+            let color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
+            this.obj.children[0].material.color = color;
+            this.obj.baseColor = color;
         }
+
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -273,7 +278,6 @@ export class Building {
         if(minusY.type){
             let newMat = new THREE.MeshPhongMaterial()
             newMat.color = minusY.obj.children[0].defaultMaterial.color
-            newMat
             this.obj.children[0].material = newMat
             this.obj.children[0].defaultMaterial = newMat
 
