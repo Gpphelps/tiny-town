@@ -56,7 +56,7 @@ const resolvers = {
             console.log(token)
             return { token, user };
         },
-        savePlot: async (parent, { plot_position_x, plot_position_z, buildings }, context) => {
+        savePlot: async (parent, { plot_position_x, plot_position_z, buildings, plotName }, context) => {
             console.log(buildings)
             if (context.user) {
                 const savedPlot = await User.findById(
@@ -78,7 +78,8 @@ const resolvers = {
                 let newPlot = {
                     plot_position_x: plot_position_x,
                     plot_position_z: plot_position_z,
-                    buildings: buildingArray
+                    buildings: buildingArray,
+                    plotName: plotName
                 }
 
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import UserTool from '../components/userTool'
-import { SAVE_PLOT, SAVE_BUILDINGS } from '../utils/mutations'
+import { SAVE_PLOT } from '../utils/mutations'
 
 
 import InputModal from '../components/InputModal'
@@ -32,7 +32,7 @@ const Editor = () => {
         let buildingData = document.querySelector('#saveText').value
 
         const { data } = await savePlot({
-            variables: {plot_position_x: plotX, plot_position_z: plotZ, buildings: buildingData}
+            variables: {plot_position_x: plotX, plot_position_z: plotZ, buildings: buildingData, plotName: plotName}
         });
 
         console.log(data)
