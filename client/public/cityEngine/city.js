@@ -75,9 +75,10 @@ const allPlots = []
 export function init(){
     
     // allPlots = document.querySelector('#plotData').textContent;
-    plotData = placeholderData;
+    plotData = JSON.parse(document.querySelector('#plotData').value)
+    console.log(plotData)
     buildPlots()
-    buildWorld()
+    // buildWorld()
     document.querySelector('canvas').addEventListener('mousemove',userHover)
     document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
 
@@ -85,27 +86,44 @@ export function init(){
 
 
 async function buildPlots(){
-    let plots = plotData.data.plots;
+
+    let wait = await ts.wait(600)
+
+    let city = plotData.city
+
+    let plots = []
+
+
+    city.forEach(user => {
+        let userPlots = user.plot
+        userPlots.forEach(plot => {
+            plots.push(plot)
+        })
+    })
+
+    console.log(plots)
     plots.forEach(plot => {
+        console.log(plot)
         let newPlot = new cls.Plot(plot.plot_position_x,0,plot.plot_position_z);
+        console.log(newPlot)
         newPlot.buildBase();
         allPlots.push(newPlot)
         plot.buildings.forEach(building => {
 
             let newBuilding;
-            // if(building.name == 'residential'){
-            //     newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
-            //     newBuilding.addToScene()
-            // }
-            if(building.name == 'office'){
+            if(building.type == 'residential'){
+                newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
+                newBuilding.addToScene()
+            }
+            if(building.type == 'office'){
                 newBuilding = new cls.Office(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
-            if(building.name == 'commercial'){
+            if(building.type == 'commercial'){
                 newBuilding = new cls.Commercial(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
-            if(building.name == 'road'){
+            if(building.type == 'road'){
                 newBuilding = new cls.Road(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
@@ -114,6 +132,7 @@ async function buildPlots(){
     })
 
     allPlots.forEach(plot => {
+        console.log(plot.blocks[1][1][1])
         for(var x=0;x<plot.dimmensions.x;x++){
             for(var y=0;y<plot.dimmensions.y;y++){
                 for(var z=0;z<plot.dimmensions.z;z++){

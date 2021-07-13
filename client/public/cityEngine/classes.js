@@ -192,7 +192,7 @@ export class Building {
             console.log('alts')
             this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
         }
-
+        console.log(this.defaultObj)
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
         if(this.randomBaseColor){
