@@ -57,6 +57,7 @@ export class Road {
         //creates new basic mesh
         this.obj = new THREE.Object3D();
         this.obj.blockType = this.type;
+
         ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
         this.obj.children.forEach(child => child.receiveShadow = true)
@@ -189,17 +190,18 @@ export class Building {
             console.log('alts')
             this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
         }
-        console.log(this.defaultObj)
-        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-        this.obj.children[0].material.color = this.baseColor
+        // ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
+        // this.obj.children[0].material.color = this.baseColor
 
-        if(this.randomBaseColor && index.runMode == 'edit'){
-            let color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
-            this.obj.children[0].material.color = color;
-            this.obj.baseColor = color;
-        }
+        // if(this.randomBaseColor && index.runMode == 'editor'){
+        //     let color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
+        //     this.obj.children[0].material.color = color;
+        //     this.obj.baseColor = color;
+        // }
 
+        let merged = ts.mergeGeometry(this.defaultObj)
+        this.obj = merged
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -342,7 +344,8 @@ export class Commercial extends Building {
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
 
-        this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
+        // this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
+        this.alts = [load.imported.commercialGround]
     }
 
 }

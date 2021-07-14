@@ -11,7 +11,7 @@ import * as load from './loader.js';
 
 //placeholder for setting the mode that it operates in
 
-let runMode;
+export let runMode;
 
 export let scene;
 export let camera;
@@ -69,7 +69,7 @@ function init(){
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(0x94e8ff);
     renderer.shadowMap.enabled = true;
-
+    renderer.powerPreference = "high-performance"
 
     document.querySelector('#canvCont').appendChild( renderer.domElement );
 
