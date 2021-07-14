@@ -181,33 +181,17 @@ export class Building {
             return;
         }
 
-        //because gltf files consist of many children, the obj needs to be a group that holds all children
-            //loops through all children and makes a new mesh copying the geometry and material of the child
-
+        //chooses random between different alternates
         if(this.alts){
             console.log('alts')
             this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
         }
 
-        // ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
-        // this.obj.children[0].material.color = this.baseColor
-
-        // if(this.randomBaseColor && index.runMode == 'editor'){
-        //     let color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
-        //     this.obj.children[0].material.color = color;
-        //     this.obj.baseColor = color;
-        // }
-
         //copies geometry and material to a new object
-        console.log(this.defaultObj)
         this.obj = ts.copyToNewMesh(this.defaultObj)
-
-
-
-        // this.obj = ts.mergeGeometry(this.defaultObj);
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
-        //x scale is slightly decreased to give space between buildings
+
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
         this.obj.scale.z = this.scale.z;
@@ -283,20 +267,6 @@ export class Building {
             ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
-
-        //makes color the same as the building below it
-        //DOESNT WORK ANYMORE
-        if(minusY.type){
-            // let newMat = new THREE.MeshPhongMaterial()
-            // newMat.color = minusY.obj.children[0].defaultMaterial.color
-            // this.obj.children[0].material = newMat
-            // this.obj.children[0].defaultMaterial = newMat
-
-        }
-
-
-
-
 
         //prevents endless loops of fitting, only the originally placed one will cause surroundings to fit
         if(original){

@@ -11,14 +11,6 @@ export const imported = {}
 
 
 export async function init(){
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-straight.obj', 'road2Way')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-straight.mtl', 'road2WayMat')
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-3way.obj', 'road3Way')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-3way.mtl', 'road3WayMat')
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-4way.obj', 'road4Way')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-4way.mtl', 'road4WayMat')
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-corner.obj', 'roadCorner')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-corner.mtl', 'roadCornerMat')
 
     await gltfLoader('./cityEngine/Objects/Residential/apartment.glb','apartmentGround')
     await gltfLoader('./cityEngine/Objects/Residential/apartmentmid.glb','apartmentMid')
@@ -64,6 +56,7 @@ function gltfLoader(filePath, targetVar){
 
         // console.log(object)
         let mergedMesh = ts.mergeGeometry(object)
+        mergedMesh.path = filePath
 
         imported[targetVar] = mergedMesh;
 
