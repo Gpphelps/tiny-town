@@ -130,41 +130,6 @@ export function newChildren(templateObj){
     return newChildren;
 }
 
-export function mergeBuffers(obj){
-
-
-    const positions = []
-    const normals = []
-    const uvs = []
-
-    obj.children.forEach(mesh => {
-        mesh.geometry.attributes.normal.array.forEach(vertex => normals.push(vertex))
-        mesh.geometry.attributes.position.array.forEach(vertex => positions.push(vertex))
-        mesh.geometry.attributes.uv.array.forEach(vertex => uvs.push(vertex))
-    })
-
-
-    const geometry = new THREE.BufferGeometry();
-    const positionNumComponents = 3;
-    const normalNumComponents = 3;
-    const uvNumComponents = 2;
-
-    geometry.setAttribute(
-        'position',
-        new THREE.BufferAttribute(new Float32Array(positions), positionNumComponents));
-    geometry.setAttribute(
-        'normal',
-        new THREE.BufferAttribute(new Float32Array(normals), normalNumComponents));
-    geometry.setAttribute(
-        'uv',
-        new THREE.BufferAttribute(new Float32Array(uvs), uvNumComponents));
-
-
-    let newMesh = new THREE.Mesh()
-    newMesh.geometry = geometry;
-    newMesh.material = new THREE.MeshPhongMaterial({color: 'red',side: THREE.FrontSide})
-    return newMesh
-}
 
 export function mergeGeometry(obj){
     
@@ -173,8 +138,10 @@ export function mergeGeometry(obj){
         let meshGeo = mesh.geometry;
         let meshPos = mesh.position;
         let meshRot = mesh.rotation;
-        // console.log(mesh)
+        let meshColor = mesh.material.color;
+
         let movedPos = []
+        let vertexColors = []
         for(let i=0;i<meshGeo.attributes.position.array.length;i+=3){
             let x = meshGeo.attributes.position.array[i]
             let y = meshGeo.attributes.position.array[i+1]
@@ -201,6 +168,10 @@ export function mergeGeometry(obj){
             let rotatedY = point[1]
             let rotatedZ = point[2]
 
+            vertexColors.push(meshColor.r)
+            vertexColors.push(meshColor.g)
+            vertexColors.push(meshColor.b)
+
 
             let newX = (rotatedX) + meshPos.x
             let newY = (rotatedY) + meshPos.y
@@ -215,20 +186,21 @@ export function mergeGeometry(obj){
         }
 
         meshGeo.attributes.position.array.set(movedPos)
+        meshGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(vertexColors),3));
 
         geometries.push(mesh.geometry)
     })
     console.log(geometries)
 
-    geometries.forEach(geometry => {
-        if(geometry.attributes.color){
-            delete geometry.attributes.color
-        }
-    })
+    // geometries.forEach(geometry => {
+    //     if(geometry.attributes.color){
+    //         delete geometry.attributes.color
+    //     }
+    // })
     let merged = BufferGeometryUtils.mergeBufferGeometries(geometries, false)
     console.log(merged)
 
-    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({color:'blue'}))
+    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}))
 
     return newMesh;
 }
