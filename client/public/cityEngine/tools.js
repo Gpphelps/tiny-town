@@ -190,7 +190,7 @@ export function mergeGeometry(obj){
 
         geometries.push(mesh.geometry)
     })
-    console.log(geometries)
+    // console.log(geometries)
 
     // geometries.forEach(geometry => {
     //     if(geometry.attributes.color){
@@ -198,9 +198,9 @@ export function mergeGeometry(obj){
     //     }
     // })
     let merged = BufferGeometryUtils.mergeBufferGeometries(geometries, false)
-    console.log(merged)
+    // console.log(merged)
 
-    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}))
+    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}));
 
     return newMesh;
 }
@@ -252,6 +252,18 @@ export function hexToRgb(hex) {
       b: parseInt(result[3], 16)/255
     } : null;
 }
+
+
+export function copyToNewMesh(mesh){
+
+    let obj = new THREE.Mesh()
+    obj.geometry = mesh.geometry;
+    obj.material = mesh.material;
+
+
+    return obj
+}
+
 
 
 

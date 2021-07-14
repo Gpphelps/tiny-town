@@ -3,6 +3,7 @@ import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/thre
 import {OBJLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/OBJLoader.js';
 import {MTLLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/MTLLoader.js';
 import * as index from './index.js'
+import * as ts from './tools.js'
 
 
 export const imported = {}
@@ -51,13 +52,20 @@ function gltfLoader(filePath, targetVar){
     const loader = new GLTFLoader();
     loader.load(filePath, (gltf) => {
         
+        // const object = gltf.scene;
+        // object.children.forEach((child,index) => {
+        //     child.defaultMaterial = child.material;
+        // })
+        // object.path = filePath
+        // object.children = object.children.filter(child => child.type != "Object3D")
+
         const object = gltf.scene;
-        object.children.forEach((child,index) => {
-            child.defaultMaterial = child.material;
-        })
-        object.path = filePath
         object.children = object.children.filter(child => child.type != "Object3D")
-        imported[targetVar] = object;
+
+        // console.log(object)
+        let mergedMesh = ts.mergeGeometry(object)
+
+        imported[targetVar] = mergedMesh;
 
     })
 }

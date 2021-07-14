@@ -183,8 +183,6 @@ export class Building {
 
         //because gltf files consist of many children, the obj needs to be a group that holds all children
             //loops through all children and makes a new mesh copying the geometry and material of the child
-        this.obj = new THREE.Object3D();
-        this.obj.blockType = this.type;
 
         if(this.alts){
             console.log('alts')
@@ -200,8 +198,15 @@ export class Building {
         //     this.obj.baseColor = color;
         // }
 
-        let merged = ts.mergeGeometry(this.defaultObj)
-        this.obj = merged
+        //copies geometry and material to a new object
+        console.log(this.defaultObj)
+        this.obj = ts.copyToNewMesh(this.defaultObj)
+
+
+
+        // this.obj = ts.mergeGeometry(this.defaultObj);
+        this.obj.blockType = this.type
+        this.obj.defaultMaterial = this.obj.material
         //x scale is slightly decreased to give space between buildings
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -266,8 +271,11 @@ export class Building {
 
 
         if(minusY.type === this.type && plusY.type != this.type){
-            this.obj.children = [];
-            ts.newChildren(this.roofObj).forEach(child => this.obj.add(child))
+            // this.obj.children = [];
+            // ts.newChildren(this.roofObj).forEach(child => this.obj.add(child));
+            //CANT SET OBJ TO NEW OBJ AND HAVE IT WORK NEED TO SET ITS GEOMETRY AND MATERIAL AND ITLL UPDATE
+            this.obj.geometry = ts.copyToNewMesh(this.roofObj).geometry
+            this.obj.material = ts.copyToNewMesh(this.roofObj).material
             this.obj.rotation.y = minusY.obj.rotation.y 
             // index.scene.add(this.obj)
         } else if (minusY.type === this.type && plusY.type === this.type){
@@ -277,11 +285,12 @@ export class Building {
         }
 
         //makes color the same as the building below it
+        //DOESNT WORK ANYMORE
         if(minusY.type){
-            let newMat = new THREE.MeshPhongMaterial()
-            newMat.color = minusY.obj.children[0].defaultMaterial.color
-            this.obj.children[0].material = newMat
-            this.obj.children[0].defaultMaterial = newMat
+            // let newMat = new THREE.MeshPhongMaterial()
+            // newMat.color = minusY.obj.children[0].defaultMaterial.color
+            // this.obj.children[0].material = newMat
+            // this.obj.children[0].defaultMaterial = newMat
 
         }
 
