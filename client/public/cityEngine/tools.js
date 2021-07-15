@@ -116,11 +116,60 @@ export function newChildren(templateObj){
 export function mergeGeometry(obj){
     
     let geometries = []
-    obj.children.forEach(mesh => {
+    obj.children.forEach((mesh,index) => {
         let meshGeo = mesh.geometry;
         let meshPos = mesh.position;
         let meshRot = mesh.rotation;
         let meshColor = mesh.material.color;
+
+        // meshRot = meshRot.setFromVector3(new THREE.Vector3(0,0,0),'XYZ')
+        // console.log(meshRot)
+        // meshGeo.translate(meshPos.x+1,meshPos.y+1,meshPos.z+1)
+
+        let signs = {
+            w: 1,
+            x: 1,
+            y: 1,
+            w: 1,
+        }
+
+
+        let quart = new THREE.Quaternion();
+        quart.setFromEuler(meshRot);
+
+        if(quart.w < 0){
+            signs.w = -1
+        }
+        if(quart.x < 0){
+            signs.x = -1
+        }
+        if(quart.y < 0){
+            signs.y = -1
+        }
+        if(quart.z < 0){
+            signs.z = -1
+        }
+
+
+
+        // quart.w = Math.abs(quart.w)
+        // quart.x = Math.abs(quart.x)
+        // quart.y = Math.abs(quart.y)
+        // quart.z = Math.abs(quart.z)
+
+        quart.w = 0
+        quart.x = 0.707
+        quart.y = 0
+        quart.z = -0.707
+
+
+
+        quart.set(quart.w,quart.x,quart.y,quart.z);
+
+        meshRot.setFromQuaternion(quart)
+
+        // meshRot.set(meshRot.x,meshRot.y,meshRot.z)
+
 
         let movedPos = []
         let vertexColors = []
@@ -129,17 +178,20 @@ export function mergeGeometry(obj){
             let y = meshGeo.attributes.position.array[i+1]
             let z = meshGeo.attributes.position.array[i+2]
 
+
             let point = [x,y,z];
 
+            //scaling
             point[0] = point[0] * mesh.scale.x
             point[1] = point[1] * mesh.scale.y
             point[2] = point[2] * mesh.scale.z
+
+            //rotating
 
             point = math.multiply(point,rotatorX(meshRot.x));
             point = math.multiply(point,rotatorY(meshRot.y));
             point = math.multiply(point,rotatorZ(meshRot.z));
             // point = math.multiply(point,rotatorX(meshRot.x));
-            point = math.multiply(point,rotatorY(meshRot.y));
             // point = math.multiply(point,rotatorY(meshRot.y));
 
 
@@ -151,9 +203,13 @@ export function mergeGeometry(obj){
             vertexColors.push(meshColor.g)
             vertexColors.push(meshColor.b)
 
-            let newX = (rotatedX) + meshPos.x
+            //moving
+            let newX = (rotatedX) + meshPos.x 
             let newY = (rotatedY) + meshPos.y
             let newZ = (rotatedZ) + meshPos.z
+            // let newX = (rotatedX) + index
+            // let newY = (rotatedY)
+            // let newZ = (rotatedZ)
    
             movedPos.push(newX)
             movedPos.push(newY)

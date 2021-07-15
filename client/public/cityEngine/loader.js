@@ -20,7 +20,7 @@ export async function init(){
 
     await gltfLoader('./cityEngine/Objects/Office/modernofficebase.glb', 'officeGround')
     await gltfLoader('./cityEngine/Objects/Office/modernofficemid.glb', 'officeMid')
-    await gltfLoader('./cityEngine/Objects/Office/modofficeroof.glb', 'officeRoof')
+    await gltfLoader('./cityEngine/Objects/Office/modernofficeroof.glb', 'officeRoof')
 
     await gltfLoader('./cityEngine/Objects/Commercial/onebyoneshop.glb', 'commercialGround')
     await gltfLoader('./cityEngine/Objects/Commercial/shopmid.glb', 'commercialMid')
@@ -40,7 +40,7 @@ export async function init(){
 
 
 
-function gltfLoader(filePath, targetVar){
+function gltfLoader(filePath, targetVar, last){
     const loader = new GLTFLoader();
     loader.load(filePath, (gltf) => {
         
@@ -53,10 +53,11 @@ function gltfLoader(filePath, targetVar){
 
         const object = gltf.scene;
         object.children = object.children.filter(child => child.type != "Object3D")
-
+        // console.log(object)
         // console.log(object)
         let mergedMesh = ts.mergeGeometry(object)
         mergedMesh.path = filePath
+
 
         imported[targetVar] = mergedMesh;
 

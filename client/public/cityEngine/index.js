@@ -20,7 +20,8 @@ export let controls;
 
 
 let generalSettings = {
-    vertOrbit: false,
+    vertOrbit: true,
+    // mergeMode: true,
 }
 
 function init(){
