@@ -62,13 +62,17 @@ const Editor = () => {
         setModalDisplay('flex')
     }
 
+    const handleHover = (e) => {
+        console.log(e.clientX)
+    }
+
     return(
         <div>
             {/* <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/> */}
             <p style={{display:'none'}} id="runModeProxy">editor</p>
             {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
             <textarea style={{display:'none'}} id='saveText'></textarea>
-            <div id="canvCont"></div>
+            <div onMouseMove={handleHover} id="canvCont"></div>
             <button onClick={renameButton}>Rename this plot</button>
             <div id="userTools">
             </div>

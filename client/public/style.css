@@ -162,3 +162,12 @@ a:visited {
 .modal > input {
     padding: 5px
 }
+
+
+/* TIP POPUP STYLING */
+
+.tipContainer {
+    position: absolute;
+    background-color: rgb(50,50,50);
+    padding: 10px;
+}
