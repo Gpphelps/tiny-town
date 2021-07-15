@@ -13,9 +13,6 @@ const resolvers = {
             });
         },
         me: async (parent, args, context) => {
-            console.log('[---USER CONTEXT---]')
-            console.log(context.user)
-            console.log(User.findOne({ _id: context.user._id }))
             if (context.user) {
               return User.findOne({ _id: context.user._id })
             }
@@ -29,19 +26,13 @@ const resolvers = {
 
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
-            console.log(username,email,password)
             const user = await User.create({ username, email, password });
-            console.log(username,email,password)
             const token = signToken(user);
 
             return { token, user };
         },
         login: async (parent, { email, password }) => {
-            console.log('------')
-            console.log(email,password)
             const user = await User.findOne({ email });
-            console.log('------')
-            console.log(user)
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
@@ -53,21 +44,13 @@ const resolvers = {
             }
 
             const token = signToken(user);
-            console.log(token)
             return { token, user };
-        },
-        savePlot: async (parent, { plot_position_x, plot_position_z, buildings }, context) => {
-            console.log(buildings)
+        }, 
+        savePlot: async (parent, { plot_position_x, plot_position_z, buildings, plotName }, context) => {
             if (context.user) {
                 const savedPlot = await User.findById(
                     context.user._id 
                 );
-
-                console.log('-----SAVE PLOT------')
-                // console.log(savedPlot)
-                // console.log(savedPlot.plot)
-
-
 
                 let parsed = JSON.parse(buildings)
                 let buildingArray = []
@@ -78,24 +61,15 @@ const resolvers = {
                 let newPlot = {
                     plot_position_x: plot_position_x,
                     plot_position_z: plot_position_z,
-                    buildings: buildingArray
+                    buildings: buildingArray,
+                    plotName: plotName
                 }
-
-
 
                 savedPlot.plot.push(newPlot)
 
-
-
-                //custom property inserted so editor knows what plot it's working with
-                // savedPlot.currentPlotID = savedPlot.plot[savedPlot.plot.length-1]._id
-
-                // savedPlot.plot.plotSchema.plot_position_x.push(plot_position_x);
-                // savedPlot.plot.plotSchema.plot_position_y.push(plot_position_z);
                 await savedPlot.save();
 
                 return savedPlot;
-                    
             }
 
             throw new AuthenticationError('You need to be logged in to use this feature.');

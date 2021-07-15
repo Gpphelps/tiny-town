@@ -12,7 +12,10 @@ const plotSchema = new Schema(
         },
         buildings: [
             placedSchema,
-        ]
+        ],
+        plotName: {
+            type: String
+        },
     }
 );
 

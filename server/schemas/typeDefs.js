@@ -10,6 +10,7 @@ const typeDefs = gql`
 
     type Plot {
         _id: ID
+        plotName: String
         plot_position_x: Int
         plot_position_z: Int
         buildings: [Building]
@@ -42,7 +43,7 @@ const typeDefs = gql`
     type Mutation {
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        savePlot(plot_position_x: Int, plot_position_z: Int, buildings: String): User
+        savePlot(plot_position_x: Int, plot_position_z: Int, buildings: String, plotName: String): User
         removeBuilding(_id: ID): User
     }
 `;

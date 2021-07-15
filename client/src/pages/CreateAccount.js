@@ -75,7 +75,7 @@ const CreateAccount = () => {
                 <h3 style={textStyle}>Create New Account</h3>
                 <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
                 <input style={loginStyle} onChange={handleInput} name="username" placeholder="Username"></input>
-                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password"></input>
+                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Sign Up</button>
             </form>
         </div>

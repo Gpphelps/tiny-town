@@ -72,7 +72,7 @@ const Login = () => {
             <form>
                 <h3 style={textStyle}>Login</h3>
                 <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
-                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password"></input>
+                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Login</button>
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
