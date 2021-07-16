@@ -170,4 +170,10 @@ a:visited {
     position: absolute;
     background-color: rgb(50,50,50);
     padding: 10px;
+    border-radius: 5px;
+}
+
+.tipContainer > p {
+    color: white;
+    font-size: 12px;
 }

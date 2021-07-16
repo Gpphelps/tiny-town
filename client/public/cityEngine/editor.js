@@ -235,28 +235,28 @@ function userClick(e){
     } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-office'){
         let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-commercial'){
         let newBlock = new cls.Commercial(editPlot,place.x,place.y,place.z);
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-park' && currentHover.object.blockType == undefined){
         let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
         newBlock.fitToSurroundings(true)

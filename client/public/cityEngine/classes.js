@@ -197,6 +197,7 @@ export class Building {
         this.obj.scale.z = this.scale.z;
 
         index.scene.add(this.obj)
+        this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
 
         let absX = this.relativePos.x + this.parent.position.x;
         let absY = this.relativePos.y + this.parent.position.y;
@@ -221,7 +222,13 @@ export class Building {
 
         let pd = this.parent.dimmensions
 
-        plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        if(this.parent.blocks[pos.x+1][pos.y][pos.z]){
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+            console.log('plusX!')
+        } else {
+            console.log('no sir you wish')
+        }
+
         minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
         plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
         minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]

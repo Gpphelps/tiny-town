@@ -6,6 +6,7 @@ import { SAVE_PLOT } from '../utils/mutations'
 
 
 import InputModal from '../components/InputModal'
+import Tip from '../components/Tip'
 
 const Editor = () => {
 
@@ -18,6 +19,10 @@ const Editor = () => {
     const [plotName, setPlotName] = useState('')
 
     const [modalDisplay, setModalDisplay] = useState('flex')
+
+    const [tipPosition, setTipPosition] = useState({top:0,left:0})
+    const [tipDisplay, setTipDisplay] =  useState('none')
+    const [tipOver, setTipOver] = useState('none')
 
     //gets plotX and plotZ data from local storage
         //saves new plot, SAVE_PLOT resolver returns the entire user
@@ -62,19 +67,29 @@ const Editor = () => {
         setModalDisplay('flex')
     }
 
+
+
     const handleHover = (e) => {
-        console.log(e.clientX)
+        setTipPosition({top:e.clientY+20,left:e.clientX+20})
+    }
+
+    const tipIsOver = (e) => {
+
     }
 
     return(
-        <div>
+        <div onMouseMove={handleHover}>
             {/* <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/> */}
-            <p style={{display:'none'}} id="runModeProxy">editor</p>
-            {/* textarea is a hidden textarea that static scripts exports the buildings to so react can use graphQL */}
-            <textarea style={{display:'none'}} id='saveText'></textarea>
-            <div onMouseMove={handleHover} id="canvCont"></div>
+            <div>
+                <p style={{display:'none'}} id="runModeProxy">editor</p>
+                <textarea style={{display:'none'}} id='saveText'></textarea>
+            </div>
+            
+            <div id="canvCont">
+
+            </div>
             <button onClick={renameButton}>Rename this plot</button>
-            <div id="userTools">
+            <div onMouseMove={tipIsOver} id="userTools">
             </div>
             <div id="userSave">
                 <button onClick={handlePlotSave}>Save Plot</button>

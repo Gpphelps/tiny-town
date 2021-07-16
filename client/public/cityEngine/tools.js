@@ -6,11 +6,11 @@ import { BufferGeometryUtils } from './bufferGeometryUtils.js'
 // import * as Buffer from './bufferGeometryUtils.js'
 
 export const plotArrayInit = (targetArray,dimmensions) => {
-    for(var x=0;x<dimmensions.x;x++){
+    for(var x=0;x<dimmensions.x+1;x++){
         let xArray = []
-        for(var y=0;y<dimmensions.y;y++){
+        for(var y=0;y<dimmensions.y+1;y++){
             let yArray = []
-            for(var z=0;z<dimmensions.z;z++){
+            for(var z=0;z<dimmensions.z+1;z++){
                 yArray.push([])
             }
             xArray.push(yArray)
