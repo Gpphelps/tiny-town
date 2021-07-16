@@ -285,6 +285,17 @@ export function copyToNewMesh(mesh){
 
 
 
+export const exporter = {
+    edgeRoadBoolean(value){
+        document.querySelector('#edgeRoadBoolean').value = value;
+    },
+    blockData(data){
+        document.querySelector('#saveText').value = data;
+    }
+}
+
+
+
 
 
 

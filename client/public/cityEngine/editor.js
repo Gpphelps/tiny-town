@@ -71,15 +71,13 @@ export function init(){
 }
 
 
-export let blockExportElem;
+
 
 //RESPONSIBLE FOR PUTTING EVERYTHING INTO REACT CONTAINERS
 function initUi(){
     let cont = document.querySelector('#userTools')
     console.log(cont)
 
-    blockExportElem = document.querySelector('#saveText');
-    console.log(blockExportElem)
 
     //code responsible for creating tool buttons programmatically so they can be put into a container created by react
     let buttonTemplates = [
@@ -275,8 +273,11 @@ function userClick(e){
     }
 
     let exportable = exportBlocks(editPlot)
+    ts.exporter.blockData(exportable)
+
     let allSides = editPlot.checkEdgesForRoads()
-    blockExportElem.value = exportable;
+    ts.exporter.edgeRoadBoolean(allSides)
+
 
 }
 

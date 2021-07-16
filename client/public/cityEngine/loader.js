@@ -78,3 +78,4 @@ function mtlLoader(filePath, targetVar){
         imported[targetVar] = mtl.materials.roadmat
     })
 }
+

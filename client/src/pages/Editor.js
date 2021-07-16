@@ -83,8 +83,9 @@ const Editor = () => {
             <div>
                 <p style={{display:'none'}} id="runModeProxy">editor</p>
                 <textarea style={{display:'none'}} id='saveText'></textarea>
+                <textarea style={{display:'none'}} id='edgeRoadBoolean'></textarea>
             </div>
-            
+
             <div id="canvCont">
 
             </div>
