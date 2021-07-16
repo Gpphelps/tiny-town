@@ -275,6 +275,7 @@ function userClick(e){
     }
 
     let exportable = exportBlocks(editPlot)
+    let allSides = editPlot.checkEdgesForRoads()
     blockExportElem.value = exportable;
 
 }

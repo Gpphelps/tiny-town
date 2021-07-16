@@ -33,6 +33,40 @@ export class Plot {
             }
         }
     }
+
+    checkEdgesForRoads(){
+        let leftSide = false
+        let rightSide = false
+        let topSide = false
+        let bottomSide = false
+
+        for(let x=0;x<this.dimmensions.x;x++){
+            console.log(this.blocks[x][1][0])
+            if(this.blocks[x][1][0].type == 'road'){
+                topSide = true;
+            }
+            if(this.blocks[x][1][this.dimmensions.x-1].type == 'road'){
+                bottomSide = true;
+            }
+        }
+
+        for(let z=0;z<this.dimmensions.z;z++){
+            if(this.blocks[0][1][z].type == 'road'){
+                leftSide = true;
+            }
+            if(this.blocks[this.dimmensions.z-1][1][z].type == 'road'){
+                rightSide = true;
+            }
+        }
+
+        console.log(topSide,bottomSide,leftSide,rightSide)
+
+        if(leftSide && rightSide && topSide && bottomSide){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 
@@ -48,6 +82,8 @@ export class Road {
         this.threeWay = load.imported.road3Way;
         this.fourWay = load.imported.road4Way;
         this.corner = load.imported.roadCorner;
+
+        this.allowFit = true;
     }
     addToScene(){
 
@@ -76,6 +112,10 @@ export class Road {
         this.obj.receiveShadow = true;
     }
     fitToSurroundings(original){
+
+        if(!this.allowFit){
+            return
+        }
         let pos = this.relativePos
         let plusX
         let minusX
@@ -85,45 +125,51 @@ export class Road {
         let minusZ
 
         let pd = this.parent.dimmensions
-        console.log(pos.x)
+        
 
         if(pos.x == pd.x-1){
             plusX = new Road(this.parent, pos.x+1,pos.y,pos.z)
-            console.log(plusX)
+            plusX.allowFit = false;
         } else {
             plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
         }
         if(pos.x == 0){
             minusX = new Road(this.parent,pos.x-1,pos.y,pos.z)
+            minusX.allowFit = false;
         } else {
             minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
         }
 
         if(pos.y == pd.y-1){
             plusY = new Road(this.parent, pos.x,pos.y+1,pos.z)
+            plusY.allowFit = false;
         } else {
             plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]        
         }
         if(pos.y == 0){
             minusY = new Road(this.parent, pos.x,pos.y-1,pos.z)
+            minusY.allowFit = false;
         } else {
             minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
         }
 
         if(pos.z == pd.z-1){
             plusZ = new Road(this.parent, pos.x,pos.y,pos.z+1)
+            plusZ.allowFit = false;
         } else{
             plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
         }
         if(pos.z == 0){
             minusZ = new Road(this.parent, pos.x,pos.y,pos.z-1)
+            minusZ.allowFit = false;
         } else{
             minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
         }
 
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
-
+        console.log(around)
+        console.log(this.allowFit)
         let roadsAround = 0;
         around.forEach(block => {
             if(block.type == 'road'){
