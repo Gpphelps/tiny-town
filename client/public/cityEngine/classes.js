@@ -220,19 +220,40 @@ export class Building {
         let minusZ
 
         let pd = this.parent.dimmensions
+        console.log(pos.x)
 
-        if(this.parent.blocks[pos.x+1][pos.y][pos.z]){
-            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
-            console.log('plusX!')
+        if(pos.x == pd.x-1){
+            plusX = new Blank()
         } else {
-            console.log('no sir you wish')
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        }
+        if(pos.x == 0){
+            minusX = new Blank()
+        } else {
+            minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
         }
 
-        minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
-        plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
-        minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
-        plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
-        minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        if(pos.y == pd.y-1){
+            plusY = new Blank()
+        } else {
+            plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]        
+        }
+        if(pos.y == 0){
+            minusY = new Blank()
+        } else {
+            minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
+        }
+
+        if(pos.z == pd.z-1){
+            plusZ = new Blank()
+        } else{
+            plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        }
+        if(pos.z == 0){
+            minusZ = new Blank()
+        } else{
+            minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        }
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
         
