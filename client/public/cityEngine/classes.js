@@ -77,12 +77,50 @@ export class Road {
     }
     fitToSurroundings(original){
         let pos = this.relativePos
-        let plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
-        let minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
-        let plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
-        let minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
-        let plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
-        let minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        let plusX
+        let minusX
+        let plusY
+        let minusY
+        let plusZ
+        let minusZ
+
+        let pd = this.parent.dimmensions
+        console.log(pos.x)
+
+        if(pos.x == pd.x-1){
+            plusX = new Road(this.parent, pos.x+1,pos.y,pos.z)
+            console.log(plusX)
+        } else {
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        }
+        if(pos.x == 0){
+            minusX = new Road(this.parent,pos.x-1,pos.y,pos.z)
+        } else {
+            minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
+        }
+
+        if(pos.y == pd.y-1){
+            plusY = new Road(this.parent, pos.x,pos.y+1,pos.z)
+        } else {
+            plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]        
+        }
+        if(pos.y == 0){
+            minusY = new Road(this.parent, pos.x,pos.y-1,pos.z)
+        } else {
+            minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
+        }
+
+        if(pos.z == pd.z-1){
+            plusZ = new Road(this.parent, pos.x,pos.y,pos.z+1)
+        } else{
+            plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        }
+        if(pos.z == 0){
+            minusZ = new Road(this.parent, pos.x,pos.y,pos.z-1)
+        } else{
+            minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        }
+
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
 
@@ -92,7 +130,7 @@ export class Road {
                 roadsAround++
             }
         })
-
+        
         this.obj.scale.x = 0.5;
         this.obj.rotation.y = 0;
 
@@ -290,8 +328,8 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
             // index.scene.add(this.obj)
         } else if (minusY.type === this.type && plusY.type === this.type){
-            this.obj.children = [];
-            ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
+            this.obj.geometry = ts.copyToNewMesh(this.midObj).geometry
+            this.obj.material = ts.copyToNewMesh(this.midObj).material
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
