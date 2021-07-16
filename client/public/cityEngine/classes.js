@@ -55,17 +55,16 @@ export class Road {
         this.defaultMaterial = load.imported.road2WayMat
 
         //creates new basic mesh
-        this.obj = new THREE.Object3D();
-        this.obj.blockType = this.type;
-
-        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
-
-        this.obj.children.forEach(child => child.receiveShadow = true)
-        index.scene.add(this.obj)
+        this.obj = ts.copyToNewMesh(this.defaultObj)
+        this.obj.blockType = this.type
+        this.obj.defaultMaterial = this.obj.material
 
         this.obj.scale.x = 0.5
         this.obj.scale.y = 0.5
         this.obj.scale.z = 0.5
+
+        index.scene.add(this.obj)
+        this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
 
         //positioning in scene is calculated relative to placed coords and the coords of the parent
         let absX = this.relativePos.x + this.parent.position.x;

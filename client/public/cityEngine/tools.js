@@ -6,11 +6,11 @@ import { BufferGeometryUtils } from './bufferGeometryUtils.js'
 // import * as Buffer from './bufferGeometryUtils.js'
 
 export const plotArrayInit = (targetArray,dimmensions) => {
-    for(var x=0;x<dimmensions.x+1;x++){
+    for(var x=0;x<dimmensions.x;x++){
         let xArray = []
-        for(var y=0;y<dimmensions.y+1;y++){
+        for(var y=0;y<dimmensions.y;y++){
             let yArray = []
-            for(var z=0;z<dimmensions.z+1;z++){
+            for(var z=0;z<dimmensions.z;z++){
                 yArray.push([])
             }
             xArray.push(yArray)
@@ -157,14 +157,8 @@ export function mergeGeometry(obj){
         // quart.y = Math.abs(quart.y)
         // quart.z = Math.abs(quart.z)
 
-        quart.w = 0
-        quart.x = 0.707
-        quart.y = 0
-        quart.z = -0.707
 
-
-
-        quart.set(quart.w,quart.x,quart.y,quart.z);
+        quart.set(quart.x,-quart.w,quart.y,quart.z);
 
         meshRot.setFromQuaternion(quart)
 
