@@ -29,9 +29,11 @@ const Login = () => {
         
         e.preventDefault();
     
-        const { data } = await loginUser({
+        const { data, error } = await loginUser({
             variables: { email: email, password: password }
         });
+
+        console.log(error);
         
         Auth.login(data.login.token)
 

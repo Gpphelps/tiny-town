@@ -37,9 +37,7 @@ const resolvers = {
             const user = await User.findOne({ email });
             if (!user) {
                 // throw new AuthenticationError('Incorrect credentials');
-                var error = this.refs.errorMessage
-                error.textContent = "Could not find a user with this email or password"
-                error.style.color = "red"
+                error.message
             }
 
             const correctPw = await user.isCorrectPassword(password);
