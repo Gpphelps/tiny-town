@@ -8,7 +8,6 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
     const [loginUser, { error }] = useMutation(LOGIN_USER);
 
@@ -85,7 +84,7 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                <div style={errorStyle} id="error" className="error"> </div>
+                <div style={errorStyle} id="errorMessage" className="error"> </div>
             </form>
         </div>
     )
