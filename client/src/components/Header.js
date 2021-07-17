@@ -9,9 +9,10 @@ import { GET_ME } from '../utils/queries';
     const { loading, error, data, refetch } = useQuery(GET_ME);
 
     const textStyle = {
-        color: "#EEDC05",
-        fontFamily: "'VT323', monospace",
-        textTransform: "uppercase",
+        color: "#FFFFFF",
+        fontFamily: "'Syncopate', sans-serif",
+        textTransform: "lowercase",
+        fontWeight: '300',
     };
 
     useEffect(() => {
