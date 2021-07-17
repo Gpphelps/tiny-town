@@ -88,7 +88,7 @@ const Editor = () => {
 
     return(
         <div onMouseMove={handleHover}>
-            {/* <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/> */}
+            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/>
             <div>
                 <p style={{display:'none'}} id="runModeProxy">editor</p>
                 <textarea style={{display:'none'}} id='saveText'></textarea>

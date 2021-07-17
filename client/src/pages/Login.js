@@ -8,6 +8,7 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [loginUser, { error }] = useMutation(LOGIN_USER);
 
@@ -37,7 +38,9 @@ const Login = () => {
 
         if (error) {
             console.log(error.message)
+            setErrorMessage(error.message);
         }
+        
 
         setEmail('');
         setPassword('');
@@ -76,6 +79,20 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
+                return (
+        <div className='cont'>
+            <form>
+                <h3 style={textStyle}>Login</h3>
+                <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
+                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
+                <button style={buttonStyle} onClick={handleFormSubmit}>Login</button>
+                <Link to="/createaccount">
+                    <p style={pStyle}>Don't have an account? Create one here</p>
+                </Link>
+                {errorMessage && <div className="error"> {errorMessage} </div>}
+            </form>
+        </div>
+    )
             </form>
         </div>
     )
