@@ -71,15 +71,13 @@ export function init(){
 }
 
 
-export let blockExportElem;
+
 
 //RESPONSIBLE FOR PUTTING EVERYTHING INTO REACT CONTAINERS
 function initUi(){
     let cont = document.querySelector('#userTools')
     console.log(cont)
 
-    blockExportElem = document.querySelector('#saveText');
-    console.log(blockExportElem)
 
     //code responsible for creating tool buttons programmatically so they can be put into a container created by react
     let buttonTemplates = [
@@ -230,35 +228,35 @@ function userClick(e){
         let newRoad = new cls.Road(editPlot,place.x,place.y,place.z)
         editPlot.blocks[place.x][place.y][place.z] = newRoad;
         newRoad.addToScene()
-        console.log(newRoad)
+        // console.log(newRoad)
         newRoad.fitToSurroundings(true)
     } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        console.log(newBlock)
+        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-office'){
         let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        console.log(newBlock)
+        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-commercial'){
         let newBlock = new cls.Commercial(editPlot,place.x,place.y,place.z);
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        console.log(newBlock)
+        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-park' && currentHover.object.blockType == undefined){
         let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
-        editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        console.log(newBlock)
+        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
@@ -275,7 +273,11 @@ function userClick(e){
     }
 
     let exportable = exportBlocks(editPlot)
-    blockExportElem.value = exportable;
+    ts.exporter.blockData(exportable)
+
+    let allSides = editPlot.checkEdgesForRoads('boolean')
+    ts.exporter.edgeRoadBoolean(allSides)
+
 
 }
 
@@ -303,7 +305,7 @@ function exportBlocks(plot){
             for(let z=0;z<dimmensions.z;z++){
                 let inArray = blocks[x][y][z];
                 if(inArray.type){
-                    console.log(inArray)
+                    // console.log(inArray)
                     let color = inArray.baseColor
                     let block = new Block(inArray.type,x,y,z,color.r,color.g,color.b);
                     exportArray.push(block)

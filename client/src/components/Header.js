@@ -18,9 +18,9 @@ import { GET_ME } from '../utils/queries';
         refetch();
     },[refetch]);
 
-    console.log(data)
+    
     const userData = data?.me;
-    console.log(userData)
+    
 
     return(
         <header>
@@ -40,11 +40,14 @@ import { GET_ME } from '../utils/queries';
                     </div>
 
                     :
+                    <div>
                     <Link to="/editor">
                     <h3 style={textStyle}>Create a Neighborhood</h3>
                     </Link>
-
-                        
+                    <Link to="/logout">
+                    <h3 style={textStyle}>Logout</h3>
+                    </Link>
+                    </div>   
                 }
 
             </div>

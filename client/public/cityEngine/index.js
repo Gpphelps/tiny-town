@@ -11,7 +11,7 @@ import * as load from './loader.js';
 
 //placeholder for setting the mode that it operates in
 
-let runMode;
+export let runMode;
 
 export let scene;
 export let camera;
@@ -20,7 +20,8 @@ export let controls;
 
 
 let generalSettings = {
-    vertOrbit: false,
+    vertOrbit: true,
+    // mergeMode: true,
 }
 
 function init(){
@@ -69,7 +70,7 @@ function init(){
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(0x94e8ff);
     renderer.shadowMap.enabled = true;
-
+    renderer.powerPreference = "high-performance"
 
     document.querySelector('#canvCont').appendChild( renderer.domElement );
 
@@ -112,7 +113,7 @@ async function runByMode(){
     
     //JUST A PLACEHOLDER FUNCTINO, JUST WAITS 2 SECONDS
     //NEED TO MAKE THE ACTUAL LOADER WORK WITH A PROMISE
-    await ts.wait()
+    await ts.wait(600)
 
     if(runMode == 'editor'){
         editor.init()

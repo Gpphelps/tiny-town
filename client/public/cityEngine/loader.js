@@ -3,6 +3,7 @@ import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/thre
 import {OBJLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/OBJLoader.js';
 import {MTLLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/MTLLoader.js';
 import * as index from './index.js'
+import * as ts from './tools.js'
 
 
 export const imported = {}
@@ -10,14 +11,6 @@ export const imported = {}
 
 
 export async function init(){
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-straight.obj', 'road2Way')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-straight.mtl', 'road2WayMat')
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-3way.obj', 'road3Way')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-3way.mtl', 'road3WayMat')
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-4way.obj', 'road4Way')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-4way.mtl', 'road4WayMat')
-    // await objLoader('./cityEngine/Objects/Roads/road-pholder-corner.obj', 'roadCorner')
-    // await mtlLoader('./cityEngine/Objects/Roads/road-pholder-corner.mtl', 'roadCornerMat')
 
     await gltfLoader('./cityEngine/Objects/Residential/apartment.glb','apartmentGround')
     await gltfLoader('./cityEngine/Objects/Residential/apartmentmid.glb','apartmentMid')
@@ -27,7 +20,7 @@ export async function init(){
 
     await gltfLoader('./cityEngine/Objects/Office/modernofficebase.glb', 'officeGround')
     await gltfLoader('./cityEngine/Objects/Office/modernofficemid.glb', 'officeMid')
-    await gltfLoader('./cityEngine/Objects/Office/modofficeroof.glb', 'officeRoof')
+    await gltfLoader('./cityEngine/Objects/Office/modernofficeroof.glb', 'officeRoof')
 
     await gltfLoader('./cityEngine/Objects/Commercial/onebyoneshop.glb', 'commercialGround')
     await gltfLoader('./cityEngine/Objects/Commercial/shopmid.glb', 'commercialMid')
@@ -47,17 +40,26 @@ export async function init(){
 
 
 
-function gltfLoader(filePath, targetVar){
+function gltfLoader(filePath, targetVar, last){
     const loader = new GLTFLoader();
     loader.load(filePath, (gltf) => {
         
+        // const object = gltf.scene;
+        // object.children.forEach((child,index) => {
+        //     child.defaultMaterial = child.material;
+        // })
+        // object.path = filePath
+        // object.children = object.children.filter(child => child.type != "Object3D")
+
         const object = gltf.scene;
-        object.children.forEach((child,index) => {
-            child.defaultMaterial = child.material;
-        })
-        object.path = filePath
         object.children = object.children.filter(child => child.type != "Object3D")
-        imported[targetVar] = object;
+        // console.log(object)
+        // console.log(object)
+        let mergedMesh = ts.mergeGeometry(object)
+        mergedMesh.path = filePath
+
+
+        imported[targetVar] = mergedMesh;
 
     })
 }
@@ -76,3 +78,4 @@ function mtlLoader(filePath, targetVar){
         imported[targetVar] = mtl.materials.roadmat
     })
 }
+
