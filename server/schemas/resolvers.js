@@ -3,7 +3,6 @@ const { User } = require('../models');
 const { findById } = require('../models/User');
 const { signToken } = require('../utils/auth');
 
-
 const resolvers = {
     Query: {
         users: async () => {
@@ -36,14 +35,13 @@ const resolvers = {
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
-                throw new AuthenticationError('Incorrect credentials');
-                
+                // throw new AuthenticationError('Incorrect credentials');
             }
 
             const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
-                throw new AuthenticationError('Incorrect credentials');
+                // throw new AuthenticationError('Incorrect credentials');
             }
 
             const token = signToken(user);
