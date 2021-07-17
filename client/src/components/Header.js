@@ -1,12 +1,10 @@
-
 import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 import {useQuery} from '@apollo/client';
 import { GET_ME } from '../utils/queries';
-
-
-const Header = () => {
+    
+    const Header = () => {
 
     const { loading, error, data, refetch } = useQuery(GET_ME);
 
@@ -27,7 +25,7 @@ const Header = () => {
     return(
         <header>
             <Link to="/">
-                <h1 style={textStyle}>Tiny Town</h1>
+            <h1 style={textStyle}>Tiny Town</h1>
             </Link>
             <div>
                 {
