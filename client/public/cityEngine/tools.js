@@ -113,7 +113,7 @@ export function newChildren(templateObj){
 }
 
 
-export function mergeGeometry(obj){
+export function mergeGeometryOld(obj){
     
     let geometries = []
     obj.children.forEach((mesh,index) => {
@@ -221,6 +221,56 @@ export function mergeGeometry(obj){
 
     let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}));
 
+    return newMesh;
+}
+
+export function mergeGeometry(obj){
+    let geometries = []
+
+    obj.children.forEach(mesh => {
+        let geometry = mesh.geometry;
+        
+        if(geometry.attributes.color){
+            delete geometry.attributes.color;
+        }
+        // console.log(mesh)
+        let matrix = new THREE.Matrix4();
+        let position = new THREE.Vector3();
+        let rotation = new THREE.Euler();
+        let quaternion = new THREE.Quaternion();
+        let scale = new THREE.Vector3();
+
+        position.x = mesh.position.x;
+        position.y = mesh.position.y;
+        position.z = mesh.position.z;
+
+        quaternion.setFromEuler( mesh.rotation, false);
+
+        scale.x = mesh.scale.x;
+        scale.y = mesh.scale.y;
+        scale.z = mesh.scale.z;
+
+        matrix.compose( position, quaternion, scale);
+
+        let vertexColors = []
+
+        for(var i=0;i<geometry.attributes.position.count;i++){
+            vertexColors.push(mesh.material.color.r)
+            vertexColors.push(mesh.material.color.g)
+            vertexColors.push(mesh.material.color.b)
+        }
+
+        geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(vertexColors),3));
+
+
+        geometry.applyMatrix4(matrix);
+        geometries.push(geometry);
+    })
+
+    let merged = BufferGeometryUtils.mergeBufferGeometries(geometries, false)
+
+    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}));
+    console.log(newMesh)
     return newMesh;
 }
 
@@ -361,7 +411,7 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
         plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().leftArray;
     }
     if(surroundingPlots.minusX){
-        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().rightArray;
+        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().Array;
     }
     if(surroundingPlots.plusZ){
         plusZRoads = surroundingPlots.plusZ.checkEdgesForRoads().topArray;
