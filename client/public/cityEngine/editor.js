@@ -275,7 +275,7 @@ function userClick(e){
     let exportable = exportBlocks(editPlot)
     ts.exporter.blockData(exportable)
 
-    let allSides = editPlot.checkEdgesForRoads()
+    let allSides = editPlot.checkEdgesForRoads('boolean')
     ts.exporter.edgeRoadBoolean(allSides)
 
 

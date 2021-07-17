@@ -340,6 +340,30 @@ export function plotsAround(selectedPlot,allPlots){
 
 }
 
+export function findAndStoreAdjacen(surroundingPlots){
+    console.log(surroundingPlots)
+    let plusXRoads = null;
+    let minusXRoads = null;
+    let plusZRoads = null;
+    let minusZRoads = null;
+
+    console.log(surroundingPlots.minusZ.checkEdgesForRoads())
+
+    if(surroundingPlots.plusX){
+        plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().rightArray;
+    }
+    if(surroundingPlots.minusX){
+        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().leftArray;
+    }
+    if(surroundingPlots.plusZ){
+        plusZRoads = surroundingPlots.plusZ.checkEdgesForRoads().topArray;
+    }
+    if(surroundingPlots.minusZ){
+        minusZRoads = surroundingPlots.minusZ.checkEdgesForRoads().bottomArray;
+    }
+    console.log(minusZRoads)
+}
+
 
 
 

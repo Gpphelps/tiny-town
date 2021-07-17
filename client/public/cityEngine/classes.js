@@ -34,38 +34,57 @@ export class Plot {
         }
     }
 
-    checkEdgesForRoads(){
-        let leftSide = false
-        let rightSide = false
-        let topSide = false
-        let bottomSide = false
+    checkEdgesForRoads(mode){
+        let leftSide = false;
+        let rightSide = false;
+        let topSide = false;
+        let bottomSide = false;
+
+        let leftArray = []
+        let rightArray = []
+        let topArray = []
+        let bottomArray = []
 
         for(let x=0;x<this.dimmensions.x;x++){
             console.log(this.blocks[x][1][0])
             if(this.blocks[x][1][0].type == 'road'){
                 topSide = true;
+                topArray.push(this.blocks[x][1][0])
             }
             if(this.blocks[x][1][this.dimmensions.x-1].type == 'road'){
                 bottomSide = true;
+                bottomArray.push(this.blocks[x][1][this.dimmensions.x-1])
             }
         }
 
         for(let z=0;z<this.dimmensions.z;z++){
             if(this.blocks[0][1][z].type == 'road'){
                 leftSide = true;
+                leftArray.push(this.blocks[0][1][z])
             }
             if(this.blocks[this.dimmensions.z-1][1][z].type == 'road'){
                 rightSide = true;
+                rightArray.push(this.blocks[this.dimmensions.z-1][1][z])
             }
         }
 
         console.log(topSide,bottomSide,leftSide,rightSide)
 
-        if(leftSide && rightSide && topSide && bottomSide){
-            return true;
+        if(mode == 'boolean'){
+            if(leftSide && rightSide && topSide && bottomSide){
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return {
+                leftArray,
+                rightArray,
+                topArray,
+                bottomArray
+            }
         }
+
     }
 }
 

@@ -16,7 +16,7 @@ export async function init(){
     plotData = JSON.parse(document.querySelector('#plotData').value)
     console.log(plotData)
     buildPlots()
-    // buildWorld()
+    buildWorld()
     document.querySelector('canvas').addEventListener('mousemove',userHover)
     document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
 
@@ -139,10 +139,11 @@ function userDoubleClick(e){
     console.log(object)
 
 
-    //figuring out which plot is the one that was clicked
+    //figuring out which plot is the one that was clicked and getting adjacent roads
     let selectedPlot = ts.whichPlot({x:object.position.x,z:object.position.z},allPlots)
-
     let plotsAround = ts.plotsAround(selectedPlot,allPlots)
+    console.log(plotsAround)
+    let adjacentRoads = ts.findAdjacentRoads(plotsAround)
 
     //code to take the react popup and make buttons highlight the new plots
 
