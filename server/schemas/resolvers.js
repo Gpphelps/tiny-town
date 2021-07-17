@@ -3,6 +3,7 @@ const { User } = require('../models');
 const { findById } = require('../models/User');
 const { signToken } = require('../utils/auth');
 
+
 const resolvers = {
     Query: {
         users: async () => {
@@ -36,12 +37,18 @@ const resolvers = {
             const user = await User.findOne({ email });
             if (!user) {
                 // throw new AuthenticationError('Incorrect credentials');
+                var error = this.refs.errorMessage
+                error.textContent = "Could not find a user with this email or password"
+                error.style.color = "red"
             }
 
             const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
                 // throw new AuthenticationError('Incorrect credentials');
+                var error = this.refs.errorMessage
+                error.textContent = "Could not find a user with this email or password"
+                error.style.color = "red"
             }
 
             const token = signToken(user);
