@@ -38,7 +38,7 @@ const Login = () => {
 
         if (error) {
             console.log(error.message)
-            setErrorMessage(error.message);
+            setErrorMessage("Could not find a user with this email or password");
         }
         
 
@@ -69,6 +69,12 @@ const Login = () => {
         color: "#2D2D29",
     };
 
+    const errorStyle = {
+        fontFamily: "'Inconsolata', monospace",
+        textAlign: "center",
+        color: "red",
+    };
+
     return (
         <div className='cont'>
             <form>
@@ -79,20 +85,7 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                return (
-        <div className='cont'>
-            <form>
-                <h3 style={textStyle}>Login</h3>
-                <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
-                <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
-                <button style={buttonStyle} onClick={handleFormSubmit}>Login</button>
-                <Link to="/createaccount">
-                    <p style={pStyle}>Don't have an account? Create one here</p>
-                </Link>
-                {errorMessage && <div className="error"> {errorMessage} </div>}
-            </form>
-        </div>
-    )
+                <div style={errorStyle} className="error"> {errorMessage} </div>
             </form>
         </div>
     )
