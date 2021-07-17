@@ -2,7 +2,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { findById } = require('../models/User');
 const { signToken } = require('../utils/auth');
-// const  { Login }= require ('../../client/src/pages/Login')
+
 
 const resolvers = {
     Query: {
@@ -37,7 +37,7 @@ const resolvers = {
             const user = await User.findOne({ email });
             if (!user) {
                 // throw new AuthenticationError('Incorrect credentials');
-                var error = document.getElementById("error")
+                var error = this.refs.errorMessage
                 error.textContent = "Could not find a user with this email or password"
                 error.style.color = "red"
             }
@@ -46,7 +46,7 @@ const resolvers = {
 
             if (!correctPw) {
                 // throw new AuthenticationError('Incorrect credentials');
-                var error = document.getElementById("error")
+                var error = this.refs.errorMessage
                 error.textContent = "Could not find a user with this email or password"
                 error.style.color = "red"
             }
