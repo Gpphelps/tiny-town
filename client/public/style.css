@@ -50,6 +50,10 @@ button {
     cursor: pointer;
 }
 
+#x:hover {
+    cursor: pointer;
+}
+
 form {
     display: flex;
     flex-direction: column;
