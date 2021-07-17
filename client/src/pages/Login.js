@@ -38,7 +38,7 @@ const Login = () => {
 
         if (error) {
             console.log(error.message)
-            setErrorMessage(error.message);
+            setErrorMessage("Could not find a user with this email or password");
         }
         
 
@@ -85,7 +85,7 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                {errorMessage && <div style={errorStyle} className="error"> {errorMessage} </div>}
+                <div style={errorStyle} className="error"> {errorMessage} </div>
             </form>
         </div>
     )
