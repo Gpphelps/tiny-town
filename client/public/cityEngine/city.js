@@ -121,6 +121,8 @@ function userHover(e){
 
 function userDoubleClick(e){
 
+
+    //casting ray, making sure it isn't hitting the plane
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2()
 
@@ -129,28 +131,20 @@ function userDoubleClick(e){
     raycaster.setFromCamera(mouse,index.camera);
     let intersects = raycaster.intersectObject(index.scene,true)
 
-    if(intersects.length == 0){
+    if(intersects.length == 0 || intersects[0].object.geometry.type == "PlaneGeometry"){
         return
     }
 
     let object = intersects[0].object
     console.log(object)
 
-    let selectedPlot;
 
-    if(object.geometry.type != "PlaneGeometry"){
-        let x = object.position.x;
-        let z = object.position.z;
+    //figuring out which plot is the one that was clicked
+    let selectedPlot = ts.whichPlot({x:object.position.x,z:object.position.z},allPlots)
 
-        allPlots.forEach(plot => {
-            if(x >= plot.position.x && x < plot.position.x + plot.dimmensions.x){
-                if(z >= plot.position.z && z < plot.position.z + plot.dimmensions.z){
-                    selectedPlot = plot;
-                }
-            }
-        })
-    }
-    console.log(selectedPlot)
+    let plotsAround = ts.plotsAround(selectedPlot,allPlots)
+
+    //code to take the react popup and make buttons highlight the new plots
 
     //cloning the popup to remove previous event listeners
     let oldPopup = document.querySelector('#newPlotPopUp')
@@ -167,7 +161,6 @@ function userDoubleClick(e){
     let allButtons = document.querySelectorAll('.plotOption');
     let currentHover;
 
-    console.log(selectedPlot);
     allButtons.forEach(button => {
         let highlightMesh;
         button.addEventListener('mousedown',function(e){

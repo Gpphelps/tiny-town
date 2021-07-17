@@ -296,6 +296,52 @@ export const exporter = {
 
 
 
+export function whichPlot(selectedObjectCoords,allPlots){
+    let selectedPlot;
+
+    let x = selectedObjectCoords.x;
+    let z = selectedObjectCoords.z;
+
+    allPlots.forEach(plot => {
+        if(x >= plot.position.x && x < plot.position.x + plot.dimmensions.x){
+            if(z >= plot.position.z && z < plot.position.z + plot.dimmensions.z){
+                selectedPlot = plot;
+            }
+        }
+    })
+
+    if(selectedPlot){
+        return selectedPlot;
+    } else {
+        return null;
+    }
+}
+
+export function plotsAround(selectedPlot,allPlots){
+
+    console.log(selectedPlot)
+
+    let plotPos = selectedPlot.position;
+    let pd = selectedPlot.dimmensions;
+
+    let plusX = whichPlot({x:plotPos.x+pd.x,z:plotPos.z},allPlots);
+    let minusX = whichPlot({x:plotPos.x-pd.x,z:plotPos.z},allPlots);
+    let plusZ = whichPlot({x:plotPos.x,z:plotPos.z+pd.z},allPlots);
+    let minusZ = whichPlot({x:plotPos.x,z:plotPos.z-pd.z},allPlots);
+
+    return {
+        plusX: plusX,
+        minusX: minusX,
+        plusZ: plusZ,
+        minusZ: minusZ,
+    }
+
+
+
+}
+
+
+
 
 
 

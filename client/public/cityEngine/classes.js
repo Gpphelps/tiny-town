@@ -168,8 +168,7 @@ export class Road {
 
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
-        console.log(around)
-        console.log(this.allowFit)
+
         let roadsAround = 0;
         around.forEach(block => {
             if(block.type == 'road'){
@@ -290,7 +289,6 @@ export class Building {
         this.obj.castShadow = true;
         this.obj.receiveShadow = true;
 
-        console.log(index.renderer.info.render)
     }
     fitToSurroundings(original){
         let pos = this.relativePos
@@ -304,7 +302,7 @@ export class Building {
         let minusZ
 
         let pd = this.parent.dimmensions
-        console.log(pos.x)
+ 
 
         if(pos.x == pd.x-1){
             plusX = new Blank()
