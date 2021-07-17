@@ -52,39 +52,48 @@ const Login = () => {
     
     const textStyle = {
         color: "#2D2D29",
-        fontFamily: "'VT323', monospace",
-        textTransform: "uppercase",
+        fontFamily: "'Syncopate', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         fontSize: "50px",
     };
 
     const loginStyle = {
-        fontFamily: "'Inconsolata', monospace",
         border: "2px solid black",
-        borderRadius: "2px"
+        borderRadius: "2px",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
+
     };
 
     const buttonStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         fontSize: "20px",
         border: "2px solid black",
         borderRadius: "2px"
+        // backgroundColor: '#7DC287',
+        // borderRadius: '5px',
+
     };
 
     const pStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         color: "#2D2D29",
     };
 
     const errorStyle = {
+
         display: "flex",
         flexDirection: "column",
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         color: "red",
-        fontSize: "25px",
-        fontWeight: "bold",
+        fontWeight: "300",
+        fontSize: "20px",
         border: "2px solid black",
         borderRadius: "2px"
     };
@@ -111,10 +120,10 @@ const Login = () => {
                 <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
                 <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Login</button>
+                {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>**Could not find a user with that email or password**</div>}
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>Could not find a user with that email or password</div>}
             </form>
         </div>
     )
