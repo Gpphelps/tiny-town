@@ -2,6 +2,7 @@ import * as index from './index.js'
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import * as ts from './tools.js'
 import * as load from './loader.js'
+import * as editor from './editor.js'
 
 //class responsible for every plot of land on map/editor
 export class Plot {
@@ -85,6 +86,43 @@ export class Plot {
             }
         }
 
+    }
+
+    buildInAdjacentRoads(){
+        let pxRoads =  JSON.parse(localStorage.getItem('plusXRoads'))
+        let mxRoads =  JSON.parse(localStorage.getItem('minusXRoads'))
+        let pzRoads =  JSON.parse(localStorage.getItem('plusZRoads'))
+        let mzRoads =  JSON.parse(localStorage.getItem('minusZRoads'))
+
+        console.log(pxRoads,mxRoads,pzRoads,mzRoads);
+
+        pxRoads.forEach(road => {
+            let newRoad = new Road(editor.editPlot,this.dimmensions.x-1,road.y,road.z);
+            newRoad.deleteable = false
+            newRoad.addToScene()
+            newRoad.fitToSurroundings()
+        })
+
+        mxRoads.forEach(road => {
+            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            newRoad.deleteable = false
+            newRoad.addToScene()
+            newRoad.fitToSurroundings()
+        })
+
+        pzRoads.forEach(road => {
+            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            newRoad.deleteable = false
+            newRoad.addToScene()
+            newRoad.fitToSurroundings()
+        }) 
+
+        mzRoads.forEach(road => {
+            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            newRoad.deleteable = false
+            newRoad.addToScene()
+            newRoad.fitToSurroundings()
+        }) 
     }
 }
 
