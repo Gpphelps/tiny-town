@@ -143,7 +143,7 @@ function userDoubleClick(e){
     let selectedPlot = ts.whichPlot({x:object.position.x,z:object.position.z},allPlots)
     let plotsAround = ts.plotsAround(selectedPlot,allPlots)
     console.log(plotsAround)
-    let adjacentRoads = ts.findAdjacentRoads(plotsAround)
+    let adjacentRoads = ts.findAndStoreAdjacentRoads(plotsAround)
 
     //code to take the react popup and make buttons highlight the new plots
 

@@ -340,7 +340,7 @@ export function plotsAround(selectedPlot,allPlots){
 
 }
 
-export function findAndStoreAdjacen(surroundingPlots){
+export function findAndStoreAdjacentRoads(surroundingPlots){
     console.log(surroundingPlots)
     let plusXRoads = null;
     let minusXRoads = null;
