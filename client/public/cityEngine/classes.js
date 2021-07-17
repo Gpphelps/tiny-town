@@ -97,7 +97,7 @@ export class Plot {
         console.log(pxRoads,mxRoads,pzRoads,mzRoads);
 
         pxRoads.forEach(road => {
-            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            let newRoad = new Road(editor.editPlot,this.dimmensions.x-1,road.y,road.z);
             newRoad.deleteable = false
             newRoad.addToScene()
             newRoad.fitToSurroundings()
