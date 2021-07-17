@@ -84,33 +84,39 @@ function initUi(){
         {
             name: 'Road',
             value: 'place-road',
+            tool: 'Place a road',
         },
         {
             name: 'Residential',
             value: 'place-residential',
-
+            tool: 'Place a residential building',
         },
         {
             name: 'Buisness',
-            value: 'place-office'
+            value: 'place-office',
+            tool: 'Place an office building',
         },
         {
             name: 'Commercial',
-            value: 'place-commercial'
+            value: 'place-commercial',
+            tool: 'Place a commercial building',
         },
         {
             name: 'Park',
-            value: 'place-park'
+            value: 'place-park',
+            tool: 'Place a park',
         },
         {
             name: 'Delete',
             value: 'delete-block',
-            highlight: '{"r":1,"g":0,"b":0}'
+            highlight: '{"r":1,"g":0,"b":0}',
+            tool: 'Delete this block',
         },
         {
             name: 'Paint',
             value: 'paint-building',
-            highlight: 'paintColor'
+            highlight: 'paintColor',
+            tool: 'Change building color',
         },
 
     ]
@@ -118,8 +124,14 @@ function initUi(){
         let elem = document.createElement('button');
         elem.textContent = button.name;
         elem.value = button.value;
+        
+        let toolTip = document.createElement('p');
+        toolTip.textContent = button.tool;
+
+        elem.appendChild(toolTip);
+
         if(button.highlight){
-            elem.dataset.highlight = button.highlight
+            elem.dataset.highlight = button.highlight;
         }
 
         elem.classList.add('toolButton')
