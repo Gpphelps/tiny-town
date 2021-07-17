@@ -79,6 +79,7 @@ const Login = () => {
         fontFamily: "'Prompt', sans-serif",
         textTransform: "lowercase",
         textAlign: "center",
+        fontWeight: "300",
         color: "#2D2D29",
     };
 
@@ -118,7 +119,7 @@ const Login = () => {
                 <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
                 <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Login</button>
-                {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>**Could not find a user with that email or password**</div>}
+                {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>**Could not find a user with that email and/or password**</div>}
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
