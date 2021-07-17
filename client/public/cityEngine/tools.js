@@ -358,10 +358,10 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
     let minusZRoads = null;
 
     if(surroundingPlots.plusX){
-        plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().rightArray;
+        plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().leftArray;
     }
     if(surroundingPlots.minusX){
-        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().leftArray;
+        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().rightArray;
     }
     if(surroundingPlots.plusZ){
         plusZRoads = surroundingPlots.plusZ.checkEdgesForRoads().topArray;
