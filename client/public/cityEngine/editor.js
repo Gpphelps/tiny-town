@@ -5,7 +5,7 @@ import * as index from './index.js'
 import * as ts from './tools.js';
 import * as cls from './classes.js'
 
-let editPlot;
+export let editPlot;
 
 
 //tracks currently selected options from user, kinda like dif states
@@ -62,6 +62,7 @@ export function init(){
     editPlot = new Plot(0,0,0)
     index.plots.push(editPlot)
     editPlot.buildBase()
+    editPlot.buildInAdjacentRoads()
 
     document.querySelector('canvas').addEventListener('mousedown',userInput.dragOrClickChecker)
     document.querySelector('canvas').addEventListener('mousemove',userHover)

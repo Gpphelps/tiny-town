@@ -258,6 +258,9 @@ export function deleteAtandUp(x,y,z,array,plot){
     // array[x][y][z] = [];
     for(var y=y; y<plot.dimmensions.y;y++){
         let inArray = array[x][y][z];
+        if(inArray.deleteable == false){
+            return
+        }
         index.scene.remove(inArray.obj);
         array[x][y][z] = [];
     }
@@ -353,8 +356,6 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
     let minusXRoads = null;
     let plusZRoads = null;
     let minusZRoads = null;
-
-    console.log(surroundingPlots.minusZ.checkEdgesForRoads())
 
     if(surroundingPlots.plusX){
         plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().rightArray;
