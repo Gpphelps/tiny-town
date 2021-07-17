@@ -85,7 +85,7 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                <div style={errorStyle} className="error"> {errorMessage} </div>
+                <div style={errorStyle} className="error"> errorMessage </div>
             </form>
         </div>
     )
