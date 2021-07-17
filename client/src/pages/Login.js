@@ -38,7 +38,6 @@ const Login = () => {
         if (error) {
             console.log(error.message)
         }
-        console.log(data)
 
         setEmail('');
         setPassword('');
@@ -77,12 +76,9 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-
             </form>
         </div>
     )
 }
 
-
-
-export default Login
+export default Login;

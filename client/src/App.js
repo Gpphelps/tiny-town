@@ -6,9 +6,11 @@ import Header from './components/Header'
 import Login from './pages/Login'
 import Editor from './pages/Editor'
 import Home from './pages/Home'
+import Logout from './pages/Logout';
 import CreateAccount from './pages/CreateAccount'
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+
 
 
 
@@ -50,7 +52,9 @@ function App() {
               <Route exact path="/editor">
                 <Editor />
               </Route>
-
+              <Route exact path="/logout">
+                <Logout />
+              </Route>
             </div>
         </div>
       </Router>
