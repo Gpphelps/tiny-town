@@ -333,9 +333,7 @@ export class Building {
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
 
-        let newColorAttribute = this.setBaseColor(this.obj,{r:0.8,g:0.1,b:0.1})
-
-        console.log(newColorAttribute)
+        this.setBaseColor(this.obj,{r:0.1,g:0.1,b:0.6})
 
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -441,6 +439,8 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
+        this.setBaseColor(this.obj,this.baseColor)
+
         //prevents endless loops of fitting, only the originally placed one will cause surroundings to fit
         if(original){
             //runs this function for all surrounding roads to adjust to new context if needed
@@ -457,6 +457,8 @@ export class Building {
         let geometry = obj.geometry;
 
         let newColorArray = []
+
+        this.baseColor = color;
 
         console.log(geometry)
         console.log(obj)
