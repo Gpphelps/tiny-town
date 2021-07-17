@@ -38,7 +38,7 @@ const Login = () => {
 
         if (error) {
             console.log(error.message)
-            setErrorMessage(error.message);
+            setErrorMessage("Could not find a user with this email or password");
         }
         
 
