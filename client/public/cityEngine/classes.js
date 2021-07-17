@@ -65,7 +65,7 @@ export class Plot {
             }
             if(this.blocks[this.dimmensions.z-1][1][z].type == 'road'){
                 rightSide = true;
-                rightArray.push(this.blocks[this.dimmensions.z-1][1][z])
+                rightArray.push(this.blocks[this.dimmensions.x-1][1][z])
             }
         }
 
@@ -104,21 +104,21 @@ export class Plot {
         })
 
         mxRoads.forEach(road => {
-            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            let newRoad = new Road(editor.editPlot,0,road.y,road.z);
             newRoad.deleteable = false
             newRoad.addToScene()
             newRoad.fitToSurroundings()
         })
 
         pzRoads.forEach(road => {
-            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            let newRoad = new Road(editor.editPlot,road.x,road.y,this.dimmensions.z-1);
             newRoad.deleteable = false
             newRoad.addToScene()
             newRoad.fitToSurroundings()
         }) 
 
         mzRoads.forEach(road => {
-            let newRoad = new Road(editor.editPlot,road.x,road.y,road.z);
+            let newRoad = new Road(editor.editPlot,road.x,road.y,0);
             newRoad.deleteable = false
             newRoad.addToScene()
             newRoad.fitToSurroundings()
