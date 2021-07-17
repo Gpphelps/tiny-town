@@ -46,29 +46,35 @@ const Login = () => {
     
     const textStyle = {
         color: "#2D2D29",
-        fontFamily: "'VT323', monospace",
-        textTransform: "uppercase",
+        fontFamily: "'Syncopate', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         fontSize: "50px",
     };
 
     const loginStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
     };
 
     const buttonStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         fontSize: "20px",
+        // backgroundColor: '#7DC287',
+        // borderRadius: '5px',
     };
 
     const pStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         color: "#2D2D29",
     };
 
     const errorStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         color: "red",
         fontSize: "50px",

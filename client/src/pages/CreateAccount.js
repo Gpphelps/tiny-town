@@ -54,20 +54,24 @@ const CreateAccount = () => {
     }
 
     const textStyle = {
-        color: "#474EED",
-        fontFamily: "'VT323', monospace",
-        textTransform: "uppercase",
+        color: "#2D2D29",
+        fontFamily: "'Syncopate', sans-serif",
+        textTransform: "lowercase",
         textAlign: "center",
         fontSize: "50px",
     };
 
     const loginStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
     };
 
     const buttonStyle = {
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
+        textTransform: "lowercase",
         fontSize: "20px",
+        // backgroundColor: '#7DC287',
+        // borderRadius: '5px',
     };
 
     return (
