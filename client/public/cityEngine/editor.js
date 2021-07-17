@@ -235,7 +235,7 @@ function userClick(e){
     }
 
     const hoverPos = currentHover.object.position
-
+    console.log(process.clickOperation)
     let place = {x:hoverPos.x,y:hoverPos.y+1,z:hoverPos.z}
     if(process.clickOperation == 'place-road'){
         let newRoad = new cls.Road(editPlot,place.x,place.y,place.z)

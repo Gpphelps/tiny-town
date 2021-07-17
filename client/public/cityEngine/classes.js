@@ -346,7 +346,7 @@ export class Building {
     
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
-        this.obj.receiveShadow = true;
+        this.obj.receiveShadow = false;
 
     }
     fitToSurroundings(original){
