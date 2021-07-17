@@ -8,6 +8,7 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [loginUser, { error }] = useMutation(LOGIN_USER);
 
@@ -37,7 +38,9 @@ const Login = () => {
 
         if (error) {
             console.log(error.message)
+            setErrorMessage("Could not find a user with this email or password");
         }
+        
 
         setEmail('');
         setPassword('');
@@ -66,6 +69,12 @@ const Login = () => {
         color: "#2D2D29",
     };
 
+    const errorStyle = {
+        fontFamily: "'Inconsolata', monospace",
+        textAlign: "center",
+        color: "red",
+    };
+
     return (
         <div className='cont'>
             <form>
@@ -76,6 +85,7 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
+                <div style={errorStyle} className="error"> errorMessage </div>
             </form>
         </div>
     )

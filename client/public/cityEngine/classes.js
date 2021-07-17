@@ -46,7 +46,7 @@ export class Plot {
         let bottomArray = []
 
         for(let x=0;x<this.dimmensions.x;x++){
-            console.log(this.blocks[x][1][0])
+            // console.log(this.blocks[x][1][0])
             if(this.blocks[x][1][0].type == 'road'){
                 topSide = true;
                 topArray.push(this.blocks[x][1][0])
@@ -68,7 +68,7 @@ export class Plot {
             }
         }
 
-        console.log(topSide,bottomSide,leftSide,rightSide)
+        // console.log(topSide,bottomSide,leftSide,rightSide)
 
         if(mode == 'boolean'){
             if(leftSide && rightSide && topSide && bottomSide){

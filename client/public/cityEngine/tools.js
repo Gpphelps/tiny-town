@@ -291,6 +291,13 @@ export const exporter = {
     },
     blockData(data){
         document.querySelector('#saveText').value = data;
+    },
+    adjacentRoads(data){
+        console.log(data)
+        localStorage.setItem('plusXRoads',data.pxData)
+        localStorage.setItem('minusXRoads',data.mxData)
+        localStorage.setItem('plusZRoads',data.pzData)
+        localStorage.setItem('minusZRoads',data.mzData)
     }
 }
 
@@ -362,6 +369,48 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
         minusZRoads = surroundingPlots.minusZ.checkEdgesForRoads().bottomArray;
     }
     console.log(minusZRoads)
+
+    let pxData = []
+    let mxData = []
+    let pzData = []
+    let mzData = []
+
+    if(plusXRoads){
+        plusXRoads.forEach(road => {
+            pxData.push(road.relativePos)
+        })
+    }
+    if(minusXRoads){
+        minusXRoads.forEach(road => {
+            mxData.push(road.relativePos)
+        })
+    }
+    if(plusZRoads){
+        plusZRoads.forEach(road => {
+            pzData.push(road.relativePos)
+        })
+    }
+    if(minusZRoads){
+        minusZRoads.forEach(road => {
+            mzData.push(road.relativePos);
+        })
+    }
+
+
+    pxData = JSON.stringify(pxData)
+    mxData = JSON.stringify(mxData)
+    pzData = JSON.stringify(pzData)
+    mzData = JSON.stringify(mzData)
+
+    let data = {
+        pxData,
+        mxData,
+        pzData,
+        mzData
+    }
+    
+
+    exporter.adjacentRoads(data)
 }
 
 
