@@ -17,10 +17,11 @@ export async function init(){
     console.log(plotData)
     buildPlots()
     buildWorld()
-    document.querySelector('canvas').addEventListener('mousemove',userHover)
-    document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
+    document.querySelector('canvas').addEventListener('mousemove',userHover);
+    document.querySelector('canvas').addEventListener('dblclick', userDoubleClick);
 
 };
+
 
 
 async function buildPlots(){
@@ -119,6 +120,9 @@ function userHover(e){
   
 }
 
+
+let selectedPlot;
+
 function userDoubleClick(e){
 
 
@@ -140,10 +144,10 @@ function userDoubleClick(e){
 
 
     //figuring out which plot is the one that was clicked and getting adjacent roads
-    let selectedPlot = ts.whichPlot({x:object.position.x,z:object.position.z},allPlots)
-    let plotsAround = ts.plotsAround(selectedPlot,allPlots)
-    console.log(plotsAround)
-    let adjacentRoads = ts.findAndStoreAdjacentRoads(plotsAround)
+    selectedPlot = ts.whichPlot({x:object.position.x,z:object.position.z},allPlots)
+    // let plotsAround = ts.plotsAround(selectedPlot,allPlots)
+    // console.log(plotsAround)
+    // let adjacentRoads = ts.findAndStoreAdjacentRoads(plotsAround)
 
     //code to take the react popup and make buttons highlight the new plots
 
@@ -188,6 +192,10 @@ function userDoubleClick(e){
             localStorage.setItem('plotZ',plotZ)
         })
         button.addEventListener('mouseenter',function(e){
+
+            //sets the data roads around stuff in localStorage, needs to be here to have it reference the right coordinates
+            adjacentRoadDataToStorage(e.target)
+
             let x = e.clientX;
             let y = e.clientY;
             let coords = button.getBoundingClientRect()
@@ -233,3 +241,35 @@ function userDoubleClick(e){
 }
 
 
+
+
+function adjacentRoadDataToStorage(target){
+
+    let newCoords;
+    let spDim = selectedPlot.dimmensions;
+    let spPos = selectedPlot.position
+
+    if(target.getAttribute('id') == 'plotPlusX'){
+        newCoords = {x:spPos.x+spDim.x,y:spPos.y,z:spPos.z}
+    }
+    if(target.getAttribute('id') == 'plotMinusX'){
+        newCoords = {x:spPos.x-spDim.x,y:spPos.y,z:spPos.z}
+    }
+    if(target.getAttribute('id') == 'plotPlusZ'){
+        newCoords = {x:spPos.x,y:spPos.y,z:spPos.z+spDim.z}
+    }
+    if(target.getAttribute('id') == 'plotMinusZ'){
+        newCoords = {x:spPos.x,y:spPos.y,z:spPos.z-spDim.z}
+    }
+
+    console.log(newCoords)
+
+    let newPlotData = {
+        position: newCoords,
+        dimmensions: spDim,
+    }
+
+    let plotsAround = ts.plotsAround(newPlotData,allPlots)
+    console.log(plotsAround)
+    let adjacentRoads = ts.findAndStoreAdjacentRoads(plotsAround)
+}
