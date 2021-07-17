@@ -225,13 +225,15 @@ export class Road {
 
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
-
+        console.log(around)
         let roadsAround = 0;
         around.forEach(block => {
             if(block.type == 'road'){
                 roadsAround++
             }
         })
+        console.log(roadsAround)
+        console.log('--------')
         
         this.obj.scale.x = 0.5;
         this.obj.rotation.y = 0;
@@ -250,27 +252,27 @@ export class Road {
             if(plusZ.type == 'road' && minusZ.type == 'road'){
                 this.obj.rotation.y = Math.PI/2
             } else if (plusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
                 this.obj.rotation.y = -Math.PI/2
             } else if (minusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
                 this.obj.rotation.y = Math.PI;
             } else if (plusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
             } else if (minusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
                 // this.obj.rotation.y = Math.PI/2;
                 this.obj.scale.x *= -1
             }
         }
 
         if(roadsAround === 3){
-            this.obj.children = []
-            ts.newChildren(this.threeWay).forEach(child => this.obj.add(child))
+            this.obj.geometry = ts.copyToNewMesh(this.threeWay).geometry
+            this.obj.material = ts.copyToNewMesh(this.threeWay).material
             if(minusX.type != 'road'){
                 this.obj.rotation.y = -Math.PI/2;
             } else if (plusX.type != 'road'){
@@ -281,8 +283,8 @@ export class Road {
         }
 
         if(roadsAround === 4){
-            this.obj.children = []
-            ts.newChildren(this.fourWay).forEach(child => this.obj.add(child))
+            this.obj.geometry = ts.copyToNewMesh(this.fourWay).geometry
+            this.obj.material = ts.copyToNewMesh(this.fourWay).material
         }
 
 

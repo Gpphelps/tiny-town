@@ -117,7 +117,7 @@ export function newChildren(templateObj){
 export function mergeGeometry(obj){
     let geometries = []
 
-    obj.children.forEach(mesh => {
+    obj.children.forEach((mesh,index) => {
         let geometry = mesh.geometry;
         
         if(geometry.attributes.color){
@@ -160,7 +160,7 @@ export function mergeGeometry(obj){
     let merged = BufferGeometryUtils.mergeBufferGeometries(geometries, false)
 
     let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}));
-    console.log(newMesh)
+
     return newMesh;
 }
 
@@ -217,7 +217,7 @@ export function hexToRgb(hex) {
 
 
 export function copyToNewMesh(mesh){
-
+    console.log(mesh)
     let obj = new THREE.Mesh()
     obj.geometry = mesh.geometry;
     obj.material = mesh.material;
