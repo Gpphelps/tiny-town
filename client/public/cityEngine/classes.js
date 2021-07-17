@@ -33,6 +33,59 @@ export class Plot {
             }
         }
     }
+
+    checkEdgesForRoads(mode){
+        let leftSide = false;
+        let rightSide = false;
+        let topSide = false;
+        let bottomSide = false;
+
+        let leftArray = []
+        let rightArray = []
+        let topArray = []
+        let bottomArray = []
+
+        for(let x=0;x<this.dimmensions.x;x++){
+            console.log(this.blocks[x][1][0])
+            if(this.blocks[x][1][0].type == 'road'){
+                topSide = true;
+                topArray.push(this.blocks[x][1][0])
+            }
+            if(this.blocks[x][1][this.dimmensions.x-1].type == 'road'){
+                bottomSide = true;
+                bottomArray.push(this.blocks[x][1][this.dimmensions.x-1])
+            }
+        }
+
+        for(let z=0;z<this.dimmensions.z;z++){
+            if(this.blocks[0][1][z].type == 'road'){
+                leftSide = true;
+                leftArray.push(this.blocks[0][1][z])
+            }
+            if(this.blocks[this.dimmensions.z-1][1][z].type == 'road'){
+                rightSide = true;
+                rightArray.push(this.blocks[this.dimmensions.z-1][1][z])
+            }
+        }
+
+        console.log(topSide,bottomSide,leftSide,rightSide)
+
+        if(mode == 'boolean'){
+            if(leftSide && rightSide && topSide && bottomSide){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return {
+                leftArray,
+                rightArray,
+                topArray,
+                bottomArray
+            }
+        }
+
+    }
 }
 
 
@@ -48,6 +101,8 @@ export class Road {
         this.threeWay = load.imported.road3Way;
         this.fourWay = load.imported.road4Way;
         this.corner = load.imported.roadCorner;
+
+        this.allowFit = true;
     }
     addToScene(){
 
@@ -55,16 +110,16 @@ export class Road {
         this.defaultMaterial = load.imported.road2WayMat
 
         //creates new basic mesh
-        this.obj = new THREE.Object3D();
-        this.obj.blockType = this.type;
-        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
-
-        this.obj.children.forEach(child => child.receiveShadow = true)
-        index.scene.add(this.obj)
+        this.obj = ts.copyToNewMesh(this.defaultObj)
+        this.obj.blockType = this.type
+        this.obj.defaultMaterial = this.obj.material
 
         this.obj.scale.x = 0.5
         this.obj.scale.y = 0.5
         this.obj.scale.z = 0.5
+
+        index.scene.add(this.obj)
+        this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
 
         //positioning in scene is calculated relative to placed coords and the coords of the parent
         let absX = this.relativePos.x + this.parent.position.x;
@@ -76,13 +131,60 @@ export class Road {
         this.obj.receiveShadow = true;
     }
     fitToSurroundings(original){
+
+        if(!this.allowFit){
+            return
+        }
         let pos = this.relativePos
-        let plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
-        let minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
-        let plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
-        let minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
-        let plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
-        let minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        let plusX
+        let minusX
+        let plusY
+        let minusY
+        let plusZ
+        let minusZ
+
+        let pd = this.parent.dimmensions
+        
+
+        if(pos.x == pd.x-1){
+            plusX = new Road(this.parent, pos.x+1,pos.y,pos.z)
+            plusX.allowFit = false;
+        } else {
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        }
+        if(pos.x == 0){
+            minusX = new Road(this.parent,pos.x-1,pos.y,pos.z)
+            minusX.allowFit = false;
+        } else {
+            minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
+        }
+
+        if(pos.y == pd.y-1){
+            plusY = new Road(this.parent, pos.x,pos.y+1,pos.z)
+            plusY.allowFit = false;
+        } else {
+            plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]        
+        }
+        if(pos.y == 0){
+            minusY = new Road(this.parent, pos.x,pos.y-1,pos.z)
+            minusY.allowFit = false;
+        } else {
+            minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
+        }
+
+        if(pos.z == pd.z-1){
+            plusZ = new Road(this.parent, pos.x,pos.y,pos.z+1)
+            plusZ.allowFit = false;
+        } else{
+            plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        }
+        if(pos.z == 0){
+            minusZ = new Road(this.parent, pos.x,pos.y,pos.z-1)
+            minusZ.allowFit = false;
+        } else{
+            minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        }
+
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
 
@@ -92,8 +194,7 @@ export class Road {
                 roadsAround++
             }
         })
-        console.log(roadsAround)
-
+        
         this.obj.scale.x = 0.5;
         this.obj.rotation.y = 0;
 
@@ -101,7 +202,6 @@ export class Road {
         //PROBABLY BETTER WAY TO DO THIS, SHOULD FIGURE THAT OUT
         if(roadsAround === 1){
             if(plusZ.type == 'road' || minusZ.type == 'road'){
-                console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             }
         }
@@ -110,7 +210,6 @@ export class Road {
 
         if(roadsAround === 2){
             if(plusZ.type == 'road' && minusZ.type == 'road'){
-                console.log('roads to x')
                 this.obj.rotation.y = Math.PI/2
             } else if (plusX.type == 'road' && plusZ.type == 'road'){
                 this.obj.children = []
@@ -183,27 +282,23 @@ export class Building {
             return;
         }
 
-        //because gltf files consist of many children, the obj needs to be a group that holds all children
-            //loops through all children and makes a new mesh copying the geometry and material of the child
-        this.obj = new THREE.Object3D();
-        this.obj.blockType = this.type;
-
+        //chooses random between different alternates
         if(this.alts){
             console.log('alts')
             this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
         }
-        console.log(this.defaultObj)
-        ts.newChildren(this.defaultObj).forEach(child => this.obj.add(child));
 
-        if(this.randomBaseColor){
-            this.obj.children[0].material.color = {r: ts.rndmNum(0,1), g: ts.rndmNum(0,1), b: ts.rndmNum(0,1)}
-        }
-        //x scale is slightly decreased to give space between buildings
+        //copies geometry and material to a new object
+        this.obj = ts.copyToNewMesh(this.defaultObj)
+        this.obj.blockType = this.type
+        this.obj.defaultMaterial = this.obj.material
+
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
         this.obj.scale.z = this.scale.z;
 
         index.scene.add(this.obj)
+        this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
 
         let absX = this.relativePos.x + this.parent.position.x;
         let absY = this.relativePos.y + this.parent.position.y;
@@ -213,7 +308,6 @@ export class Building {
         this.obj.castShadow = true;
         this.obj.receiveShadow = true;
 
-        console.log(index.renderer.info.render)
     }
     fitToSurroundings(original){
         let pos = this.relativePos
@@ -227,13 +321,40 @@ export class Building {
         let minusZ
 
         let pd = this.parent.dimmensions
+ 
 
-        plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
-        minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
-        plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]
-        minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
-        plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
-        minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        if(pos.x == pd.x-1){
+            plusX = new Blank()
+        } else {
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        }
+        if(pos.x == 0){
+            minusX = new Blank()
+        } else {
+            minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
+        }
+
+        if(pos.y == pd.y-1){
+            plusY = new Blank()
+        } else {
+            plusY = this.parent.blocks[pos.x][pos.y+1][pos.z]        
+        }
+        if(pos.y == 0){
+            minusY = new Blank()
+        } else {
+            minusY = this.parent.blocks[pos.x][pos.y-1][pos.z]
+        }
+
+        if(pos.z == pd.z-1){
+            plusZ = new Blank()
+        } else{
+            plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        }
+        if(pos.z == 0){
+            minusZ = new Blank()
+        } else{
+            minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        }
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
         
@@ -262,31 +383,18 @@ export class Building {
 
 
         if(minusY.type === this.type && plusY.type != this.type){
-            this.obj.children = [];
-            ts.newChildren(this.roofObj).forEach(child => this.obj.add(child))
+            // this.obj.children = [];
+            // ts.newChildren(this.roofObj).forEach(child => this.obj.add(child));
+            //CANT SET OBJ TO NEW OBJ AND HAVE IT WORK NEED TO SET ITS GEOMETRY AND MATERIAL AND ITLL UPDATE
+            this.obj.geometry = ts.copyToNewMesh(this.roofObj).geometry
+            this.obj.material = ts.copyToNewMesh(this.roofObj).material
             this.obj.rotation.y = minusY.obj.rotation.y 
             // index.scene.add(this.obj)
         } else if (minusY.type === this.type && plusY.type === this.type){
-            this.obj.children = [];
-            ts.newChildren(this.midObj).forEach(child => this.obj.add(child))
+            this.obj.geometry = ts.copyToNewMesh(this.midObj).geometry
+            this.obj.material = ts.copyToNewMesh(this.midObj).material
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
-
-        //makes color the same as the building below it
-        if(minusY.type){
-            let newMat = new THREE.MeshPhongMaterial()
-            newMat.color = minusY.obj.children[0].defaultMaterial.color
-            newMat
-            console.log(minusY)
-            console.log(newMat)
-            this.obj.children[0].material = newMat
-            this.obj.children[0].defaultMaterial = newMat
-
-        }
-
-
-
-
 
         //prevents endless loops of fitting, only the originally placed one will cause surroundings to fit
         if(original){
@@ -343,7 +451,8 @@ export class Commercial extends Building {
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
 
-        this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
+        // this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
+        this.alts = [load.imported.commercialGround]
     }
 
 }

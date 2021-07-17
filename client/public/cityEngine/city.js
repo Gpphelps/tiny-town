@@ -7,78 +7,16 @@ import * as cls from './classes.js'
 
 let plotData;
 
-let placeholderData = {
-    data: {
-        plots: [
-            {
-                plot_position_x: 0,
-                plot_position_z: 0,
-                buildings: [
-                    {
-                        name: 'office',
-                        building_position_x: 4,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'office',
-                        building_position_x: 4,
-                        building_position_y: 2,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'office',
-                        building_position_x: 2,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'commercial',
-                        building_position_x: 2,
-                        building_position_y: 1,
-                        building_position_z: 5,
-                    },
-                    {
-                        name: 'road',
-                        building_position_x: 3,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    }
-                ]
-            },
-            {
-                plot_position_x: 10,
-                plot_position_z: 0,
-                buildings: [
-                    {
-                        name: 'office',
-                        building_position_x: 4,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                    {
-                        name: 'office',
-                        building_position_x: 2,
-                        building_position_y: 1,
-                        building_position_z: 4,
-                    },
-                ]
-            },
-
-        ]
-    }
-};
-
-
 const allPlots = []
 
-export function init(){
+export async function init(){
     
-    // allPlots = document.querySelector('#plotData').textContent;
+    //waits until react has put the data in the text area
+    await ts.domWait(document.querySelector('#plotData'))
     plotData = JSON.parse(document.querySelector('#plotData').value)
     console.log(plotData)
     buildPlots()
-    // buildWorld()
+    buildWorld()
     document.querySelector('canvas').addEventListener('mousemove',userHover)
     document.querySelector('canvas').addEventListener('dblclick', userDoubleClick)
 
@@ -144,6 +82,7 @@ async function buildPlots(){
             }
         }
     })
+    console.log(allPlots)
 }
 
 function buildWorld(){
@@ -182,6 +121,8 @@ function userHover(e){
 
 function userDoubleClick(e){
 
+
+    //casting ray, making sure it isn't hitting the plane
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2()
 
@@ -190,24 +131,21 @@ function userDoubleClick(e){
     raycaster.setFromCamera(mouse,index.camera);
     let intersects = raycaster.intersectObject(index.scene,true)
 
+    if(intersects.length == 0 || intersects[0].object.geometry.type == "PlaneGeometry"){
+        return
+    }
+
     let object = intersects[0].object
     console.log(object)
 
-    let selectedPlot;
 
-    if(object.geometry.type != "PlaneGeometry"){
-        let x = object.position.x;
-        let z = object.position.z;
+    //figuring out which plot is the one that was clicked and getting adjacent roads
+    let selectedPlot = ts.whichPlot({x:object.position.x,z:object.position.z},allPlots)
+    let plotsAround = ts.plotsAround(selectedPlot,allPlots)
+    console.log(plotsAround)
+    let adjacentRoads = ts.findAndStoreAdjacentRoads(plotsAround)
 
-        allPlots.forEach(plot => {
-            if(x >= plot.position.x && x < plot.position.x + plot.dimmensions.x){
-                if(z >= plot.position.z && z < plot.position.z + plot.dimmensions.z){
-                    selectedPlot = plot;
-                }
-            }
-        })
-    }
-    console.log(selectedPlot)
+    //code to take the react popup and make buttons highlight the new plots
 
     //cloning the popup to remove previous event listeners
     let oldPopup = document.querySelector('#newPlotPopUp')
@@ -224,7 +162,6 @@ function userDoubleClick(e){
     let allButtons = document.querySelectorAll('.plotOption');
     let currentHover;
 
-    console.log(selectedPlot);
     allButtons.forEach(button => {
         let highlightMesh;
         button.addEventListener('mousedown',function(e){
