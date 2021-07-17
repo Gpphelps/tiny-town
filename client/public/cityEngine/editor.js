@@ -238,6 +238,9 @@ function userClick(e){
     console.log(process.clickOperation)
     let place = {x:hoverPos.x,y:hoverPos.y+1,z:hoverPos.z}
     if(process.clickOperation == 'place-road'){
+        if(currentHover.object.blockType){
+            return;
+        }
         let newRoad = new cls.Road(editPlot,place.x,place.y,place.z)
         editPlot.blocks[place.x][place.y][place.z] = newRoad;
         newRoad.addToScene()

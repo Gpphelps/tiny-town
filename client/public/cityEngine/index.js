@@ -18,6 +18,8 @@ export let camera;
 export let renderer;
 export let controls;
 
+let sun;
+
 
 let generalSettings = {
     vertOrbit: true,
@@ -50,14 +52,13 @@ function init(){
     camera.lookAt(5,0,5);
     camera.zoom = 2
 
-
-    const light = new THREE.DirectionalLight(0xffffff,0.6);
-    light.position.set(4,20,8);
-    light.castShadow = true;
-    light.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 50 );
-    light.shadow.radius = 0.4
-    light.shadowDarkness = 0.8
-    scene.add(light);
+    sun = new THREE.DirectionalLight(0xffffff,0.6);
+    sun.position.set(4,20,8);
+    sun.castShadow = true;
+    sun.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 50 );
+    sun.shadow.radius = 0.4
+    sun.shadowDarkness = 0.8
+    scene.add(sun);
 
     const ambientLight = new THREE.AmbientLight( 0xffffff )
     ambientLight.intensity = 0.6
@@ -138,8 +139,9 @@ function animate() {
 
     controls.update()
 
+
+
     //rotates popup menu
-    
     if(document.querySelector('#newPlotPopUp') && document.querySelector('#newPlotPopUp').style.display == 'flex'){
         let popup = document.querySelector('#newPlotPopUp');
 

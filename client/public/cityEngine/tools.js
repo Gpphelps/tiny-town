@@ -117,6 +117,8 @@ export function newChildren(templateObj){
 export function mergeGeometry(obj){
     let geometries = []
 
+    let baseColor
+
     obj.children.forEach((mesh,index) => {
         let geometry = mesh.geometry;
         
@@ -145,9 +147,13 @@ export function mergeGeometry(obj){
         let vertexColors = []
 
         for(var i=0;i<geometry.attributes.position.count;i++){
-            vertexColors.push(mesh.material.color.r)
-            vertexColors.push(mesh.material.color.g)
-            vertexColors.push(mesh.material.color.b)
+                vertexColors.push(mesh.material.color.r)
+                vertexColors.push(mesh.material.color.g)
+                vertexColors.push(mesh.material.color.b)
+        }
+
+        if(index == 0){
+            baseColor = mesh.material.color;
         }
 
         geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(vertexColors),3));
@@ -161,6 +167,7 @@ export function mergeGeometry(obj){
 
     let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true, side: THREE.DoubleSide}));
     newMesh.material.receiveShadow = false;
+    newMesh.material.baseOriginalColor = baseColor;
 
     return newMesh;
 }

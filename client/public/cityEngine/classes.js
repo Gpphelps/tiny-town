@@ -333,6 +333,10 @@ export class Building {
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
 
+        let newColorAttribute = this.setBaseColor(this.obj,{r:0.8,g:0.1,b:0.1})
+
+        console.log(newColorAttribute)
+
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
         this.obj.scale.z = this.scale.z;
@@ -349,6 +353,7 @@ export class Building {
         this.obj.receiveShadow = false;
 
     }
+
     fitToSurroundings(original){
         let pos = this.relativePos
         
@@ -446,6 +451,35 @@ export class Building {
             })
         }
 
+
+    }
+    setBaseColor(obj,color){
+        let geometry = obj.geometry;
+
+        let newColorArray = []
+
+        console.log(geometry)
+        console.log(obj)
+        for(var i=0;i<geometry.attributes.color.array.length;i+=3){
+            let colorArray = geometry.attributes.color.array;
+            let r = colorArray[i]
+            let g = colorArray[i+1] 
+            let b = colorArray[i+2]
+
+            if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
+                newColorArray.push(this.baseColor.r)
+                newColorArray.push(this.baseColor.g)
+                newColorArray.push(this.baseColor.b)
+            } else {
+                newColorArray.push(r)
+                newColorArray.push(g)
+                newColorArray.push(b)
+            }
+        }
+
+        let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
+        console.log(attribute)
+        this.obj.geometry.setAttribute('color',attribute)
 
     }
 }
