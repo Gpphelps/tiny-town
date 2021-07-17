@@ -159,7 +159,7 @@ export function mergeGeometry(obj){
 
     let merged = BufferGeometryUtils.mergeBufferGeometries(geometries, false)
 
-    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}));
+    let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true, side: THREE.DoubleSide}));
 
     return newMesh;
 }
