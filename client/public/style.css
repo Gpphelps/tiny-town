@@ -47,6 +47,7 @@ h3 {
 button {
     text-transform: uppercase;
     font-weight: 100;
+    cursor: pointer;
 }
 
 form {
@@ -82,6 +83,11 @@ form > p {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.flexSpacer {
+    flex-grow: 1;
+    padding: 10px;
 }
 
 
@@ -163,6 +169,24 @@ a:visited {
     padding: 5px
 }
 
+.modalHeader {
+    width: 100%;
+    display: flex;
+}
+
+.modalHeader > * {
+    flex-grow: 1;
+}
+
+.modalQuit {
+    max-width: 20px;
+    background-color: none;
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 5px;
+    float: right;
+    justify-self: flex-end;
+}
 
 /* TIP POPUP STYLING */
 
