@@ -37,8 +37,7 @@ const Login = () => {
         Auth.login(data.login.token)
 
         if (error) {
-            console.log(error.message)
-            setErrorMessage("Could not find a user with this email or password");
+            console.log(error.message);
         }
         
 
@@ -73,6 +72,7 @@ const Login = () => {
         fontFamily: "'Inconsolata', monospace",
         textAlign: "center",
         color: "red",
+        fontSize: "50px",
     };
 
     return (
@@ -85,7 +85,7 @@ const Login = () => {
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                <div style={errorStyle} className="error"> errorMessage </div>
+                <div style={errorStyle} id="error" className="error"> </div>
             </form>
         </div>
     )
