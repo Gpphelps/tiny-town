@@ -63,7 +63,6 @@ const Login = () => {
         borderRadius: "2px",
         fontFamily: "'Prompt', sans-serif",
         textTransform: "lowercase",
-
     };
 
     const buttonStyle = {
@@ -74,7 +73,6 @@ const Login = () => {
         borderRadius: "2px"
         // backgroundColor: '#7DC287',
         // borderRadius: '5px',
-
     };
 
     const pStyle = {
