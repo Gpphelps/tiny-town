@@ -10,7 +10,7 @@ export let editPlot;
 
 //tracks currently selected options from user, kinda like dif states
 const process = {
-    clickOperation: 'place-commercial',
+    clickOperation: 'place-park',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
 }
@@ -273,6 +273,7 @@ function userClick(e){
         let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
+        newBlock.calculateDisplacement()
         // console.log(newBlock)
         // newBlock.fitToSurroundings(true)
     }

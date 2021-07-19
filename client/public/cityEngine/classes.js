@@ -3,6 +3,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import * as ts from './tools.js'
 import * as load from './loader.js'
 import * as editor from './editor.js'
+import perlin from './perlin.js'
 
 //class responsible for every plot of land on map/editor
 export class Plot {
@@ -563,7 +564,8 @@ export class Park {
         this.parent = parent,
         this.relativePos = {x:x,y:y,z:z},
         this.type = 'park',
-        this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,10,10),new THREE.MeshPhongMaterial({color:'green'}))
+        this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshPhongMaterial({color:'green'}));
+        this.baseColor = {r:0,g:1,b:0}
     }
 
     addToScene(){
@@ -571,6 +573,13 @@ export class Park {
         this.obj = new THREE.Mesh();
         this.obj.material = this.defaultObj.material;
         this.obj.geometry = this.defaultObj.geometry;
+
+        this.obj.material.displacementMap = this.groundDisplacementTexture();
+        this.obj.material.displacementScale = 0.35;
+        this.obj.material.roughness = 1
+        this.obj.material.flatShading = true;
+
+        this.obj.rotation.x = -Math.PI/2
 
         console.log(this.obj.geometry)
 
@@ -581,11 +590,70 @@ export class Park {
         this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
 
         let absX = this.relativePos.x + this.parent.position.x;
-        let absY = this.relativePos.y + this.parent.position.y;
+        let absY = this.relativePos.y + this.parent.position.y - 0.49;
         let absZ = this.relativePos.z + this.parent.position.z;
     
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
-        this.obj.receiveShadow = false;
+        this.obj.receiveShadow = true;
+    }
+
+    groundDisplacementTexture(){
+        let displacementCanvas = this.calculateDisplacement();
+        const texture = new THREE.CanvasTexture(displacementCanvas);
+
+        // let material = new THREE.MeshPhongMaterial({map:texture})
+        return texture;
+    }
+
+    calculateDisplacement(){
+        var canv = document.querySelector('#parkDisplacementCanvas');
+
+        if(!canv){
+            canv = document.createElement('canvas');
+            canv.setAttribute('id','parkDisplacementCanvas');
+            document.querySelector('#root').appendChild(canv);
+        }
+
+        canv.width = 100;
+        canv.height = 100;
+
+        let ctx = canv.getContext('2d');
+
+        let imageData = ctx.createImageData(canv.width,canv.height);
+        let data = imageData.data;
+
+        var absX = this.relativePos.x + this.parent.position.x;
+        var absZ = this.relativePos.z + this.parent.position.z;
+
+        function xyToIndex(x,y,width){
+            return (y*(width*4))+(x*4);
+        }
+
+        for(var y=0;y<canv.height;y++){
+            for(var x=0;x<canv.width;x++){
+
+                let smallX = (x/100);
+                let smallY = (y/100);
+
+                let perlinValue = Math.abs(perlin.get(absX+smallX,absZ+smallY));
+                let adjValue = perlinValue * 255;
+
+                let index = xyToIndex(x,y,canv.width)
+
+                data[index] = adjValue;
+                data[index+1] = adjValue;
+                data[index+2] = adjValue;
+                data[index+3] = 255;
+            }
+        }
+        console.log(imageData)
+        ctx.putImageData(imageData,0,0);
+
+        return canv;
+    }
+
+    fitToSurroundings(){
+        
     }
 }
