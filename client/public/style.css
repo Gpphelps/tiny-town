@@ -54,6 +54,21 @@ button {
     cursor: pointer;
 }
 
+#plotNameFlex {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+}
+
+#editorName {
+    color: black;
+    font-family: 'Prompt', sans-serif;
+    text-align: center;
+    border-radius: 5px;
+    width: 20%;
+    background-color: tan;
+}
+
 form {
     display: flex;
     flex-direction: column;
