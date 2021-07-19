@@ -105,7 +105,7 @@ const Editor = () => {
                 <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
                 <button onClick={handlePlotSave}>Save Plot</button>
                 <div id="plotNameFlex">
-                    {plotName &&<div id="editorName">{plotName}</div>}
+                    {plotName &&<div id="editorName"><p id="plotNameText">{plotName}</p></div>}
                 </div>
             </div>
         </div>

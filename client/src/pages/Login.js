@@ -62,7 +62,7 @@ const Login = () => {
     const loginStyle = {
         border: "2px solid black",
         borderRadius: "2px",
-        fontFamily: "'Prompt', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
     };
 
@@ -77,7 +77,7 @@ const Login = () => {
     };
 
     const pStyle = {
-        fontFamily: "'Prompt', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
         textAlign: "center",
         fontWeight: "300",
@@ -88,7 +88,7 @@ const Login = () => {
 
         display: "flex",
         flexDirection: "column",
-        fontFamily: "'Prompt', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
         textAlign: "center",
         color: "red",
@@ -100,7 +100,7 @@ const Login = () => {
 
     const xStyle = {
         width: "20px",
-        fontFamily: "'Prompt', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         justifyContent: "right",
         color: "white",
         backgroundColor: "red",
