@@ -74,6 +74,10 @@ async function buildPlots(){
                 newBuilding = new cls.Road(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
                 newBuilding.addToScene()
             }
+            if(building.type == 'park'){
+                newBuilding = new cls.Park(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
+                newBuilding.addToScene()
+            }
             newPlot.blocks[building.building_position_x][building.building_position_y][building.building_position_z] = newBuilding
         })
     })

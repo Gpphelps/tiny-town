@@ -3,6 +3,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import * as ts from './tools.js'
 import * as load from './loader.js'
 import * as editor from './editor.js'
+import perlin from './perlin.js'
 
 //class responsible for every plot of land on map/editor
 export class Plot {
@@ -537,20 +538,286 @@ export class Commercial extends Building {
 }
 
 
-export class Park extends Building {
-    constructor(parent,x,y,z){
-        super(parent,x,y,z);
-        this.type = 'park';
-        this.defaultObj = load.imported.park1x1One;
-        this.scale = {x:0.5,y:0.5,z:0.5};
-        this.randomBaseColor = false;
-    }
-}
+// export class Park extends Building {
+//     constructor(parent,x,y,z){
+//         super(parent,x,y,z);
+//         this.type = 'park';
+//         this.defaultObj = load.imported.park1x1One;
+//         this.scale = {x:0.5,y:0.5,z:0.5};
+//         this.randomBaseColor = false;
+//     }
+// }
 
 
 class Blank {
     constructor(){
         this.type = 'blank';
         this.randomBaseColor = false;
+    }
+}
+
+
+
+
+export class Park {
+    constructor(parent,x,y,z){
+        this.parent = parent,
+        this.relativePos = {x:x,y:y,z:z},
+        this.type = 'park',
+        this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshStandardMaterial({color:'rgb(0,90,0)'}));
+        this.baseColor = {r:0,g:1,b:0},
+        this.treeCount = 3;
+        this.trees = [load.imported.tree1, load.imported.tree2]
+    }
+
+    addToScene(){
+
+        this.obj = new THREE.Mesh();
+        this.obj.material = this.defaultObj.material;
+        this.obj.geometry = this.defaultObj.geometry;
+
+        // this.obj.material.displacementMap = this.groundDisplacementTexture();
+        this.obj.material.displacementScale = 0.3;
+        this.obj.material.roughness = 1
+        this.obj.material.flatShading = true;
+
+        this.obj.rotation.x = -Math.PI/2
+
+        console.log(this.obj.geometry)
+
+        this.obj.blockType = this.type;
+        this.obj.defaultMaterial = this.obj.material;
+
+        index.scene.add(this.obj);
+        this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
+
+        let absX = this.relativePos.x + this.parent.position.x;
+        let absY = this.relativePos.y + this.parent.position.y - 0.49;
+        let absZ = this.relativePos.z + this.parent.position.z;
+    
+        this.obj.position.set(absX,absY,absZ);
+        this.obj.castShadow = true;
+        this.obj.receiveShadow = true;
+    }
+
+    groundDisplacementTexture(around){
+        let displacementCanvas = this.calculateDisplacement(around);
+        const texture = new THREE.CanvasTexture(displacementCanvas);
+
+        this.obj.material.displacementMap = texture;
+
+        // let material = new THREE.MeshPhongMaterial({map:texture})
+        return texture;
+    }
+
+    calculateDisplacement(around){
+        console.log(around)
+
+
+        let canv = document.createElement('canvas');
+        canv.setAttribute('id','parkDisplacementCanvas');
+        document.querySelector('#root').appendChild(canv);
+
+
+        canv.width = 100;
+        canv.height = 100;
+
+        let ctx = canv.getContext('2d');
+
+        let imageData = ctx.createImageData(canv.width,canv.height);
+        let data = imageData.data;
+
+        var absX = this.relativePos.x + this.parent.position.x;
+        var absZ = this.relativePos.z + this.parent.position.z;
+
+        function xyToIndex(x,y,width){
+            return (y*(width*4))+(x*4);
+        }
+
+        for(var y=0;y<canv.height;y++){
+            for(var x=0;x<canv.width;x++){
+
+                let smallX = (x/100);
+                let smallY = (y/100);
+
+                let perlinValue = Math.abs(perlin.get(absX+smallX,absZ+smallY));
+                let adjValue = perlinValue * 255;
+
+                let index = xyToIndex(x,y,canv.width)
+
+                data[index] = adjValue;
+                data[index+1] = adjValue;
+                data[index+2] = adjValue;
+                data[index+3] = 255;
+
+                // console.log(around.indexOf('plusX'))
+                if(around.indexOf('plusX') != -1){
+                    let a = ts.distanceMap(x,canv.width,20)
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+                }
+                if(around.indexOf('minusX') != -1){
+                    let a = ts.distanceMap(x,0,20);
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+                }
+                if(around.indexOf('plusZ') != -1){
+                    let a = ts.distanceMap(y,canv.height,20);
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+                }
+                if(around.indexOf('minusZ') != -1){
+                    let a = ts.distanceMap(y,0,20);
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+                }
+
+            }
+        }
+        console.log(imageData)
+        ctx.putImageData(imageData,0,0);
+
+        canv.remove()
+
+        return canv;
+    }
+
+    fitToSurroundings(original){
+        let pos = this.relativePos
+        
+        //weird way to assign plusX, minusX ... but done so that if on the edge it doesn't have error because plusX is not in the array or whatever
+        let plusX
+        let minusX
+        let plusZ
+        let minusZ
+
+        let pd = this.parent.dimmensions
+ 
+
+        if(pos.x == pd.x-1){
+            plusX = new Blank()
+        } else {
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        }
+        if(pos.x == 0){
+            minusX = new Blank()
+        } else {
+            minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
+        }
+
+        if(pos.z == pd.z-1){
+            plusZ = new Blank()
+        } else{
+            plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        }
+        if(pos.z == 0){
+            minusZ = new Blank()
+        } else{
+            minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        }
+        console.log(original)
+        let around = [plusX,minusX,plusZ,minusZ]
+
+        let notParks = []
+
+
+        if(plusX.type != 'park' || !plusX.type){
+            notParks.push('plusX')
+        }
+        if(minusX.type != 'park' || !minusX.type){
+            notParks.push('minusX')
+        }
+        if(plusZ.type != 'park' || !plusZ.type){
+            notParks.push('plusZ')
+        }
+        if(minusZ.type != 'park' || !minusZ.type){
+            notParks.push('minusZ')
+        }
+
+        console.log(around)
+        console.log(notParks)
+
+
+        this.groundDisplacementTexture(notParks);
+
+        if(original){
+            this.growFlora()
+
+        }
+
+        if(original){
+            //runs this function for all surrounding roads to adjust to new context if needed
+            around.forEach(block => {
+                if(block.type){
+                    block.fitToSurroundings(false)
+                }
+            })
+        }
+    }
+
+    growFlora(){
+
+        this.obj.children.forEach(child => {
+            scene.remove(child)
+        })
+        this.obj.children = []
+
+        for(let i=0;i<this.treeCount;i++){
+            
+            let x;
+            let z;
+
+            let y;
+
+
+
+            for(var a=0;a<50;a++){
+                let testX = ts.rndmNum(0.1,0.9)
+                let testZ = ts.rndmNum(0.1,0.9)
+                let perlinValue = perlin.get(testX+this.relativePos.x+this.parent.position.x+2,testZ+this.relativePos.z+this.parent.position.z+2);
+                if(ts.evalOdds(perlinValue)){
+                    x = testX - 0.5;
+                    z = testZ - 0.5;
+
+                    y = (perlinValue*0.3)-0.25;
+
+                    break;
+                }
+            }
+
+            console.log(x,y,z)
+
+            let treeObj = ts.copyToNewMesh(this.trees[ts.rndmInt(0,this.trees.length)])
+            treeObj.defaultMaterial = treeObj.material;
+
+            treeObj.scale.set(0.3,0.3,0.3)
+
+            let absX = this.relativePos.x + this.parent.position.x + x;
+            let absY = this.relativePos.y + this.parent.position.y + y;
+            let absZ = this.relativePos.z + this.parent.position.z + z;
+
+
+
+            treeObj.position.set(absX,absY,absZ)
+            treeObj.rotation.y = ts.rndmNum(0,3)
+
+            this.obj.add(treeObj)
+            index.scene.add(treeObj)
+
+
+
+        }
     }
 }
