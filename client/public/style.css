@@ -7,7 +7,6 @@
 * {
     margin-block-start: 0px;
     margin-block-end: 0px;
-    font-family: Helvetica;
     text-decoration: none;
     box-sizing: border-box;
     font-weight: 100;
@@ -61,12 +60,18 @@ button {
 }
 
 #editorName {
-    color: black;
-    font-family: 'Prompt', sans-serif;
+    color: green;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: auto;
+    font-weight: bolder;
     text-align: center;
     border-radius: 5px;
-    width: 20%;
-    background-color: tan;
+    width: auto;
+    background-color: rgb(180, 180, 180, 0.2);
+}
+
+#plotNameText {
+    padding: 10px;
 }
 
 form {
