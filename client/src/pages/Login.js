@@ -52,10 +52,11 @@ const Login = () => {
     
     const textStyle = {
         color: "#2D2D29",
-        fontFamily: "'Syncopate', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
         textAlign: "center",
         fontSize: "50px",
+        fontWeight: "600",
     };
 
     const loginStyle = {
@@ -66,7 +67,7 @@ const Login = () => {
     };
 
     const buttonStyle = {
-        fontFamily: "'Prompt', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
         fontSize: "20px",
         border: "2px solid black",

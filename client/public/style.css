@@ -81,6 +81,10 @@ form > p {
     margin: 10px;
 }
 
+.header {
+    background-color: rgb(180, 180, 180, 0.2);
+}
+
 .cont {
     width: 100vw;
     height: 70vh;
