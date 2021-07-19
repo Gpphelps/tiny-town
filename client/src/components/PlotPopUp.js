@@ -9,20 +9,20 @@ const PlotPopUp = () => {
         <div id="newPlotPopUp">
             <div className="plotPopUpSpacer"></div>
             <Link to='/editor'>
-                <div id="plotMinusZ" className='plotOption'></div>
+                <div id="plotMinusZ" className='plotOption activeOption'>↑</div>
             </Link>
             <div className="plotPopUpSpacer"></div>
             <Link to='/editor'>
-                <div id="plotMinusX" className='plotOption'></div>
+                <div id="plotMinusX" className='plotOption activeOption'>←</div>
             </Link>
             <div className="plotPopUpSpacer"></div>
             <Link to='/editor'>
-                <div id="plotPlusX" className='plotOption'></div>  
+                <div id="plotPlusX" className='plotOption activeOption'>→</div>  
             </Link>
   
             <div className="plotPopUpSpacer"></div>
             <Link to='/editor'>
-                <div id="plotPlusZ" className='plotOption'></div>
+                <div id="plotPlusZ" className='plotOption activeOption'>↓</div>
             </Link>
             <div className="plotPopUpSpacer"></div>
         </div>

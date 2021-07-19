@@ -235,9 +235,12 @@ function userClick(e){
     }
 
     const hoverPos = currentHover.object.position
-
+    console.log(process.clickOperation)
     let place = {x:hoverPos.x,y:hoverPos.y+1,z:hoverPos.z}
     if(process.clickOperation == 'place-road'){
+        if(currentHover.object.blockType){
+            return;
+        }
         let newRoad = new cls.Road(editPlot,place.x,place.y,place.z)
         editPlot.blocks[place.x][place.y][place.z] = newRoad;
         newRoad.addToScene()
@@ -246,6 +249,7 @@ function userClick(e){
     } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
+        // newBlock.baseColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)};
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)

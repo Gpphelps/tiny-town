@@ -26,27 +26,27 @@ import { GET_ME } from '../utils/queries';
     return(
         <header className='header'>
             <Link to="/">
-            <h1 style={textStyle}>Tiny Town</h1>
+            <h1>Tiny Town</h1>
             </Link>
             <div>
                 {
                     !userData ? 
                     <div>
                         <Link to="/createAccount">
-                        <h3 style={textStyle}>Sign Up</h3>
+                        <h3>Sign Up</h3>
                         </Link>
                         <Link to="/login">
-                        <h3 style={textStyle}>Login</h3>
+                        <h3>Login</h3>
                          </Link> 
                     </div>
 
                     :
                     <div>
-                    <Link to="/editor">
-                    <h3 style={textStyle}>Create a Neighborhood</h3>
-                    </Link>
+                    {/* <Link to="/editor">
+                    <h3>Create a Neighborhood</h3>
+                    </Link> */}
                     <Link to="/logout">
-                    <h3 style={textStyle}>Logout</h3>
+                    <h3>Logout</h3>
                     </Link>
                     </div>   
                 }

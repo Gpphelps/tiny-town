@@ -20,6 +20,14 @@ export async function init(){
     document.querySelector('canvas').addEventListener('mousemove',userHover);
     document.querySelector('canvas').addEventListener('dblclick', userDoubleClick);
 
+
+    //clearing old local storage items
+    localStorage.setItem('plusXRoads','[]')
+    localStorage.setItem('minusXRoads','[]')
+    localStorage.setItem('plusZRoads','[]')
+    localStorage.setItem('minusZRoads','[]')
+
+    console.log(index.renderer.info.render)
 };
 
 
@@ -42,9 +50,9 @@ async function buildPlots(){
 
     console.log(plots)
     plots.forEach(plot => {
-        console.log(plot)
+
         let newPlot = new cls.Plot(plot.plot_position_x,0,plot.plot_position_z);
-        console.log(newPlot)
+
         newPlot.buildBase();
         allPlots.push(newPlot)
         plot.buildings.forEach(building => {
@@ -71,7 +79,6 @@ async function buildPlots(){
     })
 
     allPlots.forEach(plot => {
-        console.log(plot.blocks[1][1][1])
         for(var x=0;x<plot.dimmensions.x;x++){
             for(var y=0;y<plot.dimmensions.y;y++){
                 for(var z=0;z<plot.dimmensions.z;z++){
@@ -161,9 +168,57 @@ function userDoubleClick(e){
     popup.style.left = `${e.clientX}px`
     popup.style.display = 'flex'
 
+    //resetting styling and stuff in the case that it was hidden earlier
+    document.querySelectorAll('.plotOption').forEach(button => {
+        button.style.backgroundColor = 'rgba(50,50,50,255)';
+        button.style.border = '1px solid rgb(30,30,30)';
+        button.classList.add('activeOption');
+        button.parentElement.setAttribute('href','/editor');
+        button.style.color = 'yellow';
+    })
+
+    //hiding buttons if there is a plot in their area
+    let plotsAround = ts.plotsAround(selectedPlot,allPlots);
+    console.log(plotsAround)
+    if(plotsAround.plusX != null){
+        let button = document.querySelector('#plotPlusX');
+        button.style.backgroundColor = 'rgba(0,0,0,0)';
+        button.style.color = 'rgba(0,0,0,0)';
+        button.style.border = 'none';
+        button.classList.remove('activeOption')
+        button.parentElement.setAttribute('href','/')
+        button.cursor = 'default'
+    }
+    if(plotsAround.minusX != null){
+        let button = document.querySelector('#plotMinusX');
+        button.style.backgroundColor = 'rgba(0,0,0,0)';
+        button.style.color = 'rgba(0,0,0,0)';
+        button.style.border = 'none';
+        button.classList.remove('activeOption')
+        button.parentElement.setAttribute('href','/')
+        button.cursor = 'default'
+    }
+    if(plotsAround.plusZ != null){
+        let button = document.querySelector('#plotPlusZ');
+        button.style.backgroundColor = 'rgba(0,0,0,0)';
+        button.style.color = 'rgba(0,0,0,0)';
+        button.style.border = 'none';
+        button.classList.remove('activeOption')
+        button.parentElement.setAttribute('href','/')
+        button.cursor = 'default'
+    }
+    if(plotsAround.minusZ != null){
+        let button = document.querySelector('#plotMinusZ');
+        button.style.backgroundColor = 'rgba(0,0,0,0)';
+        button.style.color = 'rgba(0,0,0,0)';
+        button.style.border = 'none';
+        button.classList.remove('activeOption')
+        button.parentElement.setAttribute('href','/')
+        button.cursor = 'default'
+    }
 
 
-    let allButtons = document.querySelectorAll('.plotOption');
+    let allButtons = document.querySelectorAll('.activeOption');
     let currentHover;
 
     allButtons.forEach(button => {
@@ -195,6 +250,8 @@ function userDoubleClick(e){
 
             //sets the data roads around stuff in localStorage, needs to be here to have it reference the right coordinates
             adjacentRoadDataToStorage(e.target)
+
+
 
             let x = e.clientX;
             let y = e.clientY;

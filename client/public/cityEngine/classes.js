@@ -232,6 +232,7 @@ export class Road {
                 roadsAround++
             }
         })
+
         
         this.obj.scale.x = 0.5;
         this.obj.rotation.y = 0;
@@ -250,27 +251,27 @@ export class Road {
             if(plusZ.type == 'road' && minusZ.type == 'road'){
                 this.obj.rotation.y = Math.PI/2
             } else if (plusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
                 this.obj.rotation.y = -Math.PI/2
             } else if (minusX.type == 'road' && plusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
                 this.obj.rotation.y = Math.PI;
             } else if (plusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
             } else if (minusX.type == 'road' && minusZ.type == 'road'){
-                this.obj.children = []
-                ts.newChildren(this.corner).forEach(child => this.obj.add(child))
+                this.obj.geometry = ts.copyToNewMesh(this.corner).geometry
+                this.obj.material = ts.copyToNewMesh(this.corner).material
                 // this.obj.rotation.y = Math.PI/2;
                 this.obj.scale.x *= -1
             }
         }
 
         if(roadsAround === 3){
-            this.obj.children = []
-            ts.newChildren(this.threeWay).forEach(child => this.obj.add(child))
+            this.obj.geometry = ts.copyToNewMesh(this.threeWay).geometry
+            this.obj.material = ts.copyToNewMesh(this.threeWay).material
             if(minusX.type != 'road'){
                 this.obj.rotation.y = -Math.PI/2;
             } else if (plusX.type != 'road'){
@@ -281,8 +282,8 @@ export class Road {
         }
 
         if(roadsAround === 4){
-            this.obj.children = []
-            ts.newChildren(this.fourWay).forEach(child => this.obj.add(child))
+            this.obj.geometry = ts.copyToNewMesh(this.fourWay).geometry
+            this.obj.material = ts.copyToNewMesh(this.fourWay).material
         }
 
 
@@ -308,7 +309,7 @@ export class Building {
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
-        this.baseColor = {r: 0.4,g:0,b:0.4}
+        this.baseColor = {r:0,g:0,b:1}
     }
 
     addToScene(){
@@ -322,7 +323,6 @@ export class Building {
 
         //chooses random between different alternates
         if(this.alts){
-            console.log('alts')
             this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
         }
 
@@ -330,6 +330,8 @@ export class Building {
         this.obj = ts.copyToNewMesh(this.defaultObj)
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
+
+        this.setBaseColor(this.obj,this.baseColor)
 
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -344,9 +346,9 @@ export class Building {
     
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
-        this.obj.receiveShadow = true;
-
+        this.obj.receiveShadow = false;
     }
+
     fitToSurroundings(original){
         let pos = this.relativePos
         
@@ -424,8 +426,8 @@ export class Building {
             // this.obj.children = [];
             // ts.newChildren(this.roofObj).forEach(child => this.obj.add(child));
             //CANT SET OBJ TO NEW OBJ AND HAVE IT WORK NEED TO SET ITS GEOMETRY AND MATERIAL AND ITLL UPDATE
-            this.obj.geometry = ts.copyToNewMesh(this.roofObj).geometry
-            this.obj.material = ts.copyToNewMesh(this.roofObj).material
+            this.obj.geometry = ts.copyToNewMesh(this.roofObj).geometry;
+            this.obj.material = ts.copyToNewMesh(this.roofObj).material;
             this.obj.rotation.y = minusY.obj.rotation.y 
             // index.scene.add(this.obj)
         } else if (minusY.type === this.type && plusY.type === this.type){
@@ -434,16 +436,56 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
+        this.setBaseColor(this.obj,this.baseColor)
+
+        if(minusY.type){
+            let color = minusY.baseColor;
+            this.setBaseColor(this.obj,color)
+        }
+
         //prevents endless loops of fitting, only the originally placed one will cause surroundings to fit
         if(original){
             //runs this function for all surrounding roads to adjust to new context if needed
             around.forEach(block => {
-                if(block.type == 'residential'){
+                if(block.type){
                     block.fitToSurroundings(false)
                 }
             })
         }
 
+
+    }
+    setBaseColor(obj,color){
+        let geometry = obj.geometry;
+
+        let newColorArray = []
+
+        this.baseColor = color;
+
+        obj.material.baseOriginalColor = this.baseColor;
+
+        for(var i=0;i<geometry.attributes.color.array.length;i+=3){
+            let colorArray = geometry.attributes.color.array;
+            let r = colorArray[i]
+            let g = colorArray[i+1] 
+            let b = colorArray[i+2]
+            if(!obj.material.baseOriginalColor){
+                console.log(obj.material)
+            }
+            if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
+                newColorArray.push(this.baseColor.r)
+                newColorArray.push(this.baseColor.g)
+                newColorArray.push(this.baseColor.b)
+            } else {
+                newColorArray.push(r)
+                newColorArray.push(g)
+                newColorArray.push(b)
+            }
+        }
+
+        let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
+        // console.log(attribute)
+        this.obj.geometry.setAttribute('color',attribute)
 
     }
 }
@@ -489,8 +531,7 @@ export class Commercial extends Building {
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
 
-        // this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
-        this.alts = [load.imported.commercialGround]
+        this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
     }
 
 }

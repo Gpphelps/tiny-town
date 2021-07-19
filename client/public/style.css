@@ -133,7 +133,7 @@ a:visited {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: red;
+    color: yellow;
 }
 
 .plotOption:hover{
