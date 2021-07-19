@@ -10,9 +10,9 @@ import { GET_ME } from '../utils/queries';
 
     const textStyle = {
         color: "#FFFFFF",
-        fontFamily: "'Syncopate', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
-        fontWeight: '300',
+        fontWeight: '600',
     };
 
     useEffect(() => {
@@ -24,7 +24,7 @@ import { GET_ME } from '../utils/queries';
     
 
     return(
-        <header>
+        <header className='header'>
             <Link to="/">
             <h1 style={textStyle}>Tiny Town</h1>
             </Link>

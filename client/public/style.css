@@ -50,6 +50,10 @@ button {
     cursor: pointer;
 }
 
+#x:hover {
+    cursor: pointer;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -75,6 +79,10 @@ form > button {
 
 form > p {
     margin: 10px;
+}
+
+.header {
+    background-color: rgb(180, 180, 180, 0.2);
 }
 
 .cont {

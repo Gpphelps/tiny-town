@@ -8,6 +8,7 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
 
     const [loginUser, { error }] = useMutation(LOGIN_USER);
 
@@ -28,16 +29,21 @@ const Login = () => {
     const handleFormSubmit = async (e) => {
         
         e.preventDefault();
-    
-        const { data } = await loginUser({
-            variables: { email: email, password: password }
-        });
-        
-        Auth.login(data.login.token)
+        try {
+            const { data, error } = await loginUser({
+                variables: { email: email, password: password }
+            });
 
-        if (error) {
-            console.log(error.message);
+            Auth.login(data.login.token)
+
+            if (error) {
+                console.log(error.message)
+            }
+        }catch (err) {
+            console.error(err);
+            setShowAlert(true);
         }
+
         
 
         setEmail('');
@@ -46,23 +52,30 @@ const Login = () => {
     
     const textStyle = {
         color: "#2D2D29",
-        fontFamily: "'Syncopate', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
         textAlign: "center",
         fontSize: "50px",
+        fontWeight: "600",
     };
 
     const loginStyle = {
+        border: "2px solid black",
+        borderRadius: "2px",
         fontFamily: "'Prompt', sans-serif",
         textTransform: "lowercase",
+
     };
 
     const buttonStyle = {
-        fontFamily: "'Prompt', sans-serif",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
         fontSize: "20px",
+        border: "2px solid black",
+        borderRadius: "2px"
         // backgroundColor: '#7DC287',
         // borderRadius: '5px',
+
     };
 
     const pStyle = {
@@ -73,11 +86,32 @@ const Login = () => {
     };
 
     const errorStyle = {
+
+        display: "flex",
+        flexDirection: "column",
         fontFamily: "'Prompt', sans-serif",
         textTransform: "lowercase",
         textAlign: "center",
         color: "red",
-        fontSize: "50px",
+        fontWeight: "300",
+        fontSize: "20px",
+        border: "2px solid black",
+        borderRadius: "2px"
+    };
+
+    const xStyle = {
+        width: "20px",
+        fontFamily: "'Inconsolata', monospace",
+        justifyContent: "right",
+        color: "white",
+        backgroundColor: "red",
+        fontSize: "25px",
+        fontWeight: "bold",
+        textAlign: "right",
+        borderRight: "1px solid black",
+        borderBottom: "1px solid black",
+        borderRadius: "2px",
+        paddingRight: "3px"
     };
 
     return (
@@ -87,10 +121,10 @@ const Login = () => {
                 <input style={loginStyle} onChange={handleInput} name="email" placeholder="Email"></input>
                 <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Login</button>
+                {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>**Could not find a user with that email or password**</div>}
                 <Link to="/createaccount">
                     <p style={pStyle}>Don't have an account? Create one here</p>
                 </Link>
-                <div style={errorStyle} id="errorMessage" className="error"> </div>
             </form>
         </div>
     )

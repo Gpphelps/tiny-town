@@ -113,114 +113,54 @@ export function newChildren(templateObj){
 }
 
 
+
 export function mergeGeometry(obj){
-    
     let geometries = []
-    obj.children.forEach((mesh,index) => {
-        let meshGeo = mesh.geometry;
-        let meshPos = mesh.position;
-        let meshRot = mesh.rotation;
-        let meshColor = mesh.material.color;
 
-        // meshRot = meshRot.setFromVector3(new THREE.Vector3(0,0,0),'XYZ')
-        // console.log(meshRot)
-        // meshGeo.translate(meshPos.x+1,meshPos.y+1,meshPos.z+1)
-
-        let signs = {
-            w: 1,
-            x: 1,
-            y: 1,
-            w: 1,
+    obj.children.forEach(mesh => {
+        let geometry = mesh.geometry;
+        
+        if(geometry.attributes.color){
+            delete geometry.attributes.color;
         }
+        // console.log(mesh)
+        let matrix = new THREE.Matrix4();
+        let position = new THREE.Vector3();
+        let rotation = new THREE.Euler();
+        let quaternion = new THREE.Quaternion();
+        let scale = new THREE.Vector3();
 
+        position.x = mesh.position.x;
+        position.y = mesh.position.y;
+        position.z = mesh.position.z;
 
-        let quart = new THREE.Quaternion();
-        quart.setFromEuler(meshRot);
+        quaternion.setFromEuler( mesh.rotation, false);
 
-        if(quart.w < 0){
-            signs.w = -1
-        }
-        if(quart.x < 0){
-            signs.x = -1
-        }
-        if(quart.y < 0){
-            signs.y = -1
-        }
-        if(quart.z < 0){
-            signs.z = -1
-        }
+        scale.x = mesh.scale.x;
+        scale.y = mesh.scale.y;
+        scale.z = mesh.scale.z;
 
+        matrix.compose( position, quaternion, scale);
 
-
-        // quart.w = Math.abs(quart.w)
-        // quart.x = Math.abs(quart.x)
-        // quart.y = Math.abs(quart.y)
-        // quart.z = Math.abs(quart.z)
-
-
-        quart.set(quart.x,-quart.w,quart.y,quart.z);
-
-        meshRot.setFromQuaternion(quart)
-
-        // meshRot.set(meshRot.x,meshRot.y,meshRot.z)
-
-
-        let movedPos = []
         let vertexColors = []
-        for(let i=0;i<meshGeo.attributes.position.array.length;i+=3){
-            let x = meshGeo.attributes.position.array[i]
-            let y = meshGeo.attributes.position.array[i+1]
-            let z = meshGeo.attributes.position.array[i+2]
 
-
-            let point = [x,y,z];
-
-            //scaling
-            point[0] = point[0] * mesh.scale.x
-            point[1] = point[1] * mesh.scale.y
-            point[2] = point[2] * mesh.scale.z
-
-            //rotating
-
-            point = math.multiply(point,rotatorX(meshRot.x));
-            point = math.multiply(point,rotatorY(meshRot.y));
-            point = math.multiply(point,rotatorZ(meshRot.z));
-            // point = math.multiply(point,rotatorX(meshRot.x));
-            // point = math.multiply(point,rotatorY(meshRot.y));
-
-
-            let rotatedX = point[0]
-            let rotatedY = point[1]
-            let rotatedZ = point[2]
-
-            vertexColors.push(meshColor.r)
-            vertexColors.push(meshColor.g)
-            vertexColors.push(meshColor.b)
-
-            //moving
-            let newX = (rotatedX) + meshPos.x 
-            let newY = (rotatedY) + meshPos.y
-            let newZ = (rotatedZ) + meshPos.z
-            // let newX = (rotatedX) + index
-            // let newY = (rotatedY)
-            // let newZ = (rotatedZ)
-   
-            movedPos.push(newX)
-            movedPos.push(newY)
-            movedPos.push(newZ)
-
+        for(var i=0;i<geometry.attributes.position.count;i++){
+            vertexColors.push(mesh.material.color.r)
+            vertexColors.push(mesh.material.color.g)
+            vertexColors.push(mesh.material.color.b)
         }
 
-        meshGeo.attributes.position.array.set(movedPos)
-        meshGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(vertexColors),3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(vertexColors),3));
 
-        geometries.push(mesh.geometry)
+
+        geometry.applyMatrix4(matrix);
+        geometries.push(geometry);
     })
 
     let merged = BufferGeometryUtils.mergeBufferGeometries(geometries, false)
 
     let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true}));
-
+    console.log(newMesh)
     return newMesh;
 }
 
@@ -361,7 +301,7 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
         plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().leftArray;
     }
     if(surroundingPlots.minusX){
-        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().rightArray;
+        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().Array;
     }
     if(surroundingPlots.plusZ){
         plusZRoads = surroundingPlots.plusZ.checkEdgesForRoads().topArray;
