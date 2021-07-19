@@ -379,4 +379,3 @@ export function distanceMap(value,goal,cutoff){
 
 
 
-

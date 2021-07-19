@@ -273,7 +273,7 @@ function userClick(e){
         let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        newBlock.fitToSurroundings()
+        newBlock.fitToSurroundings(true)
         // newBlock.calculateDisplacement()
         // console.log(newBlock)
         // newBlock.fitToSurroundings(true)

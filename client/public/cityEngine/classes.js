@@ -575,7 +575,7 @@ export class Park {
         this.obj.geometry = this.defaultObj.geometry;
 
         // this.obj.material.displacementMap = this.groundDisplacementTexture();
-        this.obj.material.displacementScale = 0.35;
+        this.obj.material.displacementScale = 1;
         this.obj.material.roughness = 1
         this.obj.material.flatShading = true;
 
@@ -610,12 +610,12 @@ export class Park {
 
     calculateDisplacement(around){
         console.log(around)
-        var canv = document.querySelector('#parkDisplacementCanvas');
-        if(!canv){
-            canv = document.createElement('canvas');
-            canv.setAttribute('id','parkDisplacementCanvas');
-            document.querySelector('#root').appendChild(canv);
-        }
+
+
+        let canv = document.createElement('canvas');
+        canv.setAttribute('id','parkDisplacementCanvas');
+        document.querySelector('#root').appendChild(canv);
+
 
         canv.width = 100;
         canv.height = 100;
@@ -650,20 +650,44 @@ export class Park {
 
                 // console.log(around.indexOf('plusX'))
                 if(around.indexOf('plusX') != -1){
-
-                    let a = ts.distanceMap(x,canv.width,50)
+                    let a = ts.distanceMap(x,canv.width,20)
                     if(a){
                         data[index] = data[index] - (a*data[index])
                         data[index+1] = data[index+1] - (a*data[index+1])
                         data[index+2] =  data[index+2] - (a*data[index+2])
                     }
-
+                }
+                if(around.indexOf('minusX') != -1){
+                    let a = ts.distanceMap(x,0,20);
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+                }
+                if(around.indexOf('plusZ') != -1){
+                    let a = ts.distanceMap(y,canv.height,20);
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+                }
+                if(around.indexOf('minusZ') != -1){
+                    let a = ts.distanceMap(y,0,20);
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
                 }
 
             }
         }
         console.log(imageData)
         ctx.putImageData(imageData,0,0);
+
+        canv.remove()
 
         return canv;
     }
@@ -701,10 +725,11 @@ export class Park {
         } else{
             minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
         }
-
+        console.log(original)
         let around = [plusX,minusX,plusZ,minusZ]
 
         let notParks = []
+
 
         if(plusX.type != 'park' || !plusX.type){
             notParks.push('plusX')
@@ -724,5 +749,14 @@ export class Park {
 
 
         this.groundDisplacementTexture(notParks);
+
+        if(original){
+            //runs this function for all surrounding roads to adjust to new context if needed
+            around.forEach(block => {
+                if(block.type){
+                    block.fitToSurroundings(false)
+                }
+            })
+        }
     }
 }
