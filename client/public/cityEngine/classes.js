@@ -309,7 +309,7 @@ export class Building {
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
-        this.baseColor = {r: 0,g:0,b:1}
+        this.baseColor = {r:0,g:0,b:1}
     }
 
     addToScene(){
