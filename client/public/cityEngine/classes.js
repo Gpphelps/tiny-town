@@ -564,7 +564,7 @@ export class Park {
         this.parent = parent,
         this.relativePos = {x:x,y:y,z:z},
         this.type = 'park',
-        this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshPhongMaterial({color:'green'}));
+        this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshStandardMaterial({color:'rgb(0,90,0)'}));
         this.baseColor = {r:0,g:1,b:0}
     }
 
@@ -575,7 +575,7 @@ export class Park {
         this.obj.geometry = this.defaultObj.geometry;
 
         // this.obj.material.displacementMap = this.groundDisplacementTexture();
-        this.obj.material.displacementScale = 1;
+        this.obj.material.displacementScale = 0.3;
         this.obj.material.roughness = 1
         this.obj.material.flatShading = true;
 
