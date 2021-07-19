@@ -20,6 +20,14 @@ export async function init(){
     document.querySelector('canvas').addEventListener('mousemove',userHover);
     document.querySelector('canvas').addEventListener('dblclick', userDoubleClick);
 
+
+    //clearing old local storage items
+    localStorage.setItem('plusXRoads','[]')
+    localStorage.setItem('minusXRoads','[]')
+    localStorage.setItem('plusZRoads','[]')
+    localStorage.setItem('minusZRoads','[]')
+
+    console.log(index.renderer.info.render)
 };
 
 
@@ -42,9 +50,9 @@ async function buildPlots(){
 
     console.log(plots)
     plots.forEach(plot => {
-        console.log(plot)
+
         let newPlot = new cls.Plot(plot.plot_position_x,0,plot.plot_position_z);
-        console.log(newPlot)
+
         newPlot.buildBase();
         allPlots.push(newPlot)
         plot.buildings.forEach(building => {
@@ -71,7 +79,6 @@ async function buildPlots(){
     })
 
     allPlots.forEach(plot => {
-        console.log(plot.blocks[1][1][1])
         for(var x=0;x<plot.dimmensions.x;x++){
             for(var y=0;y<plot.dimmensions.y;y++){
                 for(var z=0;z<plot.dimmensions.z;z++){

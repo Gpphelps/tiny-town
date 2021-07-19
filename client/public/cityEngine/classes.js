@@ -225,15 +225,14 @@ export class Road {
 
 
         let around = [plusX,minusX,plusY,minusY,plusZ,minusZ]
-        console.log(around)
+
         let roadsAround = 0;
         around.forEach(block => {
             if(block.type == 'road'){
                 roadsAround++
             }
         })
-        console.log(roadsAround)
-        console.log('--------')
+
         
         this.obj.scale.x = 0.5;
         this.obj.rotation.y = 0;
@@ -310,7 +309,7 @@ export class Building {
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
-        this.baseColor = {r: 0.4,g:0,b:0.4}
+        this.baseColor = {r: 0,g:0,b:1}
     }
 
     addToScene(){
@@ -324,7 +323,6 @@ export class Building {
 
         //chooses random between different alternates
         if(this.alts){
-            console.log('alts')
             this.defaultObj = this.alts[ts.rndmInt(0,this.alts.length)]
         }
 
@@ -333,7 +331,7 @@ export class Building {
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
 
-        this.setBaseColor(this.obj,{r:0.1,g:0.1,b:0.6})
+        this.setBaseColor(this.obj,this.baseColor)
 
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -349,7 +347,6 @@ export class Building {
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
         this.obj.receiveShadow = false;
-
     }
 
     fitToSurroundings(original){
@@ -429,8 +426,8 @@ export class Building {
             // this.obj.children = [];
             // ts.newChildren(this.roofObj).forEach(child => this.obj.add(child));
             //CANT SET OBJ TO NEW OBJ AND HAVE IT WORK NEED TO SET ITS GEOMETRY AND MATERIAL AND ITLL UPDATE
-            this.obj.geometry = ts.copyToNewMesh(this.roofObj).geometry
-            this.obj.material = ts.copyToNewMesh(this.roofObj).material
+            this.obj.geometry = ts.copyToNewMesh(this.roofObj).geometry;
+            this.obj.material = ts.copyToNewMesh(this.roofObj).material;
             this.obj.rotation.y = minusY.obj.rotation.y 
             // index.scene.add(this.obj)
         } else if (minusY.type === this.type && plusY.type === this.type){
@@ -441,11 +438,16 @@ export class Building {
 
         this.setBaseColor(this.obj,this.baseColor)
 
+        if(minusY.type){
+            let color = minusY.baseColor;
+            this.setBaseColor(this.obj,color)
+        }
+
         //prevents endless loops of fitting, only the originally placed one will cause surroundings to fit
         if(original){
             //runs this function for all surrounding roads to adjust to new context if needed
             around.forEach(block => {
-                if(block.type == 'residential'){
+                if(block.type){
                     block.fitToSurroundings(false)
                 }
             })
@@ -460,14 +462,16 @@ export class Building {
 
         this.baseColor = color;
 
-        console.log(geometry)
-        console.log(obj)
+        obj.material.baseOriginalColor = this.baseColor;
+
         for(var i=0;i<geometry.attributes.color.array.length;i+=3){
             let colorArray = geometry.attributes.color.array;
             let r = colorArray[i]
             let g = colorArray[i+1] 
             let b = colorArray[i+2]
-
+            if(!obj.material.baseOriginalColor){
+                console.log(obj.material)
+            }
             if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
                 newColorArray.push(this.baseColor.r)
                 newColorArray.push(this.baseColor.g)
@@ -480,7 +484,7 @@ export class Building {
         }
 
         let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
-        console.log(attribute)
+        // console.log(attribute)
         this.obj.geometry.setAttribute('color',attribute)
 
     }
@@ -527,8 +531,7 @@ export class Commercial extends Building {
         this.midObj = load.imported.commercialMid;
         this.roofObj = load.imported.commercialRoof;
 
-        // this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
-        this.alts = [load.imported.commercialGround]
+        this.alts = [load.imported.commercialGround,load.imported.commercialGroundAltOne]
     }
 
 }

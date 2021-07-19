@@ -249,6 +249,7 @@ function userClick(e){
     } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
+        // newBlock.baseColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)};
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)

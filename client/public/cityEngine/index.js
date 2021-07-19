@@ -19,7 +19,7 @@ export let renderer;
 export let controls;
 
 let sun;
-
+let helper;
 
 let generalSettings = {
     vertOrbit: true,
@@ -43,28 +43,31 @@ function init(){
     const far = 100;
     scene.fog = new THREE.Fog(color,near,far)
 
-    // export const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    // camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
     let windowRatio = window.innerWidth/window.innerHeight;
     camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-100,500);
 
+    
     camera.position.set(10,12,10)
     camera.lookAt(5,0,5);
     camera.zoom = 2
-
+    
     sun = new THREE.DirectionalLight(0xffffff,0.6);
-    sun.position.set(4,20,8);
+    sun.position.set(10,20,20);
     sun.castShadow = true;
     sun.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 50 );
     sun.shadow.radius = 0.4
     sun.shadowDarkness = 0.8
     scene.add(sun);
-
+    
     const ambientLight = new THREE.AmbientLight( 0xffffff )
     ambientLight.intensity = 0.6
     scene.add(ambientLight)
-
-
+    
+    
+    helper = new THREE.CameraHelper(sun.shadow.camera)
+    // scene.add(helper)
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -81,7 +84,7 @@ function init(){
     controls.target.set(5,2,5);
 
     controls.maxZoom = 8;
-    controls.minZoom = 0.1;
+    controls.minZoom = 1;
 
     controls.enableDamping = true;
     controls.dampingFactor = 0.05
@@ -137,8 +140,8 @@ export const log = () => {
 function animate() {
 	requestAnimationFrame( animate );
 
-    controls.update()
-
+    controls.update();
+    helper.update();
 
 
     //rotates popup menu
