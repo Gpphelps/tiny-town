@@ -84,26 +84,32 @@ const Editor = () => {
         setTipPosition({top:e.clientY+20,left:e.clientX+20})
     }
 
-
+    // {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>**Could not find a user with that email and/or password**</div>}
 
     return(
-        <div onMouseMove={handleHover}>
-            <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/>
-            <div>
-                <p style={{display:'none'}} id="runModeProxy">editor</p>
-                <textarea style={{display:'none'}} id='saveText'></textarea>
-                <textarea style={{display:'none'}} id='edgeRoadBoolean'></textarea>
-            </div>
+        <div>
+            <div onMouseMove={handleHover}>
+                <InputModal header={"Name this Neighborhood"} inputFunction={handleNameInput} buttonText={'Submit'} display={modalDisplay} setModalDisplay={setModalDisplay} otherFunction={handlePlotSave} savedYet={savedYet} setSavedYet={setSavedYet}/>
+                <div>
+                    <p style={{display:'none'}} id="runModeProxy">editor</p>
+                    <textarea style={{display:'none'}} id='saveText'></textarea>
+                    <textarea style={{display:'none'}} id='edgeRoadBoolean'></textarea>
+                </div>
 
-            <div id="canvCont">
-
+                <div id="canvCont">
+                
+                </div>
+                <button onClick={renameButton}>Rename this plot</button>
+                <div id="userTools">
+                </div>
+                <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
+                <button onClick={handlePlotSave}>Save Plot</button>
+                <div id="plotNameFlex">
+                    {plotName &&<div id="editorName">{plotName}</div>}
+                </div>
             </div>
-            <button onClick={renameButton}>Rename this plot</button>
-            <div id="userTools">
-            </div>
-            <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
-            <button onClick={handlePlotSave}>Save Plot</button>
         </div>
+        
     )
 }
 

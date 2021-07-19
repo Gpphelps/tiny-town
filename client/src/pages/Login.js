@@ -100,7 +100,7 @@ const Login = () => {
 
     const xStyle = {
         width: "20px",
-        fontFamily: "'Inconsolata', monospace",
+        fontFamily: "'Prompt', sans-serif",
         justifyContent: "right",
         color: "white",
         backgroundColor: "red",
