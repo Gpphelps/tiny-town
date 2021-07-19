@@ -274,7 +274,7 @@ function userClick(e){
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
-        newBlock.fitToSurroundings(true)
+        // newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
         console.log(currentHover.object)

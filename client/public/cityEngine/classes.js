@@ -537,20 +537,55 @@ export class Commercial extends Building {
 }
 
 
-export class Park extends Building {
-    constructor(parent,x,y,z){
-        super(parent,x,y,z);
-        this.type = 'park';
-        this.defaultObj = load.imported.park1x1One;
-        this.scale = {x:0.5,y:0.5,z:0.5};
-        this.randomBaseColor = false;
-    }
-}
+// export class Park extends Building {
+//     constructor(parent,x,y,z){
+//         super(parent,x,y,z);
+//         this.type = 'park';
+//         this.defaultObj = load.imported.park1x1One;
+//         this.scale = {x:0.5,y:0.5,z:0.5};
+//         this.randomBaseColor = false;
+//     }
+// }
 
 
 class Blank {
     constructor(){
         this.type = 'blank';
         this.randomBaseColor = false;
+    }
+}
+
+
+
+
+export class Park {
+    constructor(parent,x,y,z){
+        this.parent = parent,
+        this.relativePos = {x:x,y:y,z:z},
+        this.type = 'park',
+        this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,10,10),new THREE.MeshPhongMaterial({color:'green'}))
+    }
+
+    addToScene(){
+
+        this.obj = new THREE.Mesh();
+        this.obj.material = this.defaultObj.material;
+        this.obj.geometry = this.defaultObj.geometry;
+
+        console.log(this.obj.geometry)
+
+        this.obj.blockType = this.type;
+        this.obj.defaultMaterial = this.obj.material;
+
+        index.scene.add(this.obj);
+        this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
+
+        let absX = this.relativePos.x + this.parent.position.x;
+        let absY = this.relativePos.y + this.parent.position.y;
+        let absZ = this.relativePos.z + this.parent.position.z;
+    
+        this.obj.position.set(absX,absY,absZ);
+        this.obj.castShadow = true;
+        this.obj.receiveShadow = false;
     }
 }
