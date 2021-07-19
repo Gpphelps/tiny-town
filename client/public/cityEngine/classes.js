@@ -565,7 +565,9 @@ export class Park {
         this.relativePos = {x:x,y:y,z:z},
         this.type = 'park',
         this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshStandardMaterial({color:'rgb(0,90,0)'}));
-        this.baseColor = {r:0,g:1,b:0}
+        this.baseColor = {r:0,g:1,b:0},
+        this.treeCount = 3;
+        this.trees = [load.imported.tree1, load.imported.tree2]
     }
 
     addToScene(){
@@ -751,12 +753,71 @@ export class Park {
         this.groundDisplacementTexture(notParks);
 
         if(original){
+            this.growFlora()
+
+        }
+
+        if(original){
             //runs this function for all surrounding roads to adjust to new context if needed
             around.forEach(block => {
                 if(block.type){
                     block.fitToSurroundings(false)
                 }
             })
+        }
+    }
+
+    growFlora(){
+
+        this.obj.children.forEach(child => {
+            scene.remove(child)
+        })
+        this.obj.children = []
+
+        for(let i=0;i<this.treeCount;i++){
+            
+            let x;
+            let z;
+
+            let y;
+
+
+
+            for(var a=0;a<50;a++){
+                let testX = ts.rndmNum(0.1,0.9)
+                let testZ = ts.rndmNum(0.1,0.9)
+                let perlinValue = perlin.get(testX+this.relativePos.x+this.parent.position.x+2,testZ+this.relativePos.z+this.parent.position.z+2);
+                if(ts.evalOdds(perlinValue)){
+                    x = testX - 0.5;
+                    z = testZ - 0.5;
+
+                    y = (perlinValue*0.3)-0.25;
+
+                    break;
+                }
+            }
+
+            console.log(x,y,z)
+
+            let treeObj = ts.copyToNewMesh(this.trees[ts.rndmInt(0,this.trees.length)])
+            treeObj.defaultMaterial = treeObj.material;
+
+            treeObj.scale.set(0.3,0.3,0.3)
+
+            let absX = this.relativePos.x + this.parent.position.x + x;
+            let absY = this.relativePos.y + this.parent.position.y + y;
+            let absZ = this.relativePos.z + this.parent.position.z + z;
+
+
+
+            treeObj.position.set(absX,absY,absZ)
+            treeObj.rotation.y = ts.rndmNum(0,3)
+
+            this.obj.add(treeObj)
+            index.scene.add(treeObj)
+
+
+
         }
     }
 }

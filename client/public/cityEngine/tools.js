@@ -375,6 +375,15 @@ export function distanceMap(value,goal,cutoff){
     }
 }
 
+export function evalOdds(odds){
+    let rndm = rndmNum(0,1);
+    if(odds > rndm){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 
 
