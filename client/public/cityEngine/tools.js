@@ -363,6 +363,19 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
 }
 
 
+export function distanceMap(value,goal,cutoff){
+
+    let distance = Math.abs(goal-value);
+
+    if(distance < cutoff){
+        let a = 1-(distance/cutoff);
+        return a;
+    } else {
+        return null
+    }
+}
+
+
 
 
 

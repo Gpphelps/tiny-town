@@ -574,7 +574,7 @@ export class Park {
         this.obj.material = this.defaultObj.material;
         this.obj.geometry = this.defaultObj.geometry;
 
-        this.obj.material.displacementMap = this.groundDisplacementTexture();
+        // this.obj.material.displacementMap = this.groundDisplacementTexture();
         this.obj.material.displacementScale = 0.35;
         this.obj.material.roughness = 1
         this.obj.material.flatShading = true;
@@ -598,17 +598,19 @@ export class Park {
         this.obj.receiveShadow = true;
     }
 
-    groundDisplacementTexture(){
-        let displacementCanvas = this.calculateDisplacement();
+    groundDisplacementTexture(around){
+        let displacementCanvas = this.calculateDisplacement(around);
         const texture = new THREE.CanvasTexture(displacementCanvas);
+
+        this.obj.material.displacementMap = texture;
 
         // let material = new THREE.MeshPhongMaterial({map:texture})
         return texture;
     }
 
-    calculateDisplacement(){
+    calculateDisplacement(around){
+        console.log(around)
         var canv = document.querySelector('#parkDisplacementCanvas');
-
         if(!canv){
             canv = document.createElement('canvas');
             canv.setAttribute('id','parkDisplacementCanvas');
@@ -645,6 +647,19 @@ export class Park {
                 data[index+1] = adjValue;
                 data[index+2] = adjValue;
                 data[index+3] = 255;
+
+                // console.log(around.indexOf('plusX'))
+                if(around.indexOf('plusX') != -1){
+
+                    let a = ts.distanceMap(x,canv.width,50)
+                    if(a){
+                        data[index] = data[index] - (a*data[index])
+                        data[index+1] = data[index+1] - (a*data[index+1])
+                        data[index+2] =  data[index+2] - (a*data[index+2])
+                    }
+
+                }
+
             }
         }
         console.log(imageData)
@@ -653,7 +668,61 @@ export class Park {
         return canv;
     }
 
-    fitToSurroundings(){
+    fitToSurroundings(original){
+        let pos = this.relativePos
         
+        //weird way to assign plusX, minusX ... but done so that if on the edge it doesn't have error because plusX is not in the array or whatever
+        let plusX
+        let minusX
+        let plusZ
+        let minusZ
+
+        let pd = this.parent.dimmensions
+ 
+
+        if(pos.x == pd.x-1){
+            plusX = new Blank()
+        } else {
+            plusX = this.parent.blocks[pos.x+1][pos.y][pos.z]
+        }
+        if(pos.x == 0){
+            minusX = new Blank()
+        } else {
+            minusX = this.parent.blocks[pos.x-1][pos.y][pos.z]
+        }
+
+        if(pos.z == pd.z-1){
+            plusZ = new Blank()
+        } else{
+            plusZ = this.parent.blocks[pos.x][pos.y][pos.z+1]
+        }
+        if(pos.z == 0){
+            minusZ = new Blank()
+        } else{
+            minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
+        }
+
+        let around = [plusX,minusX,plusZ,minusZ]
+
+        let notParks = []
+
+        if(plusX.type != 'park' || !plusX.type){
+            notParks.push('plusX')
+        }
+        if(minusX.type != 'park' || !minusX.type){
+            notParks.push('minusX')
+        }
+        if(plusZ.type != 'park' || !plusZ.type){
+            notParks.push('plusZ')
+        }
+        if(minusZ.type != 'park' || !minusZ.type){
+            notParks.push('minusZ')
+        }
+
+        console.log(around)
+        console.log(notParks)
+
+
+        this.groundDisplacementTexture(notParks);
     }
 }
