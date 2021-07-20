@@ -9,10 +9,12 @@ export let editPlot;
 
 
 //tracks currently selected options from user, kinda like dif states
-const process = {
+export const process = {
     clickOperation: 'place-park',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
+    paintColor: {r:0.2,g:0.2,b:0.8},
+    randomColor: true,
 }
 
 
@@ -24,6 +26,7 @@ const userInput = {
             if(e.target.dataset.highlight == 'paintColor'){
                 let inputHexColor = document.querySelector('#paintColorInput').value;
                 let rgb = ts.hexToRgb(inputHexColor)
+                console.log(rgb)
                 process.paintColor = rgb;
                 process.hoverMaterial.color = process.paintColor;
                 return;
@@ -156,8 +159,10 @@ function initUi(){
     paintColorInput.setAttribute('id','paintColorInput')
     cont.appendChild(paintColorInput);
     paintColorInput.addEventListener("change", (e) => {
-        console.log(e.target)
-        process.paintColor = e.target.value
+        let rgb = ts.hexToRgb(e.target.value)
+        process.paintColor = rgb;
+        console.log(process.paintColor)
+        
     })
 
 }
@@ -231,18 +236,24 @@ function userClick(e){
     }
 
     if(!currentHover){
+        console.log('none!')
         return;
     }
 
 
 
     //cant place things on top of roads so nothing happens on click
-    if(currentHover.object.blockType == 'road'){
+    if(currentHover.object.blockType == 'road' && process.clickOperation != 'delete-block'){
         return
     }
 
+    if(process.randomColor){
+        process.paintColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)}
+    }
+
+
     const hoverPos = currentHover.object.position
-    console.log(process.clickOperation)
+    console.log(currentHover)
     let place = {x:hoverPos.x,y:hoverPos.y+1,z:hoverPos.z}
     if(process.clickOperation == 'place-road'){
         if(currentHover.object.blockType){
@@ -256,34 +267,29 @@ function userClick(e){
     } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
-        // newBlock.baseColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)};
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.baseColor = process.paintColor
+        console.log(newBlock.baseColor)
         newBlock.addToScene()
-        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-office'){
         let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.baseColor = process.paintColor
+        console.log(newBlock.baseColor)
         newBlock.addToScene()
-        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-commercial'){
         let newBlock = new cls.Commercial(editPlot,place.x,place.y,place.z);
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.baseColor = process.paintColor
         newBlock.addToScene()
-        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-park' && currentHover.object.blockType == undefined){
         let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         newBlock.fitToSurroundings(true)
-        // newBlock.calculateDisplacement()
-        // console.log(newBlock)
-        // newBlock.fitToSurroundings(true)
+
     }
     if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
         console.log(currentHover.object)
@@ -291,11 +297,18 @@ function userClick(e){
         let x = currentHover.object.position.x;
         let y = currentHover.object.position.y;
         let z = currentHover.object.position.z;
+
+        if(currentHover.object.blockType == 'park'){
+            y = 1;
+        }
+
         ts.deleteAtandUp(x,y,z,editPlot.blocks,editPlot)
         // editPlot.blocks[x][y][z] = [];
     }
     if(process.clickOperation == 'paint-building' && currentHover.object.blockType){
-        currentHover.object.children[0].defaultMaterial.color = process.paintColor;
+        console.log(currentHover.object)
+        ts.setBaseColor(currentHover.object,process.paintColor);
+        currentHover.object.objectOf.baseColor = process.paintColor;
     }
 
     let exportable = exportBlocks(editPlot)

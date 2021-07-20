@@ -27,7 +27,6 @@ export class Plot {
                 let baseMesh = new THREE.Mesh(baseGeometry,baseMaterial);
                 baseMesh.receiveShadow = true;
                 this.base.push(baseMesh)
-
                 index.scene.add(baseMesh)
 
                 baseMesh.defaultMaterial = this.defaultMaterial
@@ -310,7 +309,7 @@ export class Building {
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
-        this.baseColor = {r:0,g:0,b:1}
+        this.baseColor = {r:1,g:0.5,b:1}
     }
 
     addToScene(){
@@ -331,6 +330,10 @@ export class Building {
         this.obj = ts.copyToNewMesh(this.defaultObj)
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
+
+        this.obj.objectOf = this
+
+        this.obj.material.baseOriginalColor = this.baseColor;
 
         this.setBaseColor(this.obj,this.baseColor)
 
@@ -437,10 +440,14 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
-        this.setBaseColor(this.obj,this.baseColor)
+        // console.log(this.baseColor)
+
+        // this.setBaseColor(this.obj,this.baseColor)
 
         if(minusY.type){
             let color = minusY.baseColor;
+            // console.log(minusY.baseColor)
+            this.baseColor = color
             this.setBaseColor(this.obj,color)
         }
 
@@ -457,13 +464,18 @@ export class Building {
 
     }
     setBaseColor(obj,color){
+        // console.log(color)
         let geometry = obj.geometry;
 
         let newColorArray = []
 
-        this.baseColor = color;
 
-        obj.material.baseOriginalColor = this.baseColor;
+
+        // this.baseColor = color;
+        // console.log(this.baseColor)
+        // console.log(obj.material.baseOriginalColor)
+
+        // console.log(obj.geometry)
 
         for(var i=0;i<geometry.attributes.color.array.length;i+=3){
             let colorArray = geometry.attributes.color.array;
@@ -471,9 +483,10 @@ export class Building {
             let g = colorArray[i+1] 
             let b = colorArray[i+2]
             if(!obj.material.baseOriginalColor){
-                console.log(obj.material)
+                // console.log(obj.material)
             }
-            if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
+            if(i/3 < obj.geometry.finalBaseVertex){
+            // if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
                 newColorArray.push(this.baseColor.r)
                 newColorArray.push(this.baseColor.g)
                 newColorArray.push(this.baseColor.b)
@@ -484,10 +497,22 @@ export class Building {
             }
         }
 
+
+        this.baseColor = color;
+
         let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
-        // console.log(attribute)
+        console.log(attribute)
+
+        let position = this.obj.geometry.attributes.position;
+        let uv =  this.obj.geometry.attributes.uv;
+        let normal = this.obj.geometry.attributes.normal;
+
+        this.obj.geometry = this.obj.geometry.clone()
         this.obj.geometry.setAttribute('color',attribute)
 
+        this.obj.material = new THREE.MeshPhongMaterial({vertexColors: true})
+
+        obj.material.baseOriginalColor = this.baseColor;
     }
 }
 
@@ -566,7 +591,7 @@ export class Park {
         this.type = 'park',
         this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshStandardMaterial({color:'rgb(0,90,0)'}));
         this.baseColor = {r:0,g:1,b:0},
-        this.treeCount = 3;
+        this.treeCount = 1;
         this.trees = [load.imported.tree1, load.imported.tree2]
     }
 
@@ -583,7 +608,7 @@ export class Park {
 
         this.obj.rotation.x = -Math.PI/2
 
-        console.log(this.obj.geometry)
+
 
         this.obj.blockType = this.type;
         this.obj.defaultMaterial = this.obj.material;
@@ -595,23 +620,25 @@ export class Park {
         let absY = this.relativePos.y + this.parent.position.y - 0.49;
         let absZ = this.relativePos.z + this.parent.position.z;
     
+
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
         this.obj.receiveShadow = true;
     }
 
     groundDisplacementTexture(around){
+
         let displacementCanvas = this.calculateDisplacement(around);
         const texture = new THREE.CanvasTexture(displacementCanvas);
 
         this.obj.material.displacementMap = texture;
+
 
         // let material = new THREE.MeshPhongMaterial({map:texture})
         return texture;
     }
 
     calculateDisplacement(around){
-        console.log(around)
 
 
         let canv = document.createElement('canvas');
@@ -650,7 +677,7 @@ export class Park {
                 data[index+2] = adjValue;
                 data[index+3] = 255;
 
-                // console.log(around.indexOf('plusX'))
+                // console.log(around)
                 if(around.indexOf('plusX') != -1){
                     let a = ts.distanceMap(x,canv.width,20)
                     if(a){
@@ -686,7 +713,7 @@ export class Park {
 
             }
         }
-        console.log(imageData)
+
         ctx.putImageData(imageData,0,0);
 
         canv.remove()
@@ -727,11 +754,10 @@ export class Park {
         } else{
             minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
         }
-        console.log(original)
+
         let around = [plusX,minusX,plusZ,minusZ]
 
         let notParks = []
-
 
         if(plusX.type != 'park' || !plusX.type){
             notParks.push('plusX')
@@ -746,15 +772,11 @@ export class Park {
             notParks.push('minusZ')
         }
 
-        console.log(around)
-        console.log(notParks)
-
 
         this.groundDisplacementTexture(notParks);
 
-        if(original){
+        if(original || index.runMode == 'city'){
             this.growFlora()
-
         }
 
         if(original){
@@ -787,19 +809,21 @@ export class Park {
                 let testX = ts.rndmNum(0.1,0.9)
                 let testZ = ts.rndmNum(0.1,0.9)
                 let perlinValue = perlin.get(testX+this.relativePos.x+this.parent.position.x+2,testZ+this.relativePos.z+this.parent.position.z+2);
-                if(ts.evalOdds(perlinValue)){
+                if(ts.evalOdds(perlinValue+0.2)){
+                    //y and z flipped because trees are rotated
                     x = testX - 0.5;
-                    z = testZ - 0.5;
+                    y = testZ - 0.5;
 
-                    y = (perlinValue*0.3)-0.25;
+                    let heightValue = perlin.get(x+this.relativePos.x+this.parent.position.x,y+this.relativePos.z+this.parent.position.z);
+                    z = Math.abs(heightValue*0.3)+0.2;
 
                     break;
                 }
             }
 
-            console.log(x,y,z)
 
             let treeObj = ts.copyToNewMesh(this.trees[ts.rndmInt(0,this.trees.length)])
+            treeObj.material.castShadow = true;
             treeObj.defaultMaterial = treeObj.material;
 
             treeObj.scale.set(0.3,0.3,0.3)
@@ -809,12 +833,18 @@ export class Park {
             let absZ = this.relativePos.z + this.parent.position.z + z;
 
 
-
-            treeObj.position.set(absX,absY,absZ)
+            treeObj.position.set(x,y,z)
             treeObj.rotation.y = ts.rndmNum(0,3)
+            treeObj.rotation.x = Math.PI/2
+
 
             this.obj.add(treeObj)
-            index.scene.add(treeObj)
+            this.obj.children.forEach(child => {
+                child.castShadow = true
+            })
+            // index.scene.add(treeObj)
+
+
 
 
 

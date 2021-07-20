@@ -7,6 +7,7 @@ import * as ts from './tools.js'
 
 
 export const imported = {}
+export const importArray = []
 
 
 
@@ -61,6 +62,7 @@ function gltfLoader(filePath, targetVar, last){
 
 
         imported[targetVar] = mergedMesh;
+        importArray.push(mergedMesh);
 
     })
 }

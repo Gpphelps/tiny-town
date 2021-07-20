@@ -1,10 +1,13 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
-import oc from './orbit.js';
 import * as ts from './tools.js';
 import * as cls from './classes.js';
 import * as editor from './editor.js';
 import * as city from './city.js'
 import * as load from './loader.js';
+
+import oc from './orbit.js';
+import { DragControls } from './drag.js';
+
 
 
 // [=--- RUNTIME SPECIFIC VARIABLES AND THE SORT ---=]
@@ -17,6 +20,7 @@ export let scene;
 export let camera;
 export let renderer;
 export let controls;
+export let dragControls;
 
 let sun;
 let helper;
@@ -97,6 +101,8 @@ function init(){
         controls.maxPolarAngle = vertAngle
     }
 
+    dragControls = new DragControls([camera],camera,renderer.domElement)
+
 
     runByMode()
     animate()
@@ -141,7 +147,7 @@ function animate() {
 	requestAnimationFrame( animate );
 
     controls.update();
-    helper.update();
+
 
 
     //rotates popup menu
@@ -162,7 +168,6 @@ function animate() {
 
 
 init()
-
 
 
 

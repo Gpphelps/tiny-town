@@ -2,6 +2,7 @@
 import * as index from './index.js'
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { BufferGeometryUtils } from './bufferGeometryUtils.js'
+import * as load from './loader.js'
 // import { BufferGeometryUtils } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';
 // import * as Buffer from './bufferGeometryUtils.js'
 
@@ -39,6 +40,18 @@ export function domWait(waitingUpon){
                 resolve('resolved')
             }
 
+        },10)
+    })
+}
+
+export function awaitModels(target){
+    return new Promise(resolve => {
+        setInterval(() => {
+            let length = load.importArray.length;
+
+            if(length >= target){
+                resolve('resolved')
+            }
         },10)
     })
 }
@@ -117,7 +130,8 @@ export function newChildren(templateObj){
 export function mergeGeometry(obj){
     let geometries = []
 
-    let baseColor
+    let baseColor;
+    let finalBaseVertex;
 
     obj.children.forEach((mesh,index) => {
         let geometry = mesh.geometry;
@@ -150,6 +164,10 @@ export function mergeGeometry(obj){
                 vertexColors.push(mesh.material.color.r)
                 vertexColors.push(mesh.material.color.g)
                 vertexColors.push(mesh.material.color.b)
+
+                if(i == geometry.attributes.position.count-1 && index == 0){
+                    finalBaseVertex = i+1
+                }
         }
 
         if(index == 0){
@@ -167,8 +185,9 @@ export function mergeGeometry(obj){
 
     let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true, side: THREE.DoubleSide}));
     newMesh.material.receiveShadow = false;
-    // newMesh.material.baseOriginalColor = baseColor;
-
+    newMesh.material.baseOriginalColor = baseColor;
+    newMesh.geometry.finalBaseVertex = finalBaseVertex;
+    // console.log(newMesh)
     return newMesh;
 }
 
@@ -204,9 +223,12 @@ export function deleteAtandUp(x,y,z,array,plot){
     // let at = array[x][y][z];
     // index.scene.remove(at.obj);
     // array[x][y][z] = [];
+    console.log(array)
+    console.log(x,y,z)
     for(var y=y; y<plot.dimmensions.y;y++){
         let inArray = array[x][y][z];
         if(inArray.deleteable == false){
+
             return
         }
         index.scene.remove(inArray.obj);
@@ -383,6 +405,77 @@ export function evalOdds(odds){
         return false;
     }
 }
+
+
+
+export function startLoading(){
+    let cont = document.createElement('div');
+    cont.setAttribute('id','loadingCont')
+    let cs = cont.style
+    console.log('yes')
+    cs.width = '100vw'
+    cs.height = '100vh'
+    cs.display = 'flex'
+    cs.alignItems = 'center'
+    cs.justifyContent = 'center';
+
+    let title = document.createElement('h1');
+    title.textContent = "Loading..."
+
+    cont.appendChild(title)
+
+    document.querySelector('#root').appendChild(cont)
+}
+
+export function endLoading(){
+    document.querySelector('#loadingCont').remove()
+}
+
+export function setBaseColor(obj,color){
+    console.log(obj)
+
+    let baseOriginalColor = obj.defaultMaterial.baseOriginalColor;
+
+    let geometry = obj.geometry;
+
+    let newColorArray = []
+
+    let baseColor = color;
+
+    console.log(obj);
+    for(var i=0;i<geometry.attributes.color.array.length;i+=3){
+        i < 20 ? console.log(obj.material) : null;
+        let colorArray = geometry.attributes.color.array;
+        let r = colorArray[i]
+        let g = colorArray[i+1] 
+        let b = colorArray[i+2]
+        if(!obj.material.baseOriginalColor){
+            console.log(obj.material)
+        }
+        if(r == baseOriginalColor.r && g == baseOriginalColor.g && b == baseOriginalColor.b ){
+            newColorArray.push(baseColor.r)
+            newColorArray.push(baseColor.g)
+            newColorArray.push(baseColor.b)
+        } else {
+            newColorArray.push(r)
+            newColorArray.push(g)
+            newColorArray.push(b)
+        }
+    }
+
+
+
+    let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
+    console.log(attribute)
+    obj.geometry.setAttribute('color',attribute)
+    obj.material = new THREE.MeshPhongMaterial({vertexColors: true})
+
+    obj.objectOf.baseColor = baseColor;
+    obj.material.baseOriginalColor = baseColor;
+    console.log(obj.material)
+
+}
+
 
 
 
