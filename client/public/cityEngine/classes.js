@@ -27,7 +27,6 @@ export class Plot {
                 let baseMesh = new THREE.Mesh(baseGeometry,baseMaterial);
                 baseMesh.receiveShadow = true;
                 this.base.push(baseMesh)
-
                 index.scene.add(baseMesh)
 
                 baseMesh.defaultMaterial = this.defaultMaterial
@@ -437,7 +436,7 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
-        this.setBaseColor(this.obj,this.baseColor)
+        this.setBaseColor(this.obj,{r:0,g:0,b:1})
 
         if(minusY.type){
             let color = minusY.baseColor;
@@ -487,6 +486,7 @@ export class Building {
         let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
         // console.log(attribute)
         this.obj.geometry.setAttribute('color',attribute)
+        this.obj.material = new THREE.MeshPhongMaterial({vertexColors: true})
 
     }
 }
@@ -601,6 +601,7 @@ export class Park {
     }
 
     groundDisplacementTexture(around){
+        console.log(around)
         let displacementCanvas = this.calculateDisplacement(around);
         const texture = new THREE.CanvasTexture(displacementCanvas);
 
@@ -612,7 +613,6 @@ export class Park {
 
     calculateDisplacement(around){
         console.log(around)
-
 
         let canv = document.createElement('canvas');
         canv.setAttribute('id','parkDisplacementCanvas');
@@ -650,7 +650,7 @@ export class Park {
                 data[index+2] = adjValue;
                 data[index+3] = 255;
 
-                // console.log(around.indexOf('plusX'))
+                // console.log(around)
                 if(around.indexOf('plusX') != -1){
                     let a = ts.distanceMap(x,canv.width,20)
                     if(a){
@@ -787,11 +787,12 @@ export class Park {
                 let testX = ts.rndmNum(0.1,0.9)
                 let testZ = ts.rndmNum(0.1,0.9)
                 let perlinValue = perlin.get(testX+this.relativePos.x+this.parent.position.x+2,testZ+this.relativePos.z+this.parent.position.z+2);
-                if(ts.evalOdds(perlinValue)){
+                if(ts.evalOdds(perlinValue+0.2)){
                     x = testX - 0.5;
                     z = testZ - 0.5;
 
-                    y = (perlinValue*0.3)-0.25;
+                    let heightValue = perlin.get(testX+this.relativePos.x+this.parent.position.x,testZ+this.relativePos.z+this.parent.position.z);
+                    y = (heightValue*0.3)-0.2;
 
                     break;
                 }
@@ -800,6 +801,7 @@ export class Park {
             console.log(x,y,z)
 
             let treeObj = ts.copyToNewMesh(this.trees[ts.rndmInt(0,this.trees.length)])
+            treeObj.material.receiveShadow = true;
             treeObj.defaultMaterial = treeObj.material;
 
             treeObj.scale.set(0.3,0.3,0.3)
@@ -807,7 +809,6 @@ export class Park {
             let absX = this.relativePos.x + this.parent.position.x + x;
             let absY = this.relativePos.y + this.parent.position.y + y;
             let absZ = this.relativePos.z + this.parent.position.z + z;
-
 
 
             treeObj.position.set(absX,absY,absZ)
