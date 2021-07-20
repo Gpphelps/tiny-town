@@ -8,13 +8,6 @@ import { GET_ME } from '../utils/queries';
 
     const { loading, error, data, refetch } = useQuery(GET_ME);
 
-    const textStyle = {
-        color: "#FFFFFF",
-        fontFamily: "'Chakra Petch', sans-serif",
-        textTransform: "lowercase",
-        fontWeight: '600',
-    };
-
     useEffect(() => {
         refetch();
     },[refetch]);
