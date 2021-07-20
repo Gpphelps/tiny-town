@@ -99,8 +99,8 @@ const Editor = () => {
                 <div id="canvCont">
                 
                 </div>
-                <button onClick={renameButton}>Rename this plot</button>
                 <div id="userTools">
+                <button onClick={renameButton}>Rename this plot</button>
                 </div>
                 <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
                 <button onClick={handlePlotSave}>Save Plot</button>
