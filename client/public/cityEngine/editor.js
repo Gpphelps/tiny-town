@@ -86,7 +86,6 @@ function initUi(){
             name: 'Road',
             value: 'place-road',
             tool: 'Place a road',
-            src: '../assets/images/simpleRoadButton.png',
         },
         {
             name: 'Residential',
