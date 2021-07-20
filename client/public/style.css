@@ -133,6 +133,7 @@ a:visited {
     font-weight: 500;
     text-transform: lowercase;
     position: relative;
+    padding: 8px;
 }
 
 .toolButton .tooltiptext {
@@ -144,19 +145,36 @@ a:visited {
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-
     position: absolute;
     z-index: 1;
     width: 120px;
     top: 100%;
     left: 50%;
     margin-left: -60px;
+    padding: 4px;
 }
 
 .toolButton:hover .tooltiptext {
     visibility: visible;
-  }
+}
 
+.usertoolButtons {
+    margin-left: 20px;
+}
+
+.plotButtons {
+    font-family: 'Chakra Petch', sans-serif;
+    float: right;
+    font-weight: 500;
+    margin-right: 20px;
+    text-transform: lowercase;
+    padding: 8px;
+}
+
+/* .buttonImage {
+    background-image: url(../public/assets/images/simpleRoadButton.png);
+    background-position: center;
+} */
 
 
 
@@ -220,12 +238,18 @@ a:visited {
 }
 
 .modal > h5 {
-    font-family: 'BN Times Gothic';
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 500;
     font-size: 24px;
 }
 
 .modal > input {
-    padding: 5px
+    padding: 5px;
+}
+
+.modal > button {
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 500;
 }
 
 .modalHeader {
@@ -260,3 +284,18 @@ a:visited {
     color: white;
     font-size: 12px;
 }
+
+
+/* responsive sizing */
+
+@media screen and (max-width: 800px) and (min-width: 300px) {
+    .main, .header, .body {
+      width: 100%; 
+    }
+}
+
+/* @media screen and (max-width: 400px) {
+    .left, .main, .right {
+        width: 100%;
+    }
+} */
