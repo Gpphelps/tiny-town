@@ -180,7 +180,7 @@ export function mergeGeometry(obj){
 
     let newMesh = new THREE.Mesh(merged, new THREE.MeshPhongMaterial({vertexColors: true, side: THREE.DoubleSide}));
     newMesh.material.receiveShadow = false;
-    // newMesh.material.baseOriginalColor = baseColor;
+    newMesh.material.baseOriginalColor = baseColor;
 
     return newMesh;
 }

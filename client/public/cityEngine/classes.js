@@ -309,7 +309,7 @@ export class Building {
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
-        this.baseColor = {r:0,g:0,b:1}
+        this.baseColor = {r:0,g:0.5,b:1}
     }
 
     addToScene(){
@@ -436,7 +436,7 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
-        this.setBaseColor(this.obj,{r:0,g:0,b:1})
+        this.setBaseColor(this.obj,this.baseColor)
 
         if(minusY.type){
             let color = minusY.baseColor;
@@ -456,14 +456,14 @@ export class Building {
 
     }
     setBaseColor(obj,color){
+        console.log(color)
         let geometry = obj.geometry;
 
         let newColorArray = []
 
         this.baseColor = color;
 
-        obj.material.baseOriginalColor = this.baseColor;
-
+        console.log(obj.material.baseOriginalColor);
         for(var i=0;i<geometry.attributes.color.array.length;i+=3){
             let colorArray = geometry.attributes.color.array;
             let r = colorArray[i]
@@ -483,8 +483,11 @@ export class Building {
             }
         }
 
+
+        obj.material.baseOriginalColor = this.baseColor;
+
         let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
-        // console.log(attribute)
+        console.log(attribute)
         this.obj.geometry.setAttribute('color',attribute)
         this.obj.material = new THREE.MeshPhongMaterial({vertexColors: true})
 
