@@ -6,6 +6,7 @@ import * as cls from './classes.js';
 import * as load from './loader.js'
 
 
+
 let plotData;
 
 const allPlots = []
@@ -35,6 +36,7 @@ export async function init(){
     localStorage.setItem('minusZRoads','[]')
 
     console.log(index.renderer.info.render)
+
 };
 
 

@@ -566,7 +566,7 @@ export class Park {
         this.type = 'park',
         this.defaultObj = new THREE.Mesh(new THREE.PlaneGeometry(1,1,6,6),new THREE.MeshStandardMaterial({color:'rgb(0,90,0)'}));
         this.baseColor = {r:0,g:1,b:0},
-        this.treeCount = 3;
+        this.treeCount = 1;
         this.trees = [load.imported.tree1, load.imported.tree2]
     }
 
