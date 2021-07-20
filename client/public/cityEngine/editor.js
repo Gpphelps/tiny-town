@@ -9,10 +9,11 @@ export let editPlot;
 
 
 //tracks currently selected options from user, kinda like dif states
-const process = {
+export const process = {
     clickOperation: 'place-park',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
+    paintColor: {r:0.2,g:0.2,b:0.8}
 }
 
 
@@ -24,6 +25,7 @@ const userInput = {
             if(e.target.dataset.highlight == 'paintColor'){
                 let inputHexColor = document.querySelector('#paintColorInput').value;
                 let rgb = ts.hexToRgb(inputHexColor)
+                console.log(rgb)
                 process.paintColor = rgb;
                 process.hoverMaterial.color = process.paintColor;
                 return;
@@ -156,8 +158,10 @@ function initUi(){
     paintColorInput.setAttribute('id','paintColorInput')
     cont.appendChild(paintColorInput);
     paintColorInput.addEventListener("change", (e) => {
-        console.log(e.target)
-        process.paintColor = e.target.value
+        let rgb = ts.hexToRgb(e.target.value)
+        process.paintColor = rgb;
+        console.log(process.paintColor)
+        
     })
 
 }
@@ -259,12 +263,15 @@ function userClick(e){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
         // newBlock.baseColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)};
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
+        newBlock.baseColor = process.paintColor
+        console.log(newBlock.baseColor)
         newBlock.addToScene()
-        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-office'){
         let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
+        newBlock.baseColor = process.paintColor
+        console.log(newBlock.baseColor)
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
@@ -272,6 +279,7 @@ function userClick(e){
     }
     if(process.clickOperation == 'place-commercial'){
         let newBlock = new cls.Commercial(editPlot,place.x,place.y,place.z);
+        newBlock.baseColor = process.paintColor
         // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         // console.log(newBlock)
@@ -301,7 +309,9 @@ function userClick(e){
         // editPlot.blocks[x][y][z] = [];
     }
     if(process.clickOperation == 'paint-building' && currentHover.object.blockType){
-        currentHover.object.children[0].defaultMaterial.color = process.paintColor;
+        console.log(currentHover.object)
+        ts.setBaseColor(currentHover.object,process.paintColor);
+        currentHover.object.objectOf.baseColor = process.paintColor;
     }
 
     let exportable = exportBlocks(editPlot)

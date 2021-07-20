@@ -309,7 +309,7 @@ export class Building {
         this.type = 'building',
         this.defaultMaterial = new THREE.MeshToonMaterial({color:'blue'}),
         this.defaultGeometry = new THREE.BoxGeometry(1,1,1),
-        this.baseColor = {r:0,g:0.5,b:1}
+        this.baseColor = {r:1,g:0.5,b:1}
     }
 
     addToScene(){
@@ -331,7 +331,11 @@ export class Building {
         this.obj.blockType = this.type
         this.obj.defaultMaterial = this.obj.material
 
-        this.setBaseColor(this.obj,this.baseColor)
+        this.obj.objectOf = this
+
+        this.obj.material.baseOriginalColor = this.baseColor;
+
+        // this.setBaseColor(this.obj,this.baseColor)
 
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -436,10 +440,14 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
+        console.log(this.baseColor)
+
         this.setBaseColor(this.obj,this.baseColor)
 
         if(minusY.type){
             let color = minusY.baseColor;
+            console.log(minusY.baseColor)
+            this.baseColor = color
             this.setBaseColor(this.obj,color)
         }
 
@@ -461,9 +469,14 @@ export class Building {
 
         let newColorArray = []
 
-        this.baseColor = color;
 
-        console.log(obj.material.baseOriginalColor);
+
+        // this.baseColor = color;
+        console.log(this.baseColor)
+        console.log(obj.material.baseOriginalColor)
+
+        console.log(obj.geometry)
+
         for(var i=0;i<geometry.attributes.color.array.length;i+=3){
             let colorArray = geometry.attributes.color.array;
             let r = colorArray[i]
@@ -472,7 +485,8 @@ export class Building {
             if(!obj.material.baseOriginalColor){
                 console.log(obj.material)
             }
-            if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
+            if(i/3 < obj.geometry.finalBaseVertex){
+            // if(r == obj.material.baseOriginalColor.r && g == obj.material.baseOriginalColor.g && b == obj.material.baseOriginalColor.b ){
                 newColorArray.push(this.baseColor.r)
                 newColorArray.push(this.baseColor.g)
                 newColorArray.push(this.baseColor.b)
@@ -484,13 +498,14 @@ export class Building {
         }
 
 
-        obj.material.baseOriginalColor = this.baseColor;
+        this.baseColor = color;
 
         let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
         console.log(attribute)
         this.obj.geometry.setAttribute('color',attribute)
         this.obj.material = new THREE.MeshPhongMaterial({vertexColors: true})
 
+        obj.material.baseOriginalColor = this.baseColor;
     }
 }
 
