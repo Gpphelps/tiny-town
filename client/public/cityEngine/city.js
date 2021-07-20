@@ -12,11 +12,13 @@ const allPlots = []
 
 export async function init(){
     
-    console.log('goin')
-    //waits until react has put the data in the text area
+    ts.startLoading()
+
     await ts.domWait(document.querySelector('#plotData'));
-    let modelWait = await ts.awaitModels(14);
-    console.log(modelWait)
+    await ts.awaitModels(14);
+
+
+    ts.endLoading()
 
     plotData = JSON.parse(document.querySelector('#plotData').value)
     console.log(plotData)

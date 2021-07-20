@@ -583,26 +583,26 @@ export class Park {
 
         this.obj.rotation.x = -Math.PI/2
 
-        console.log(this.obj.geometry)
+
 
         this.obj.blockType = this.type;
         this.obj.defaultMaterial = this.obj.material;
 
         index.scene.add(this.obj);
         this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
-        console.log(this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z])
+
         let absX = this.relativePos.x + this.parent.position.x;
         let absY = this.relativePos.y + this.parent.position.y - 0.49;
         let absZ = this.relativePos.z + this.parent.position.z;
     
-        console.log(this.relativePos.x,this.relativePos.y,this.relativePos.z)
+
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
         this.obj.receiveShadow = true;
     }
 
     groundDisplacementTexture(around){
-        console.log(around)
+
         let displacementCanvas = this.calculateDisplacement(around);
         const texture = new THREE.CanvasTexture(displacementCanvas);
 
@@ -614,7 +614,7 @@ export class Park {
     }
 
     calculateDisplacement(around){
-        console.log(around)
+
 
         let canv = document.createElement('canvas');
         canv.setAttribute('id','parkDisplacementCanvas');
@@ -688,7 +688,7 @@ export class Park {
 
             }
         }
-        console.log(imageData)
+
         ctx.putImageData(imageData,0,0);
 
         canv.remove()
@@ -729,11 +729,10 @@ export class Park {
         } else{
             minusZ = this.parent.blocks[pos.x][pos.y][pos.z-1]
         }
-        console.log(original)
+
         let around = [plusX,minusX,plusZ,minusZ]
 
         let notParks = []
-
 
         if(plusX.type != 'park' || !plusX.type){
             notParks.push('plusX')
@@ -747,9 +746,6 @@ export class Park {
         if(minusZ.type != 'park' || !minusZ.type){
             notParks.push('minusZ')
         }
-
-        console.log(around)
-        console.log(notParks)
 
 
         this.groundDisplacementTexture(notParks);
@@ -800,10 +796,9 @@ export class Park {
                 }
             }
 
-            console.log(x,y,z)
 
             let treeObj = ts.copyToNewMesh(this.trees[ts.rndmInt(0,this.trees.length)])
-            treeObj.material.receiveShadow = true;
+            treeObj.material.castShadow = true;
             treeObj.defaultMaterial = treeObj.material;
 
             treeObj.scale.set(0.3,0.3,0.3)
@@ -819,6 +814,9 @@ export class Park {
 
 
             this.obj.add(treeObj)
+            this.obj.children.forEach(child => {
+                child.castShadow = true
+            })
             // index.scene.add(treeObj)
 
 

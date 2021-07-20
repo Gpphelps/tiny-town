@@ -402,6 +402,31 @@ export function evalOdds(odds){
 
 
 
+export function startLoading(){
+    let cont = document.createElement('div');
+    cont.setAttribute('id','loadingCont')
+    let cs = cont.style
+    console.log('yes')
+    cs.width = '100vw'
+    cs.height = '100vh'
+    cs.display = 'flex'
+    cs.alignItems = 'center'
+    cs.justifyContent = 'center';
+
+    let title = document.createElement('h1');
+    title.textContent = "Loading..."
+
+    cont.appendChild(title)
+
+    document.querySelector('#root').appendChild(cont)
+}
+
+export function endLoading(){
+    document.querySelector('#loadingCont').remove()
+}
+
+
+
 
 
 

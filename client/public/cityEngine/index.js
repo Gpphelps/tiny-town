@@ -53,8 +53,8 @@ function init(){
     camera.lookAt(5,0,5);
     camera.zoom = 2
     
-    sun = new THREE.DirectionalLight(0xffffff,0.6);
-    sun.position.set(10,20,20);
+    sun = new THREE.DirectionalLight(0xffcf7d,0.6);
+    sun.position.set(10,3,20);
     sun.castShadow = true;
     sun.shadow.camera = new THREE.OrthographicCamera( -10, 10, 10, -10, 0.1, 50 );
     sun.shadow.radius = 0.4
