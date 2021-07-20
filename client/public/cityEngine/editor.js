@@ -224,18 +224,19 @@ function userClick(e){
     }
 
     if(!currentHover){
+        console.log('none!')
         return;
     }
 
 
 
     //cant place things on top of roads so nothing happens on click
-    if(currentHover.object.blockType == 'road'){
+    if(currentHover.object.blockType == 'road' && process.clickOperation != 'delete-block'){
         return
     }
 
     const hoverPos = currentHover.object.position
-    console.log(process.clickOperation)
+    console.log(currentHover)
     let place = {x:hoverPos.x,y:hoverPos.y+1,z:hoverPos.z}
     if(process.clickOperation == 'place-road'){
         if(currentHover.object.blockType){
@@ -284,6 +285,11 @@ function userClick(e){
         let x = currentHover.object.position.x;
         let y = currentHover.object.position.y;
         let z = currentHover.object.position.z;
+
+        if(currentHover.object.blockType == 'park'){
+            y = 1;
+        }
+
         ts.deleteAtandUp(x,y,z,editPlot.blocks,editPlot)
         // editPlot.blocks[x][y][z] = [];
     }

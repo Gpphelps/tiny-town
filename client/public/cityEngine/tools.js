@@ -204,7 +204,8 @@ export function deleteAtandUp(x,y,z,array,plot){
     // let at = array[x][y][z];
     // index.scene.remove(at.obj);
     // array[x][y][z] = [];
-    console.log('cant delete!')
+    console.log(array)
+    console.log(x,y,z)
     for(var y=y; y<plot.dimmensions.y;y++){
         let inArray = array[x][y][z];
         if(inArray.deleteable == false){

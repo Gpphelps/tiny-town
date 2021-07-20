@@ -590,11 +590,12 @@ export class Park {
 
         index.scene.add(this.obj);
         this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z] = this
-
+        console.log(this.parent.blocks[this.relativePos.x][this.relativePos.y][this.relativePos.z])
         let absX = this.relativePos.x + this.parent.position.x;
         let absY = this.relativePos.y + this.parent.position.y - 0.49;
         let absZ = this.relativePos.z + this.parent.position.z;
     
+        console.log(this.relativePos.x,this.relativePos.y,this.relativePos.z)
         this.obj.position.set(absX,absY,absZ);
         this.obj.castShadow = true;
         this.obj.receiveShadow = true;
@@ -606,6 +607,7 @@ export class Park {
         const texture = new THREE.CanvasTexture(displacementCanvas);
 
         this.obj.material.displacementMap = texture;
+        this.obj.material.map = texture;
 
         // let material = new THREE.MeshPhongMaterial({map:texture})
         return texture;
@@ -788,11 +790,12 @@ export class Park {
                 let testZ = ts.rndmNum(0.1,0.9)
                 let perlinValue = perlin.get(testX+this.relativePos.x+this.parent.position.x+2,testZ+this.relativePos.z+this.parent.position.z+2);
                 if(ts.evalOdds(perlinValue+0.2)){
+                    //y and z flipped because trees are rotated
                     x = testX - 0.5;
-                    z = testZ - 0.5;
+                    y = testZ - 0.5;
 
-                    let heightValue = perlin.get(testX+this.relativePos.x+this.parent.position.x,testZ+this.relativePos.z+this.parent.position.z);
-                    y = (heightValue*0.3)-0.2;
+                    let heightValue = perlin.get(x+this.relativePos.x+this.parent.position.x,y+this.relativePos.z+this.parent.position.z);
+                    z = Math.abs(heightValue*0.3)+0.2;
 
                     break;
                 }
@@ -811,11 +814,15 @@ export class Park {
             let absZ = this.relativePos.z + this.parent.position.z + z;
 
 
-            treeObj.position.set(absX,absY,absZ)
+            treeObj.position.set(x,y,z)
             treeObj.rotation.y = ts.rndmNum(0,3)
+            treeObj.rotation.x = Math.PI/2
+
 
             this.obj.add(treeObj)
-            index.scene.add(treeObj)
+            // index.scene.add(treeObj)
+
+            console.log(this.obj)
 
 
 
