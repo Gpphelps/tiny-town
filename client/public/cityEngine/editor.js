@@ -121,6 +121,7 @@ function initUi(){
         },
 
     ]
+
     buttonTemplates.forEach(button => {
         let elem = document.createElement('button');
         elem.textContent = button.name;
@@ -129,13 +130,18 @@ function initUi(){
         let toolTip = document.createElement('p');
         toolTip.textContent = button.tool;
 
+        // let buttonImage = document.createElement('image');
+        // document.buttonImage.src = roadButton;
+
         elem.appendChild(toolTip);
+        // elem.appendChild(buttonImage);
 
         if(button.highlight){
             elem.dataset.highlight = button.highlight;
         }
 
         elem.classList.add('toolButton')
+        // buttonImage.classList.add('buttonImage')
         toolTip.classList.add('tooltiptext')
         cont.appendChild(elem)
     })
