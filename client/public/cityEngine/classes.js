@@ -821,7 +821,7 @@ export class Park {
             this.obj.add(treeObj)
             // index.scene.add(treeObj)
 
-            console.log(this.obj)
+
 
 
 

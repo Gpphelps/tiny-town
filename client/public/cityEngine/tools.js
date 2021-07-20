@@ -2,6 +2,7 @@
 import * as index from './index.js'
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { BufferGeometryUtils } from './bufferGeometryUtils.js'
+import * as load from './loader.js'
 // import { BufferGeometryUtils } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';
 // import * as Buffer from './bufferGeometryUtils.js'
 
@@ -39,6 +40,18 @@ export function domWait(waitingUpon){
                 resolve('resolved')
             }
 
+        },10)
+    })
+}
+
+export function awaitModels(target){
+    return new Promise(resolve => {
+        setInterval(() => {
+            let length = load.importArray.length;
+
+            if(length >= target){
+                resolve('resolved')
+            }
         },10)
     })
 }
@@ -386,6 +399,7 @@ export function evalOdds(odds){
         return false;
     }
 }
+
 
 
 

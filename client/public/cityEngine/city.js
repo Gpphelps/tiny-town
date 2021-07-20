@@ -2,7 +2,8 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 
 import * as index from './index.js'
 import * as ts from './tools.js';
-import * as cls from './classes.js'
+import * as cls from './classes.js';
+import * as load from './loader.js'
 
 
 let plotData;
@@ -11,8 +12,12 @@ const allPlots = []
 
 export async function init(){
     
+    console.log('goin')
     //waits until react has put the data in the text area
-    await ts.domWait(document.querySelector('#plotData'))
+    await ts.domWait(document.querySelector('#plotData'));
+    let modelWait = await ts.awaitModels(14);
+    console.log(modelWait)
+
     plotData = JSON.parse(document.querySelector('#plotData').value)
     console.log(plotData)
     buildPlots()
@@ -302,7 +307,11 @@ function userDoubleClick(e){
 }
 
 
-
+document.querySelector('body').addEventListener('keydown',function(e){
+    if(e.key == 'f'){
+        console.log(index.renderer.info.render)
+    }
+})
 
 function adjacentRoadDataToStorage(target){
 
