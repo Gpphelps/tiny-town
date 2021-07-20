@@ -754,9 +754,8 @@ export class Park {
 
         this.groundDisplacementTexture(notParks);
 
-        if(original){
+        if(original || index.runMode == 'city'){
             this.growFlora()
-
         }
 
         if(original){
