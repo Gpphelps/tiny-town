@@ -607,7 +607,7 @@ export class Park {
         const texture = new THREE.CanvasTexture(displacementCanvas);
 
         this.obj.material.displacementMap = texture;
-        this.obj.material.map = texture;
+
 
         // let material = new THREE.MeshPhongMaterial({map:texture})
         return texture;
