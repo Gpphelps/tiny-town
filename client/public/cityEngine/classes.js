@@ -335,7 +335,7 @@ export class Building {
 
         this.obj.material.baseOriginalColor = this.baseColor;
 
-        // this.setBaseColor(this.obj,this.baseColor)
+        this.setBaseColor(this.obj,this.baseColor)
 
         this.obj.scale.x = this.scale.x;
         this.obj.scale.y = this.scale.y;
@@ -440,13 +440,13 @@ export class Building {
             this.obj.rotation.y = minusY.obj.rotation.y 
         }
 
-        console.log(this.baseColor)
+        // console.log(this.baseColor)
 
-        this.setBaseColor(this.obj,this.baseColor)
+        // this.setBaseColor(this.obj,this.baseColor)
 
         if(minusY.type){
             let color = minusY.baseColor;
-            console.log(minusY.baseColor)
+            // console.log(minusY.baseColor)
             this.baseColor = color
             this.setBaseColor(this.obj,color)
         }
@@ -472,10 +472,10 @@ export class Building {
 
 
         // this.baseColor = color;
-        console.log(this.baseColor)
-        console.log(obj.material.baseOriginalColor)
+        // console.log(this.baseColor)
+        // console.log(obj.material.baseOriginalColor)
 
-        console.log(obj.geometry)
+        // console.log(obj.geometry)
 
         for(var i=0;i<geometry.attributes.color.array.length;i+=3){
             let colorArray = geometry.attributes.color.array;

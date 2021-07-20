@@ -13,7 +13,8 @@ export const process = {
     clickOperation: 'place-park',
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
-    paintColor: {r:0.2,g:0.2,b:0.8}
+    paintColor: {r:0.2,g:0.2,b:0.8},
+    randomColor: true,
 }
 
 
@@ -246,6 +247,11 @@ function userClick(e){
         return
     }
 
+    if(process.randomColor){
+        process.paintColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)}
+    }
+
+
     const hoverPos = currentHover.object.position
     console.log(currentHover)
     let place = {x:hoverPos.x,y:hoverPos.y+1,z:hoverPos.z}
@@ -261,8 +267,6 @@ function userClick(e){
     } 
     if(process.clickOperation == 'place-residential'){
         let newBlock = new cls.Residential(editPlot,place.x,place.y,place.z)
-        // newBlock.baseColor = {r:ts.rndmNum(0,1),g:ts.rndmNum(0,1),b:ts.rndmNum(0,1)};
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.baseColor = process.paintColor
         console.log(newBlock.baseColor)
         newBlock.addToScene()
@@ -272,27 +276,20 @@ function userClick(e){
         let newBlock = new cls.Office(editPlot,place.x,place.y,place.z);
         newBlock.baseColor = process.paintColor
         console.log(newBlock.baseColor)
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-commercial'){
         let newBlock = new cls.Commercial(editPlot,place.x,place.y,place.z);
         newBlock.baseColor = process.paintColor
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
-        // console.log(newBlock)
         newBlock.fitToSurroundings(true)
     }
     if(process.clickOperation == 'place-park' && currentHover.object.blockType == undefined){
         let newBlock = new cls.Park(editPlot,place.x,place.y,place.z);
-        // editPlot.blocks[place.x][place.y][place.z] = newBlock;
         newBlock.addToScene()
         newBlock.fitToSurroundings(true)
-        // newBlock.calculateDisplacement()
-        // console.log(newBlock)
-        // newBlock.fitToSurroundings(true)
+
     }
     if(process.clickOperation == 'delete-block' && currentHover.object.blockType){
         console.log(currentHover.object)

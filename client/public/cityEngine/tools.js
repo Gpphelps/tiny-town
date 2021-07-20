@@ -187,7 +187,7 @@ export function mergeGeometry(obj){
     newMesh.material.receiveShadow = false;
     newMesh.material.baseOriginalColor = baseColor;
     newMesh.geometry.finalBaseVertex = finalBaseVertex;
-    console.log(newMesh)
+    // console.log(newMesh)
     return newMesh;
 }
 
