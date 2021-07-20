@@ -32,15 +32,18 @@ header {
 }
 
 h1 {
-    font-family: 'BN Times Gothic';
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 700;
     /* text-transform:uppercase; */
     font-size: 45px;
-    color: black
+    color: white;
 }
 
 h3 {
-    font-family: 'BN Times Gothic';
+    font-family: 'Chakra Petch', sans-serif;
     font-size: 24px;
+    font-weight: 500;
+    color: white;
 }
 
 button {
@@ -124,7 +127,35 @@ a:visited {
 }
 
 
+/* user tool button styling */
+.toolButton {
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 500;
+    text-transform: lowercase;
+    position: relative;
+}
 
+.toolButton .tooltiptext {
+    font-family: 'Chakra Petch', sans-serif;
+    visibility: hidden;
+    width: 120px;
+    background-color: rgb(180, 180, 180, 0.2);
+    color:black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    position: absolute;
+    z-index: 1;
+    width: 120px;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.toolButton:hover .tooltiptext {
+    visibility: visible;
+  }
 
 
 

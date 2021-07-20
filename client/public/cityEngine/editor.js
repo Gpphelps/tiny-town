@@ -136,6 +136,7 @@ function initUi(){
         }
 
         elem.classList.add('toolButton')
+        toolTip.classList.add('tooltiptext')
         cont.appendChild(elem)
     })
 
