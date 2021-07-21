@@ -235,6 +235,18 @@ a:visited {
     height: auto;
 }
 
+#reactButtons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 0px;
+    margin: 20px;
+}
+
+#reactButtons > button {
+    text-transform: uppercase;
+    margin: 4px;
+}
 
 /* Building Color Things */
 
@@ -250,8 +262,15 @@ a:visited {
 #colorCont > label {
     color: white;
     font-family: Helvetica;
+    font-size: 12px;
     font-weight: 100;
     margin: 10px 0px 2px 0px;
+}
+
+#paintColorInput {
+    width: 100%;
+    border: none;
+    border-radius: 2px;
 }
 
 
@@ -398,6 +417,12 @@ h5 {
 @media screen and (max-width: 640px)  {
     .main, .header, .body {
       width: 100%; 
+    }
+
+    #userTools {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 200px;
     }
 }
 
