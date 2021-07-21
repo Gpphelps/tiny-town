@@ -119,7 +119,7 @@ const Editor = () => {
                 
                 {/* <InfoModal message={infoText} display={infoModalDisplay} setDisplay={setInfoModalDisplay} top="40vh" left="30vw"/>                 */}
                 <div className='usertoolButtons' id="userTools"></div>
-                <InfoModal message="Every plot must have roads connecting to all 4 edges." display={roadWarningModalDisplay} title="Error!" errorMode={true} setDisplay={setRoadWarningModalDisplay} top="40vh" left="30vw"/>                
+                <InfoModal message="Every plot must have roads connecting to all 4 edges." display={roadWarningModalDisplay} title="Error!" errorMode={true} setDisplay={setRoadWarningModalDisplay} top="30vh" right="20px" width="250px"/>                
 
                
                 <div id="reactButtons">

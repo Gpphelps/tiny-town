@@ -1,13 +1,24 @@
 
 import React from 'react';
 
-const InfoModal = ({message,display,setDisplay,top,left,title,errorMode}) => {
+const InfoModal = ({message,display,setDisplay,top,left,right,title,errorMode,width}) => {
 
     const style = {
         display: display,
         top: top,
         left: left,
+    }
 
+    if (left) {
+        style.left = left;
+    }
+
+    if(right) {
+        style.right = right;
+    }
+
+    if(width){
+        style.width = width
     }
 
     if(errorMode){
