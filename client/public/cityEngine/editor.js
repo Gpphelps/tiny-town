@@ -95,16 +95,19 @@ function initUi(){
             name: 'Residential',
             value: 'place-residential',
             tool: 'Place a residential building',
+            imgSrc: './assets/images/simpleResButton.png'
         },
         {
             name: 'Buisness',
             value: 'place-office',
             tool: 'Place an office building',
+            imgSrc: './assets/images/simpleResButton.png'
         },
         {
             name: 'Commercial',
             value: 'place-commercial',
             tool: 'Place a commercial building',
+            imgSrc: './assets/images/simpleComButton.png'
         },
         {
             name: 'Park',
@@ -116,36 +119,32 @@ function initUi(){
             value: 'delete-block',
             highlight: '{"r":1,"g":0,"b":0}',
             tool: 'Delete this block',
-        },
-        {
-            name: 'Paint',
-            value: 'paint-building',
-            highlight: 'paintColor',
-            tool: 'Change building color',
+            imgSrc: './assets/images/simpleDeleteButton.png'
         },
 
     ]
 
     buttonTemplates.forEach(button => {
-        let elem = document.createElement('button');
+        let elem = document.createElement('img');
         // elem.textContent = button.name;
         elem.value = button.value;
+        elem.src = button.imgSrc;
         
         let toolTip = document.createElement('p');
         toolTip.textContent = button.tool;
 
-        let buttonImage = document.createElement('img');
-        buttonImage.src = button.imgSrc;
+        // let buttonImage = document.createElement('img');
+        // buttonImage.src = button.imgSrc;
 
-        elem.appendChild(toolTip);
-        elem.appendChild(buttonImage);
+        // elem.appendChild(toolTip);
+        // elem.appendChild(buttonImage);
 
         if(button.highlight){
             elem.dataset.highlight = button.highlight;
         }
 
         elem.classList.add('toolButton')
-        buttonImage.classList.add('buttonImage')
+        // buttonImage.classList.add('buttonImage')
         toolTip.classList.add('tooltiptext')
         cont.appendChild(elem)
     })

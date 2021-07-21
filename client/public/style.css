@@ -133,7 +133,12 @@ a:visited {
     font-weight: 500;
     text-transform: lowercase;
     position: relative;
-    padding: 8px;
+    /* padding: 8px; */
+    margin: 8px;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    width: 60px;
+
 }
 
 .toolButton .tooltiptext {
