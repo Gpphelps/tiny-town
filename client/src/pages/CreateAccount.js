@@ -54,21 +54,29 @@ const CreateAccount = () => {
     const textStyle = {
         color: "#2D2D29",
         fontFamily: "'Chakra Petch', sans-serif",
-        textTransform: "lowercase",
+        // textTransform: "lowercase",
         textAlign: "center",
-        fontSize: "50px",
+        fontSize: "32px",
         fontWeight: "600",
     };
 
     const loginStyle = {
-        fontFamily: "'Prompt', sans-serif",
+        border: "1px solid black",
+        borderRadius: "5px",
+        fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
+        backgroundColor: "rgb(50,50,50)",
+        color: "#94e8ff",
     };
 
     const buttonStyle = {
         fontFamily: "'Chakra Petch', sans-serif",
+        fontFamily: "Helvetica",
+        fontWeight: 100,
         textTransform: "lowercase",
         fontSize: "20px",
+        border: "2px solid black",
+        borderRadius: "5px"
         // backgroundColor: '#7DC287',
         // borderRadius: '5px',
     };
