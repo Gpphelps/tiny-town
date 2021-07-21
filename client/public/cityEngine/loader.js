@@ -28,6 +28,9 @@ export async function init(){
     await gltfLoader('./cityEngine/Objects/Commercial/shoproof.glb', 'commercialRoof')
     await gltfLoader('./cityEngine/Objects/Commercial/shopbase2.glb', 'commercialGroundAltOne')
 
+    // await gltfLoader('./cityEngine/Objects/Skyscraper/skyscraperbase.glb', 'skyscraperGround')
+    // await gltfLoader('./cityEngine/Objects/Skyscraper/skyscrapermid.glb', 'skyscraperMid')
+    // await gltfLoader('./cityEngine/Objects/Skyscraper/skyscraperroof.glb', 'skyscraperRoof')
 
     await gltfLoader('./cityEngine/Objects/Roads/road2way.glb','road2Way')
     await gltfLoader('./cityEngine/Objects/Roads/road3way.glb','road3Way')

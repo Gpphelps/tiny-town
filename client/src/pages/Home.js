@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import PlotPopUp from '../components/PlotPopUp';
 import {GET_CITY} from '../utils/queries'
-
+import InfoModal from '../components/InfoModal';
 
 const Home = () => {
 
