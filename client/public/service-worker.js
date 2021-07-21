@@ -18,7 +18,7 @@ const FILES_TO_CACHE = [
     '/cityEngine/Objects/Commercial/shoproof.glb',
     '/cityEngine/Objects/Office/modernofficebase.glb',
     '/cityEngine/Objects/Office/modernofficemid.glb',
-    '/cityEngine/Objects/Office/modernofficeroof.glb',
+    '/cityEngine/Objects/Office/modofficeroof.glb',
     '/cityEngineObjects/Park/park-1x1-01.glb',
     '/cityEngineObjects/Park/park.glb',
     '/cityEngine/Objects/Residential/apartment.glb',
