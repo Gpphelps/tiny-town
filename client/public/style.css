@@ -14,6 +14,7 @@
 
 body {
     margin: 0px;
+    background-color: #94e8ff;
 }
 
 header {
@@ -56,7 +57,7 @@ h1 {
     font-weight: 700;
     /* text-transform:uppercase; */
     font-size: 45px;
-    color: white;
+    color: rgb(50,50,50);
 }
 
 h3 {
@@ -87,13 +88,14 @@ button {
 }
 
 #editorName {
-    color: green;
+    color: black;
     font-family: 'Chakra Petch', sans-serif;
     font-size: auto;
     font-weight: bolder;
     text-align: center;
     border-radius: 5px;
     width: auto;
+    margin: 20px;
     background-color: rgb(180, 180, 180, 0.2);
 }
 
@@ -129,7 +131,29 @@ form > p {
 }
 
 .header {
-    background-color: rgb(180, 180, 180, 0.2);
+    /* background-color: rgb(180, 180, 180, 0.2); */
+}
+
+#loginCont {
+    display: flex;
+    flex-direction: row;
+    /* width: 400px */
+}
+
+.loginSignUpButtons {
+    background-color: rgb(50,50,50);
+    border: 2px solid rgba(0,0,0,0);
+    color: #94e8ff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    margin: 0px 5px 0px 5px;
+}
+
+.loginSignUpButtons:hover {
+    background-color: #94e8ff;
+    color: rgb(50,50,50);
+    border: 2px solid rgb(50,50,50);
 }
 
 .cont {
@@ -231,6 +255,21 @@ a:visited {
     width: 80px;
     height: auto;
 }
+
+#reactButtons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 0px;
+    margin: 20px;
+}
+
+#reactButtons > button {
+    text-transform: uppercase;
+    margin: 4px;
+
+}
+
 .toolButtonContainer:hover .tooltiptext {
     visibility: visible;
 }
@@ -249,8 +288,15 @@ a:visited {
 #colorCont > label {
     color: white;
     font-family: Helvetica;
+    font-size: 12px;
     font-weight: 100;
     margin: 10px 0px 2px 0px;
+}
+
+#paintColorInput {
+    width: 100%;
+    border: none;
+    border-radius: 2px;
 }
 
 
@@ -397,6 +443,12 @@ h5 {
 @media screen and (max-width: 640px)  {
     .main, .header, .body {
       width: 100%; 
+    }
+
+    #userTools {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 200px;
     }
 }
 

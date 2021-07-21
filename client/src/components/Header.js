@@ -24,12 +24,12 @@ import { GET_ME } from '../utils/queries';
             <div>
                 {
                     !userData ? 
-                    <div>
+                    <div id="loginCont">
                         <Link to="/createAccount">
-                        <h3>Sign Up</h3>
+                        <h3 className="loginSignUpButtons">Sign Up</h3>
                         </Link>
                         <Link to="/login">
-                        <h3>Login</h3>
+                        <h3 className="loginSignUpButtons">Login</h3>
                          </Link> 
                     </div>
 

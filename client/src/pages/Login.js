@@ -89,33 +89,32 @@ const Login = () => {
     };
 
     const errorStyle = {
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: "'Chakra Petch', sans-serif",
+        textTransform: "lowercase",
+        textAlign: "center",
+        color: "white",
+        fontWeight: "300",
+        fontSize: "14px",
+        backgroundColor: "red",
+        borderRadius: "10px",
+        padding: "10px",
 
-        // display: "flex",
-        // flexDirection: "column",
-        // fontFamily: "'Chakra Petch', sans-serif",
-        // textTransform: "lowercase",
-        // textAlign: "center",
-        // color: "red",
-        // fontWeight: "300",
-        // fontSize: "20px",
-        // border: "2px solid black",
-        // borderRadius: "2px"
     };
 
     const xStyle = {
-        // width: "20px",
-        // fontFamily: "'Chakra Petch', sans-serif",
-        // justifyContent: "right",
-        // color: "white",
-        // backgroundColor: "red",
-        // fontSize: "25px",
-        // fontWeight: "bold",
-        // textAlign: "right",
-        // borderRight: "1px solid black",
-        // borderBottom: "1px solid black",
-        // borderRadius: "2px",
-        // paddingRight: "3px"
+        border: "none",
+        backgroundColor: "white",
+        borderRadius: "5px",
+        color: "red",
+        maxWidth: "20px"
+
     };
+
+    const bkgStyle = {
+        backgroundColor: "#94e8ff"
+    }
 
     return (
         <div className='cont'>
