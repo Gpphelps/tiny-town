@@ -56,6 +56,7 @@ function init(){
     camera.position.set(10,12,10)
     camera.lookAt(5,0,5);
     camera.zoom = 2
+    camera.frustumCulled = true
     
     sun = new THREE.DirectionalLight(0xffffff,0.6);
     sun.position.set(10,20,20);
@@ -102,6 +103,7 @@ function init(){
     }
 
     dragControls = new DragControls([camera],camera,renderer.domElement)
+
 
 
     runByMode()
@@ -187,4 +189,5 @@ const checkLocationChange = () => {
 }
 
 checkLocationChange()
+
 
