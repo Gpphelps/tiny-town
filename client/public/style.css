@@ -149,6 +149,12 @@ form > p {
     margin: 0px 5px 0px 5px;
 }
 
+.loginSignUpButtons:hover {
+    background-color: #94e8ff;
+    color: rgb(50,50,50);
+    border: 2px solid rgb(50,50,50);
+}
+
 .cont {
     width: 100vw;
     height: 70vh;
