@@ -662,8 +662,8 @@ export class Park {
         document.querySelector('#root').appendChild(canv);
 
 
-        canv.width = 100;
-        canv.height = 100;
+        canv.width = 20;
+        canv.height = 20;
 
         let ctx = canv.getContext('2d');
 
@@ -680,8 +680,8 @@ export class Park {
         for(var y=0;y<canv.height;y++){
             for(var x=0;x<canv.width;x++){
 
-                let smallX = (x/100);
-                let smallY = (y/100);
+                let smallX = (x/20);
+                let smallY = (y/20);
 
                 let perlinValue = Math.abs(perlin.get(absX+smallX,absZ+smallY));
                 let adjValue = perlinValue * 255;
@@ -695,7 +695,7 @@ export class Park {
 
                 // console.log(around)
                 if(around.indexOf('plusX') != -1){
-                    let a = ts.distanceMap(x,canv.width,20)
+                    let a = ts.distanceMap(x,canv.width,5)
                     if(a){
                         data[index] = data[index] - (a*data[index])
                         data[index+1] = data[index+1] - (a*data[index+1])
@@ -703,7 +703,7 @@ export class Park {
                     }
                 }
                 if(around.indexOf('minusX') != -1){
-                    let a = ts.distanceMap(x,0,20);
+                    let a = ts.distanceMap(x,0,5);
                     if(a){
                         data[index] = data[index] - (a*data[index])
                         data[index+1] = data[index+1] - (a*data[index+1])
@@ -711,7 +711,7 @@ export class Park {
                     }
                 }
                 if(around.indexOf('plusZ') != -1){
-                    let a = ts.distanceMap(y,canv.height,20);
+                    let a = ts.distanceMap(y,canv.height,5);
                     if(a){
                         data[index] = data[index] - (a*data[index])
                         data[index+1] = data[index+1] - (a*data[index+1])
@@ -719,7 +719,7 @@ export class Park {
                     }
                 }
                 if(around.indexOf('minusZ') != -1){
-                    let a = ts.distanceMap(y,0,20);
+                    let a = ts.distanceMap(y,0,5);
                     if(a){
                         data[index] = data[index] - (a*data[index])
                         data[index+1] = data[index+1] - (a*data[index+1])
@@ -732,7 +732,7 @@ export class Park {
 
         ctx.putImageData(imageData,0,0);
 
-        canv.remove()
+        // canv.remove()
 
         return canv;
     }
