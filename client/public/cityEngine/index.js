@@ -43,14 +43,14 @@ function init(){
     scene = new THREE.Scene();
 
     const color = 0x94e8ff;
-    const near = 10;
-    const far = 100;
+    const near = 20;
+    const far = 30;
     scene.fog = new THREE.Fog(color,near,far)
 
     // camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
     let windowRatio = window.innerWidth/window.innerHeight;
-    camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-100,500);
+    camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-10,30);
 
     
     camera.position.set(10,12,10)
