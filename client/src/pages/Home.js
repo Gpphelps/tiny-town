@@ -11,8 +11,6 @@ const Home = () => {
     //HERE WILL BE ALL PLOTS QUERY 
     //textarea text content will immedietly be set to the data from the query
     const { data } = useQuery(GET_CITY)
-<<<<<<< HEAD
-
 
     // if (data !== undefined) {
     //     let i =0;
@@ -21,12 +19,6 @@ const Home = () => {
     //     }
     // }
     
-    
-    
-=======
-    console.log(data)
->>>>>>> 2bfd8d5886bb79acd899d45d34c5ea11ca8d2c5f
-
     let string = JSON.stringify(data)
  
     useEffect(() => {
