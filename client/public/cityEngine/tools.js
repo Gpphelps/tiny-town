@@ -3,6 +3,7 @@ import * as index from './index.js'
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { BufferGeometryUtils } from './bufferGeometryUtils.js'
 import * as load from './loader.js'
+import * as city from './city.js'
 // import { BufferGeometryUtils } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';
 // import * as Buffer from './bufferGeometryUtils.js'
 
@@ -248,6 +249,11 @@ export function hexToRgb(hex) {
 
 export function copyToNewMesh(mesh){
     // console.log(mesh)
+
+    if(!mesh){
+        city.init()
+    }
+
     let obj = new THREE.Mesh()
     obj.geometry = mesh.geometry;
     obj.material = mesh.material;

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import PlotPopUp from '../components/PlotPopUp';
 import {GET_CITY} from '../utils/queries'
-
+import InfoModal from '../components/InfoModal';
 
 const Home = () => {
 
@@ -25,10 +25,19 @@ const Home = () => {
         document.querySelector('#plotData').value = string
     })
 
+    const [infoModalDisplay,setInfoModalDisplay] = useState('block');
+
+    const handleInfoModalExit = () => {
+        setInfoModalDisplay('none')
+    }
+
+    const infoText = "Double Click on any neighborhood that you would like to build next to."
+
     return (
         <div className="canvasParent">
             <textarea style={{display:'none'}} id="plotData"></textarea>
             <p style={{display:'none'}} id="runModeProxy">city</p>
+            <InfoModal message={infoText} display={infoModalDisplay} setDisplay={setInfoModalDisplay} />
             <PlotPopUp />
             <div id="canvCont"></div>
         </div>

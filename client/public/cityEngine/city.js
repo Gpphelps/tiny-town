@@ -64,7 +64,7 @@ async function buildPlots(){
         newPlot.buildBase();
         allPlots.push(newPlot)
         plot.buildings.forEach(building => {
-            console.log(building)
+            // console.log(building)
             let newBuilding;
             if(building.type == 'residential'){
                 newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)

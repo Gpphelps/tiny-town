@@ -564,6 +564,19 @@ export class Commercial extends Building {
 
 }
 
+export class Skyscraper extends Building {
+    constructor(parent,x,y,z){
+        super(parent,x,y,z);
+        this.type = 'skyscraper';
+        this.defaultObj = load.imported.skyscraperGround;
+        this.scale = {x:0.48,y:0.5,z:0.48};
+        this.randomBaseColor = true;
+
+        this.midObj = load.imported.skyscraperMid;
+        this.roofObj = load.imported.skyscraperRoof;
+    }
+}
+
 
 // export class Park extends Building {
 //     constructor(parent,x,y,z){
