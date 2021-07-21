@@ -187,7 +187,7 @@ a:visited {
 
 }
 
-.toolButton .tooltiptext {
+.toolButtonContainer .tooltiptext {
     font-family: 'Chakra Petch', sans-serif;
     visibility: hidden;
     width: 120px;
@@ -199,17 +199,14 @@ a:visited {
     position: absolute;
     z-index: 1;
     width: 120px;
-    top: 100%;
-    left: 50%;
+    top: -5px;
+    left: 80%;
     margin-left: -60px;
     padding: 4px;
 }
 
 .toolButtonContainer:hover {
-    background-color: 'red';
-}
-.toolButton:hover .tooltiptext {
-    visibility: visible;
+    background-color: red;
 }
 
 .usertoolButtons {
@@ -234,7 +231,9 @@ a:visited {
     width: 80px;
     height: auto;
 }
-
+.toolButtonContainer:hover .tooltiptext {
+    visibility: visible;
+}
 
 /* Building Color Things */
 
