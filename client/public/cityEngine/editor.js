@@ -101,7 +101,7 @@ function initUi(){
             name: 'Buisness',
             value: 'place-office',
             tool: 'Place an office building',
-            imgSrc: './assets/images/simpleResButton.svg'
+            imgSrc: './assets/images/officelogo.svg'
         },
         {
             name: 'Commercial',
@@ -113,6 +113,7 @@ function initUi(){
             name: 'Park',
             value: 'place-park',
             tool: 'Place a park',
+            imgSrc: './assets/images/parklogo.svg'
         },
         {
             name: 'Delete',
