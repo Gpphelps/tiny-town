@@ -89,6 +89,7 @@ function initUi(){
             name: 'Road',
             value: 'place-road',
             tool: 'Place a road',
+            imgSrc: './assets/images/simpleRoadButton.png'
         },
         {
             name: 'Residential',
@@ -127,24 +128,24 @@ function initUi(){
 
     buttonTemplates.forEach(button => {
         let elem = document.createElement('button');
-        elem.textContent = button.name;
+        // elem.textContent = button.name;
         elem.value = button.value;
         
         let toolTip = document.createElement('p');
         toolTip.textContent = button.tool;
 
-        // let buttonImage = document.createElement('image');
-        // document.buttonImage.src = roadButton;
+        let buttonImage = document.createElement('img');
+        buttonImage.src = button.imgSrc;
 
         elem.appendChild(toolTip);
-        // elem.appendChild(buttonImage);
+        elem.appendChild(buttonImage);
 
         if(button.highlight){
             elem.dataset.highlight = button.highlight;
         }
 
         elem.classList.add('toolButton')
-        // buttonImage.classList.add('buttonImage')
+        buttonImage.classList.add('buttonImage')
         toolTip.classList.add('tooltiptext')
         cont.appendChild(elem)
     })

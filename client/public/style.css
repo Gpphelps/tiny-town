@@ -176,6 +176,11 @@ a:visited {
     background-position: center;
 } */
 
+.buttonImage {
+    width: 80px;
+    height: auto;
+}
+
 
 
 /* NEW PLOT POP UP STYLING */
