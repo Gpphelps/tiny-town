@@ -61,6 +61,8 @@ const Editor = () => {
                 localStorage.setItem('currentPlot',plot._id)
             }
         })
+
+        window.location.assign('/');
     }
 
     const handleBuildingSave = async () => {
