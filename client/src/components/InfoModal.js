@@ -12,7 +12,7 @@ const InfoModal = ({message,display,setDisplay}) => {
     }
 
     return (
-        <div className="infoModalCont">
+        <div style={style} className="infoModalCont">
             <div>
                 <h5>INFO</h5>
                 <h5 onClick={handleExitButton}>X</h5>
