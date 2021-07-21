@@ -31,11 +31,13 @@ const Home = () => {
         setInfoModalDisplay('none')
     }
 
+    const infoText = "Double Click on any neighborhood that you would like to build next to."
+
     return (
         <div className="canvasParent">
             <textarea style={{display:'none'}} id="plotData"></textarea>
             <p style={{display:'none'}} id="runModeProxy">city</p>
-            <InfoModal message="hey" display={infoModalDisplay} setDisplay={setInfoModalDisplay} />
+            <InfoModal message={infoText} display={infoModalDisplay} setDisplay={setInfoModalDisplay} />
             <PlotPopUp />
             <div id="canvCont"></div>
         </div>

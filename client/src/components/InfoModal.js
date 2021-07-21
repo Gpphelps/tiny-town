@@ -15,7 +15,7 @@ const InfoModal = ({message,display,setDisplay}) => {
         <div className="infoModalCont">
             <div>
                 <h5>INFO</h5>
-                <p onClick={handleExitButton}>X</p>
+                <h5 onClick={handleExitButton}>X</h5>
             </div>
             <p>{message}</p>
         </div>

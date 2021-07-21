@@ -409,18 +409,33 @@ h5 {
 /* INFO MODAL */
 
 .infoModalCont {
-    background-color: 'green';
+    color: white;
     width: 200px;
+    position: absolute;
+    background-color: rgba(0,0,0,0.1);
+    top: 40vh;
+    left: 30px;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .infoModalCont > div {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid white;
 }
 
 .infoModalCont > div > h5 {
     font-family: 'Chakra Petch';
+    font-size: 12px;
+}
+
+.infoModalCont > p {
+    padding: 5px;
+    font-family: 'Helvetica';
+    margin-top: 10px;
 }
 
 /* TIP POPUP STYLING */
