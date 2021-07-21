@@ -405,6 +405,24 @@ h5 {
     justify-self: flex-end;
 }
 
+
+/* INFO MODAL */
+
+.infoModalCont {
+    background-color: 'green';
+    width: 200px;
+}
+
+.infoModalCont > div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.infoModalCont > div > h5 {
+    font-family: 'Chakra Petch';
+}
+
 /* TIP POPUP STYLING */
 
 .tipContainer {

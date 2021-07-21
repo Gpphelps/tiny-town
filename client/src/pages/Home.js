@@ -25,10 +25,17 @@ const Home = () => {
         document.querySelector('#plotData').value = string
     })
 
+    const [infoModalDisplay,setInfoModalDisplay] = useState('block');
+
+    const handleInfoModalExit = () => {
+        setInfoModalDisplay('none')
+    }
+
     return (
         <div className="canvasParent">
             <textarea style={{display:'none'}} id="plotData"></textarea>
             <p style={{display:'none'}} id="runModeProxy">city</p>
+            <InfoModal message="hey" display={infoModalDisplay} setDisplay={setInfoModalDisplay} />
             <PlotPopUp />
             <div id="canvCont"></div>
         </div>
