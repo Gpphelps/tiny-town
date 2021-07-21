@@ -102,10 +102,21 @@ const Editor = () => {
                 
                 </div>
                 
-                <button className='plotButtons' onClick={renameButton}>Rename this neighborhood</button>
+
+                
                 <div className='usertoolButtons' id="userTools"></div>
                 <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
-                <button className='plotButtons' onClick={handlePlotSave}>Save Neighborhood</button>
+               
+
+                <div id="reactButtons">
+                    <button className='plotButtons' onClick={renameButton}>Rename this neighborhood</button>
+                    <button className='plotButtons' onClick={handlePlotSave}>Save Neighborhood</button>
+                </div>
+
+                <div className='usertoolButtons' id="userTools"></div>
+                <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
+
+
                 <div id="plotNameFlex">
                     {plotName &&<div id="editorName"><p id="plotNameText">{plotName}</p></div>}
                 </div>
