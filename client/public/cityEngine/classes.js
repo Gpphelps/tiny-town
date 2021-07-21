@@ -732,7 +732,7 @@ export class Park {
 
         ctx.putImageData(imageData,0,0);
 
-        // canv.remove()
+        canv.remove()
 
         return canv;
     }
