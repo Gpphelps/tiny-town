@@ -624,6 +624,7 @@ export class Park {
     
 
         this.obj.position.set(absX,absY,absZ);
+        this.obj.scale.set(1.01,1.01,1.01)
         this.obj.castShadow = true;
         this.obj.receiveShadow = true;
     }

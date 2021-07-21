@@ -148,12 +148,26 @@ a:visited {
 
 
 /* user tool button styling */
+
+#userTools {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 20px;
+}
+
 .toolButton {
     font-family: 'Chakra Petch', sans-serif;
     font-weight: 500;
     text-transform: lowercase;
     position: relative;
     padding: 8px;
+    margin: 8px;
+    background-color: rgb(27, 27, 27);
+    border: none;
+    width: 40px;
+    border-radius: 10px;
+
 }
 
 .toolButton .tooltiptext {
@@ -174,6 +188,9 @@ a:visited {
     padding: 4px;
 }
 
+.toolButton:hover {
+    background-color: 'red';
+}
 .toolButton:hover .tooltiptext {
     visibility: visible;
 }
@@ -195,6 +212,11 @@ a:visited {
     background-image: url(../public/assets/images/simpleRoadButton.png);
     background-position: center;
 } */
+
+.buttonImage {
+    width: 80px;
+    height: auto;
+}
 
 
 

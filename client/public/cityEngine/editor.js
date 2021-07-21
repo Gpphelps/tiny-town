@@ -89,52 +89,53 @@ function initUi(){
             name: 'Road',
             value: 'place-road',
             tool: 'Place a road',
+            imgSrc: './assets/images/simpleRoadButton.png'
         },
         {
             name: 'Residential',
             value: 'place-residential',
             tool: 'Place a residential building',
+            imgSrc: './assets/images/simpleResButton.svg'
         },
         {
             name: 'Buisness',
             value: 'place-office',
             tool: 'Place an office building',
+            imgSrc: './assets/images/officelogo.svg'
         },
         {
             name: 'Commercial',
             value: 'place-commercial',
             tool: 'Place a commercial building',
+            imgSrc: './assets/images/simpleComButton.svg'
         },
         {
             name: 'Park',
             value: 'place-park',
             tool: 'Place a park',
+            imgSrc: './assets/images/parklogo.svg'
         },
         {
             name: 'Delete',
             value: 'delete-block',
             highlight: '{"r":1,"g":0,"b":0}',
             tool: 'Delete this block',
-        },
-        {
-            name: 'Paint',
-            value: 'paint-building',
-            highlight: 'paintColor',
-            tool: 'Change building color',
+            imgSrc: './assets/images/simpleDeleteButton.svg'
         },
 
     ]
 
     buttonTemplates.forEach(button => {
-        let elem = document.createElement('button');
-        elem.textContent = button.name;
+        let elem = document.createElement('img');
+        // elem.textContent = button.name;
         elem.value = button.value;
+        elem.src = button.imgSrc;
         
         let toolTip = document.createElement('p');
         toolTip.textContent = button.tool;
 
-        // let buttonImage = document.createElement('image');
-        // document.buttonImage.src = roadButton;
+        // let buttonImage = document.createElement('img');
+        // buttonImage.src = button.imgSrc;
 
         elem.appendChild(toolTip);
         // elem.appendChild(buttonImage);
