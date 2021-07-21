@@ -14,7 +14,7 @@ export const process = {
     defaultHoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     hoverMaterial: new THREE.MeshBasicMaterial({color:'yellow', opacity:0.7,transparent:true}),
     paintColor: {r:0.2,g:0.2,b:0.8},
-    randomColor: true,
+    randomColor: false,
 }
 
 
@@ -163,6 +163,14 @@ function initUi(){
         process.paintColor = rgb;
         console.log(process.paintColor)
         
+    })
+
+    let randomColorInput = document.createElement('input');
+    randomColorInput.setAttribute('type','checkbox');
+    cont.appendChild(randomColorInput)
+    randomColorInput.addEventListener('mousedown',function(){
+        process.randomColor = randomColorInput.value;
+        process.randomColor
     })
 
 }

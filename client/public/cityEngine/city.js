@@ -16,7 +16,7 @@ export async function init(){
     ts.startLoading()
 
     await ts.domWait(document.querySelector('#plotData'));
-    await ts.awaitModels(14);
+    await ts.awaitModels(16);
 
 
     ts.endLoading()
