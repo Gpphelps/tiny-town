@@ -1,7 +1,7 @@
 # Tiny Town
 
 ## Description
-Tiny Town is a web application that allows users to build and name neighborhoods that are placed in a city with the neighborhoods of other users. Neighborhood locations are restricted to areas directly adjacent to neighborhooods that have already been created. There are currently 6 types of structures that users can place in their neighborhood: roads, skyscrapers, commercial buildings, buisness buildings, residential buildings, and parks. Users can also demolish any of the structures they would like to before they save their neighborhood. Users can also select the color that they want their building to be before they place it or they can select the option to have their buildings be a random color when placed. In order for a plot to be placed in the city there must be a road running from each side of the neighborhood to the opther side in order for the city to connect to itself. 
+Tiny Town is a web application that allows users to build and name neighborhoods that are placed in a city with the neighborhoods of other users. Neighborhood locations are restricted to areas directly adjacent to neighborhooods that have already been created. There are currently 5 types of structures that users can place in their neighborhood: roads, commercial buildings, buisness buildings, residential buildings, and parks. Users can also demolish any of the structures they would like to before they save their neighborhood. Users can also select the color that they want their building to be before they place it or they can select the option to have their buildings be a random color when placed. In order for a plot to be placed in the city there must be a road running from each side of the neighborhood to the opther side in order for the city to connect to itself. 
 
 ## Installation
 ### To install codebase on local machine: 
@@ -22,13 +22,25 @@ npm i concurrently && npm install && npm run develop
 
 ## Usage
 
+Below is a mockup of the homepage:
+![Tiny Town Home Page](client/public/assets/images/LoggedIn.png)
+
 To save a neighborhood into the city the user must create and acount or login.
 
+Below is a mockup of the login page:
+![Tiny Town Login/Sign up Page](client/public/assets/images/TinyTownLogin.png)
+
 Once the user is logged in, they can create a neighborhood and save it into the larger city. Creating a city is as simple as naimg the neighborhood, and selecting a structure to build and placing on the neighborhood map. 
+
+Below is a mockup of the editor page: 
+![Tiny Town City Editor Page](client/public/assets/images/TinyTownEditor.png)
 
 Once the user has their neighborhood they way that they want it they can hit the save neighborhood button and they are redirected to the homepage where their new neighborhood is waiting for them to explore. 
 
 When the user is done creating, or they need to leave the app they can logout from Tiny Town with our dedicated logout page, but they can still enjoy viewing the city from the homepage.
+
+Below is a mockup of the lgout page: 
+![Tiny Town Editor Page](client/public/assets/images/TinyTownLogout.png)
 
 ## Features 
 Tiny Town features the use of three.js to render the 3d models created using blender. Tiny Town also features the use of JSON Web Tokens to authenticate user actions and make sure than no request are beign made from users who do not have accounts.
