@@ -141,7 +141,7 @@ function initUi(){
         // let buttonImage = document.createElement('img');
         // buttonImage.src = button.imgSrc;
 
-        elem.appendChild(toolTip);
+        buttonContainer.appendChild(toolTip);
         buttonContainer.appendChild(elem);
         // elem.appendChild(buttonImage);
 
