@@ -10,6 +10,12 @@ const InfoModal = ({message,display,setDisplay}) => {
     const handleExitButton = () => {
         setDisplay('none')
     }
+
+    return (
+        <div>
+            <p>{message}</p>
+        </div>
+    )
 }
 
 export default InfoModal;
