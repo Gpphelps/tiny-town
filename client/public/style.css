@@ -31,6 +31,26 @@ header {
     z-index: -1;
 }
 
+
+.canvasParent .plotNameDiv {
+    font-family: 'Chakra Petch', sans-serif;
+    visibility: hidden;
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 500;
+    /* margin-left: 32rem; */
+    margin-top: 3rem;
+    color: cornsilk;
+    
+
+}
+
+.canvasParent:hover .plotNameDiv {
+    visibility: visible;
+}
+
 h1 {
     font-family: 'Chakra Petch', sans-serif;
     font-weight: 700;
@@ -255,9 +275,13 @@ a:visited {
     margin: 5px;
 }
 
-.modal > h5 {
+.modal  h5 {
     font-family: 'Chakra Petch', sans-serif;
     font-weight: 500;
+    
+}
+
+h5 {
     font-size: 24px;
 }
 
@@ -306,14 +330,66 @@ a:visited {
 
 /* responsive sizing */
 
-@media screen and (max-width: 800px) and (min-width: 300px) {
+@media screen and (max-width: 568px) {
+    .header,  .main, .body  {
+        width: 100%;
+    }
+
+    #userTools {
+        width: 20%;
+    }
+
+    .modal {
+       width: 40%;
+    }
+
+    h5 {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 640px)  {
     .main, .header, .body {
       width: 100%; 
     }
 }
 
-/* @media screen and (max-width: 400px) {
-    .left, .main, .right {
+@media screen and (max-width: 653px)  {
+    .main, .header, .body {
+      width: 100%; 
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 731px) {
+    .header,  .main, .body {
         width: 100%;
     }
-} */
+}
+
+@media screen and (max-width: 812px) {
+    .header,  .main, .body {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 823px) {
+    .header,  .main, .body {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .header,  .main, .body {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .header,  .main, .body {
+        width: 100%;
+    }
+}
