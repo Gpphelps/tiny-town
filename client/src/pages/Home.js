@@ -1,8 +1,8 @@
 
-import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import React, {useState, useEffect} from 'react';
+import { useQuery, useMutation } from '@apollo/client';
 import PlotPopUp from '../components/PlotPopUp';
-import { GET_CITY } from '../utils/queries'
+import {GET_CITY} from '../utils/queries'
 
 
 const Home = () => {
@@ -10,8 +10,8 @@ const Home = () => {
 
     //HERE WILL BE ALL PLOTS QUERY 
     //textarea text content will immedietly be set to the data from the query
-
     const { data } = useQuery(GET_CITY)
+<<<<<<< HEAD
 
 
     // if (data !== undefined) {
@@ -23,6 +23,9 @@ const Home = () => {
     
     
     
+=======
+    console.log(data)
+>>>>>>> 2bfd8d5886bb79acd899d45d34c5ea11ca8d2c5f
 
     let string = JSON.stringify(data)
  
