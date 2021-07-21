@@ -16,7 +16,7 @@ export async function init(){
     ts.startLoading()
 
     await ts.domWait(document.querySelector('#plotData'));
-    await ts.awaitModels(14);
+    await ts.awaitModels(16);
 
 
     ts.endLoading()
@@ -43,7 +43,6 @@ export async function init(){
 
 async function buildPlots(){
 
-    let wait = await ts.wait(600)
 
     let city = plotData.city
 
@@ -65,18 +64,23 @@ async function buildPlots(){
         newPlot.buildBase();
         allPlots.push(newPlot)
         plot.buildings.forEach(building => {
-
+            console.log(building)
             let newBuilding;
             if(building.type == 'residential'){
                 newBuilding = new cls.Residential(newPlot,building.building_position_x,building.building_position_y,building.building_position_z)
+                newBuilding.baseColor = {r:building.building_color_r,g:building.building_color_g,b:building.building_color_b}
                 newBuilding.addToScene()
             }
             if(building.type == 'office'){
                 newBuilding = new cls.Office(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
+                newBuilding.baseColor = {r:building.building_color_r,g:building.building_color_g,b:building.building_color_b}
+
                 newBuilding.addToScene()
             }
             if(building.type == 'commercial'){
                 newBuilding = new cls.Commercial(newPlot,building.building_position_x,building.building_position_y,building.building_position_z);
+                newBuilding.baseColor = {r:building.building_color_r,g:building.building_color_g,b:building.building_color_b}
+
                 newBuilding.addToScene()
             }
             if(building.type == 'road'){
