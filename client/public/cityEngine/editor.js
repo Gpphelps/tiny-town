@@ -21,6 +21,7 @@ export const process = {
 const userInput = {
     toolModeButton(e){
         console.log(e.target);
+
         process.clickOperation = e.target.value;
         if(e.target.dataset.highlight){
             if(e.target.dataset.highlight == 'paintColor'){
