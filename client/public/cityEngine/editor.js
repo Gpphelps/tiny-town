@@ -95,19 +95,19 @@ function initUi(){
             name: 'Residential',
             value: 'place-residential',
             tool: 'Place a residential building',
-            imgSrc: './assets/images/simpleResButton.png'
+            imgSrc: './assets/images/simpleResButton.svg'
         },
         {
             name: 'Buisness',
             value: 'place-office',
             tool: 'Place an office building',
-            imgSrc: './assets/images/simpleResButton.png'
+            imgSrc: './assets/images/simpleResButton.svg'
         },
         {
             name: 'Commercial',
             value: 'place-commercial',
             tool: 'Place a commercial building',
-            imgSrc: './assets/images/simpleComButton.png'
+            imgSrc: './assets/images/simpleComButton.svg'
         },
         {
             name: 'Park',
@@ -119,7 +119,7 @@ function initUi(){
             value: 'delete-block',
             highlight: '{"r":1,"g":0,"b":0}',
             tool: 'Delete this block',
-            imgSrc: './assets/images/simpleDeleteButton.png'
+            imgSrc: './assets/images/simpleDeleteButton.svg'
         },
 
     ]

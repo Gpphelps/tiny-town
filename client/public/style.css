@@ -161,11 +161,12 @@ a:visited {
     font-weight: 500;
     text-transform: lowercase;
     position: relative;
-    /* padding: 8px; */
+    padding: 8px;
     margin: 8px;
-    background-color: rgba(0,0,0,0);
+    background-color: rgb(27, 27, 27);
     border: none;
-    width: 60px;
+    width: 40px;
+    border-radius: 10px;
 
 }
 
@@ -187,6 +188,9 @@ a:visited {
     padding: 4px;
 }
 
+.toolButton:hover {
+    background-color: 'red';
+}
 .toolButton:hover .tooltiptext {
     visibility: visible;
 }
