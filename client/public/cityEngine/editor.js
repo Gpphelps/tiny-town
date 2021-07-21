@@ -136,7 +136,7 @@ function initUi(){
         // let buttonImage = document.createElement('img');
         // buttonImage.src = button.imgSrc;
 
-        // elem.appendChild(toolTip);
+        elem.appendChild(toolTip);
         // elem.appendChild(buttonImage);
 
         if(button.highlight){
