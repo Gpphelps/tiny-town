@@ -442,7 +442,9 @@ export class Building {
 
         // console.log(this.baseColor)
 
-        // this.setBaseColor(this.obj,this.baseColor)
+        if(index.runMode == 'city'){
+            this.setBaseColor(this.obj,this.baseColor)
+        }
 
         if(minusY.type){
             let color = minusY.baseColor;
@@ -501,7 +503,7 @@ export class Building {
         this.baseColor = color;
 
         let attribute = new THREE.BufferAttribute(new Float32Array(newColorArray),3)
-        console.log(attribute)
+        // console.log(attribute)
 
         let position = this.obj.geometry.attributes.position;
         let uv =  this.obj.geometry.attributes.uv;
