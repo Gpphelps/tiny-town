@@ -8,6 +8,7 @@ import { SAVE_PLOT } from '../utils/mutations'
 import InputModal from '../components/InputModal'
 import Tip from '../components/Tip'
 import Modal from '../components/Modal'
+import InfoModal from '../components/InfoModal'
 
 const Editor = () => {
 
@@ -25,6 +26,11 @@ const Editor = () => {
     const [tipDisplay, setTipDisplay] =  useState('none')
     const [tipOver, setTipOver] = useState('none')
 
+    const [infoModalDisplay,setInfoModalDisplay] = useState('none');
+
+    const infoText = "Click any of the buttons on the left to select a building type to place!"
+
+
     const [roadWarningModalDisplay, setRoadWarningModalDisplay] = useState('none')
     //gets plotX and plotZ data from local storage
         //saves new plot, SAVE_PLOT resolver returns the entire user
@@ -35,7 +41,7 @@ const Editor = () => {
         console.log(edgeRoadBoolean)
 
         if(!edgeRoadBoolean){
-            setRoadWarningModalDisplay('flex');
+            setRoadWarningModalDisplay('block');
             return;
         }
 
@@ -81,9 +87,18 @@ const Editor = () => {
     }
 
 
-
     const handleHover = (e) => {
         setTipPosition({top:e.clientY+20,left:e.clientX+20})
+    }
+
+    let canvClicks = 0
+
+    const canvClick = () => {
+        console.log(canvClicks)
+        if(canvClicks == 0){
+            setInfoModalDisplay('block')
+        }
+        canvClicks++;
     }
 
     // {showAlert && <div id="loginError" style={errorStyle}> <div  onClick={() => setShowAlert(false)} id="x" style={xStyle}>X</div>**Could not find a user with that email and/or password**</div>}
@@ -98,14 +113,14 @@ const Editor = () => {
                     <textarea style={{display:'none'}} id='edgeRoadBoolean'></textarea>
                 </div>
 
-                <div id="canvCont">
+                <div onClick={canvClick} id="canvCont">
                 
                 </div>
                 
-
-                
+                {/* <InfoModal message={infoText} display={infoModalDisplay} setDisplay={setInfoModalDisplay} top="40vh" left="30vw"/>                 */}
                 <div className='usertoolButtons' id="userTools"></div>
-                <Modal message={'Every side of the plot must have a road connected to it.'} display={roadWarningModalDisplay} setDisplay={setRoadWarningModalDisplay}/>
+                <InfoModal message="Every plot must have roads connecting to all 4 edges." display={roadWarningModalDisplay} title="Error!" errorMode={true} setDisplay={setRoadWarningModalDisplay} top="30vh" right="20px" width="250px"/>                
+
                
                 <div id="reactButtons">
                     <button className='plotButtons' onClick={renameButton}>Rename this neighborhood</button>

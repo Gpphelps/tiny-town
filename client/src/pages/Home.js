@@ -37,7 +37,7 @@ const Home = () => {
         <div className="canvasParent">
             <textarea style={{display:'none'}} id="plotData"></textarea>
             <p style={{display:'none'}} id="runModeProxy">city</p>
-            <InfoModal message={infoText} display={infoModalDisplay} setDisplay={setInfoModalDisplay} />
+            <InfoModal message={infoText} display={infoModalDisplay} setDisplay={setInfoModalDisplay} top="40vh" left="30px"/>
             <PlotPopUp />
             <div id="canvCont"></div>
         </div>
