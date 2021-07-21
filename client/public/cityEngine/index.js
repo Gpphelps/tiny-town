@@ -50,7 +50,7 @@ function init(){
     // camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
     let windowRatio = window.innerWidth/window.innerHeight;
-    camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-10,30);
+    camera = new THREE.OrthographicCamera(-10*windowRatio,10*windowRatio,10,-10,-100,30);
 
     
     camera.position.set(10,12,10)

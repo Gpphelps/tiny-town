@@ -337,7 +337,7 @@ export function findAndStoreAdjacentRoads(surroundingPlots){
         plusXRoads = surroundingPlots.plusX.checkEdgesForRoads().leftArray;
     }
     if(surroundingPlots.minusX){
-        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().Array;
+        minusXRoads = surroundingPlots.minusX.checkEdgesForRoads().rightArray;
     }
     if(surroundingPlots.plusZ){
         plusZRoads = surroundingPlots.plusZ.checkEdgesForRoads().topArray;
