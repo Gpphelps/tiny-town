@@ -10,7 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [showAlert, setShowAlert] = useState(false);
 
-    const [loginUser, { error }] = useMutation(LOGIN_USER);
+    const [ loginUser ] = useMutation(LOGIN_USER);
 
     const handleInput = (e) => {
         const {name, value} = e.target
@@ -40,7 +40,7 @@ const Login = () => {
                 console.log(error.message)
             }
         }catch (err) {
-            console.error(err);
+            console.log(err);
             setShowAlert(true);
         }
 

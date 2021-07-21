@@ -40,8 +40,6 @@ const CreateAccount = () => {
         });
 
         Auth.login(data.addUser.token);
-
-        console.log(data)
         
         if (error) {
             console.log(error.message)
