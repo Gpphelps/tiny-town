@@ -53,25 +53,29 @@ const Login = () => {
     const textStyle = {
         color: "#2D2D29",
         fontFamily: "'Chakra Petch', sans-serif",
-        textTransform: "lowercase",
+        // textTransform: "lowercase",
         textAlign: "center",
-        fontSize: "50px",
+        fontSize: "32px",
         fontWeight: "600",
     };
 
     const loginStyle = {
-        border: "2px solid black",
-        borderRadius: "2px",
+        border: "1px solid black",
+        borderRadius: "5px",
         fontFamily: "'Chakra Petch', sans-serif",
         textTransform: "lowercase",
+        backgroundColor: "rgb(50,50,50)",
+        color: "#94e8ff",
     };
 
     const buttonStyle = {
         fontFamily: "'Chakra Petch', sans-serif",
+        fontFamily: "Helvetica",
+        fontWeight: 100,
         textTransform: "lowercase",
         fontSize: "20px",
         border: "2px solid black",
-        borderRadius: "2px"
+        borderRadius: "5px"
         // backgroundColor: '#7DC287',
         // borderRadius: '5px',
     };
@@ -86,31 +90,31 @@ const Login = () => {
 
     const errorStyle = {
 
-        display: "flex",
-        flexDirection: "column",
-        fontFamily: "'Chakra Petch', sans-serif",
-        textTransform: "lowercase",
-        textAlign: "center",
-        color: "red",
-        fontWeight: "300",
-        fontSize: "20px",
-        border: "2px solid black",
-        borderRadius: "2px"
+        // display: "flex",
+        // flexDirection: "column",
+        // fontFamily: "'Chakra Petch', sans-serif",
+        // textTransform: "lowercase",
+        // textAlign: "center",
+        // color: "red",
+        // fontWeight: "300",
+        // fontSize: "20px",
+        // border: "2px solid black",
+        // borderRadius: "2px"
     };
 
     const xStyle = {
-        width: "20px",
-        fontFamily: "'Chakra Petch', sans-serif",
-        justifyContent: "right",
-        color: "white",
-        backgroundColor: "red",
-        fontSize: "25px",
-        fontWeight: "bold",
-        textAlign: "right",
-        borderRight: "1px solid black",
-        borderBottom: "1px solid black",
-        borderRadius: "2px",
-        paddingRight: "3px"
+        // width: "20px",
+        // fontFamily: "'Chakra Petch', sans-serif",
+        // justifyContent: "right",
+        // color: "white",
+        // backgroundColor: "red",
+        // fontSize: "25px",
+        // fontWeight: "bold",
+        // textAlign: "right",
+        // borderRight: "1px solid black",
+        // borderBottom: "1px solid black",
+        // borderRadius: "2px",
+        // paddingRight: "3px"
     };
 
     return (

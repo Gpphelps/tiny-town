@@ -89,7 +89,7 @@ function initUi(){
             name: 'Road',
             value: 'place-road',
             tool: 'Place a road',
-            imgSrc: './assets/images/simpleRoadButton.png'
+            imgSrc: './assets/images/simpleRoadButton.svg'
         },
         {
             name: 'Residential',
@@ -126,6 +126,10 @@ function initUi(){
     ]
 
     buttonTemplates.forEach(button => {
+
+        let buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('toolButtonContainer')
+
         let elem = document.createElement('img');
         // elem.textContent = button.name;
         elem.value = button.value;
@@ -138,6 +142,7 @@ function initUi(){
         // buttonImage.src = button.imgSrc;
 
         elem.appendChild(toolTip);
+        buttonContainer.appendChild(elem);
         // elem.appendChild(buttonImage);
 
         if(button.highlight){
@@ -147,18 +152,28 @@ function initUi(){
         elem.classList.add('toolButton')
         // buttonImage.classList.add('buttonImage')
         toolTip.classList.add('tooltiptext')
-        cont.appendChild(elem)
+        cont.appendChild(buttonContainer)
     })
 
 
     let buttons = document.querySelectorAll('.toolButton');
     buttons.forEach(button => button.addEventListener('mousedown', userInput.toolModeButton))
 
+    let colorCont = document.createElement('div')
+    colorCont.setAttribute('id','colorCont');
+    cont.appendChild(colorCont)
+
+
+    let colorLabel = document.createElement('label');
+    colorLabel.setAttribute('for','paintColorInput');
+    colorLabel.textContent = 'Building Color'
+    colorCont.appendChild(colorLabel)
+
     let paintColorInput = document.createElement('input');
     paintColorInput.type = 'color';
-    paintColorInput.value = '#888888';
+    paintColorInput.value = '#0000ee';
     paintColorInput.setAttribute('id','paintColorInput')
-    cont.appendChild(paintColorInput);
+    colorCont.appendChild(paintColorInput);
     paintColorInput.addEventListener("change", (e) => {
         let rgb = ts.hexToRgb(e.target.value)
         process.paintColor = rgb;
@@ -166,13 +181,20 @@ function initUi(){
         
     })
 
+
+    let randomLabel = document.createElement('label');
+    randomLabel.setAttribute('for','paintColorInput');
+    randomLabel.textContent = 'Random Building Colors'
+    colorCont.appendChild(randomLabel)
+
     let randomColorInput = document.createElement('input');
     randomColorInput.setAttribute('type','checkbox');
-    cont.appendChild(randomColorInput)
+    colorCont.appendChild(randomColorInput)
     randomColorInput.addEventListener('mousedown',function(){
         process.randomColor = randomColorInput.value;
         process.randomColor
     })
+
 
 }
 
