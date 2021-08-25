@@ -15,7 +15,6 @@ const CreateAccount = () => {
 
     const [addUser, { error }] = useMutation(ADD_USER);
 
-    const reRef = useRef();
 
     const handleInput = (e) => {
         const { name, value } = e.target
@@ -38,10 +37,9 @@ const CreateAccount = () => {
 
         e.preventDefault();
 
-        const capToken = await reRef.current.executeAsync();
 
         const { data } = await addUser({
-            variables: { username: username, email: email, password: password, capToken: capToken }
+            variables: { username: username, email: email, password: password }
         });
 
         Auth.login(data.addUser.token);
@@ -95,11 +93,6 @@ const CreateAccount = () => {
                 <input style={loginStyle} onChange={handleInput} name="username" placeholder="Username"></input>
                 <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Sign Up</button>
-                {/* <ReCAPTCHA
-                    sitekey={process.env.SITE_KEY}
-                    onChange={onChange}
-                    ref={reRef}
-                /> */}
             </form>
         </div>
     )
