@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { tsRestType } from '@babel/types';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ADD_USER } from '../utils/mutations'
 import Auth from '../utils/auth';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -14,6 +14,8 @@ const CreateAccount = () => {
     const [password, setPassword] = useState('');
 
     const [addUser, { error }] = useMutation(ADD_USER);
+
+    const reRef = useRef();
 
     const handleInput = (e) => {
         const { name, value } = e.target
@@ -36,9 +38,10 @@ const CreateAccount = () => {
 
         e.preventDefault();
 
+        const capToken = await reRef.current.executeAsync();
 
         const { data } = await addUser({
-            variables: { username: username, email: email, password: password }
+            variables: { username: username, email: email, password: password, capToken: capToken }
         });
 
         Auth.login(data.addUser.token);
@@ -53,9 +56,6 @@ const CreateAccount = () => {
         setPassword('')
     }
 
-    function onChange(value) {
-        console.log("Captcha value:", value);
-    }
 
     const textStyle = {
         color: "#2D2D29",
@@ -95,10 +95,11 @@ const CreateAccount = () => {
                 <input style={loginStyle} onChange={handleInput} name="username" placeholder="Username"></input>
                 <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Sign Up</button>
-                <ReCAPTCHA
+                {/* <ReCAPTCHA
                     sitekey={process.env.SITE_KEY}
                     onChange={onChange}
-                />
+                    ref={reRef}
+                /> */}
             </form>
         </div>
     )
