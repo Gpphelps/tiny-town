@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { ADD_USER } from '../utils/mutations'
 import Auth from '../utils/auth';
 import ReCAPTCHA from "react-google-recaptcha";
-
-const siteKey = process.env.SITE_KEY
+require('dotenv').config()
 
 const CreateAccount = () => {
 
@@ -97,7 +96,7 @@ const CreateAccount = () => {
                 <input style={loginStyle} onChange={handleInput} name="password" placeholder="Password" type="password"></input>
                 <button style={buttonStyle} onClick={handleFormSubmit}>Sign Up</button>
                 <ReCAPTCHA
-                    sitekey="6LdmViQcAAAAANo-hqfkLVWrKnJ-KyI8Vrq79UtH"
+                    sitekey={process.env.SITE_KEY}
                     onChange={onChange}
                 />
             </form>
